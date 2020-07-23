@@ -1,0 +1,100 @@
+/*=========================================================
+Author       : Rashmin.
+Template Name: Educone - Education and LMS HTML Template
+Version      : 1.0
+==============================================================*/
+
+a:hover,
+.navbar .navbar-nav > li > a.active, .navbar .navbar-nav > li:hover > a, 
+.light_skin.transparent_header.nav-fixed .navbar .navbar-nav > li > a.active, 
+.light_skin.transparent_header.nav-fixed .navbar .navbar-nav > li:hover > a,
+.dark_skin .navbar .navbar-nav .dropdown-menu li a.active, 
+.dark_skin .navbar .navbar-nav .dropdown-menu li a:hover, 
+.dark_skin .navbar .navbar-nav .dropdown-menu > ul > li:hover > a, 
+.dark_skin .navbar .navbar-nav .dropdown-menu > ul > .mega-menu-col ul > li:hover > a,
+.navbar .navbar-nav .dropdown-menu li a.active, 
+.navbar .navbar-nav .dropdown-menu li a:hover, 
+.navbar .navbar-nav .dropdown-menu > ul > li:hover > a, 
+.navbar .navbar-nav .dropdown-menu > ul > .mega-menu-col ul > li:hover > a, 
+.sticky_dark_skin.nav-fixed .navbar .navbar-nav .dropdown-item:hover,
+.social_white .social_icons li a:hover, 
+.social_white.social_icons li a:hover,
+.social_icons li a:hover, 
+.header_wrap .social_icons li a:hover,
+.top-header.light_skin .header_list li a:hover, 
+.top-header.light_skin .contact_detail li a:hover, 
+.top-header.light_skin .header_list li a:hover span,
+.sub_heading,
+.courses_price span,
+.courses_meta li i,
+.event_meta li i,
+.ripple,
+.author_name span,
+.blog_meta li a i,
+.footer_dark a:hover, 
+.footer_dark .widget_links li a:hover, 
+.widget_links li a:hover, 
+.footer_dark .footer_link li a:hover, 
+.footer_link li a:hover,
+.icon_box_style3 .icon i,
+.team_style1 .team_title span,
+.widget_course_description li i,
+.widget_features li i,
+.shorting_icon.active,
+.toggle_info i {
+	color: #FF9F54;
+}
+
+.text_default,
+.social_style4 li a:hover {
+	color: #FF9F54 !important;
+}
+
+.btn-default,
+.lds-ellipsis span,
+.cart_count,
+.carousel-control-next:hover, 
+.carousel-control-prev:hover, 
+.light_arrow .carousel-control-next:hover, 
+.light_arrow .carousel-control-prev:hover,
+.btn-dark::before,
+.event_dt,
+.owl-theme .owl-dots .owl-dot.active span, .owl-theme .owl-dots .owl-dot:hover span,
+.post_date,
+.social_icons.social_style1 li a:hover,
+.scrollup:hover,
+.icon_box_style3::before,
+.social_style4 li a,
+.owl-theme .owl-nav [class*="owl-"],
+.contact_style1 .contact_icon i,
+.custome-checkbox input[type="checkbox"]:checked + .form-check-label::before,
+.pagination_style1 .page-item.active .page-link, .pagination_style1 .page-item .page-link:hover,
+.sidebar .widget_title::before,
+.accordion_style1.accordion .card-header a[aria-expanded="true"],
+.tags a:hover,
+.blockquote_style1,
+.tab-style1 .nav-tabs li.nav-item a.active, .tab-style1 .nav-tabs li.nav-item a.active:hover,
+.custome-radio input[type="radio"] + .form-check-label::after {
+	background-color: #FF9F54;
+}
+
+.bg_default {
+	background-color: #FF9F54 !important;
+}
+
+.btn-default:hover {
+	background-color: #EF8F44;
+}
+
+.owl-theme .owl-dots .owl-dot span,
+.custome-checkbox input[type="checkbox"]:checked + .form-check-label::before,
+.pagination_style1 .page-item.active .page-link, .pagination_style1 .page-item .page-link:hover,
+.product_gallery_item .slick-current img,
+.tab-style1 .nav-tabs li.nav-item a.active, .tab-style1 .nav-tabs li.nav-item a.active:hover,
+.toggle_info,.custome-radio input[type="radio"]:checked + .form-check-label::before {
+	border-color: #FF9F54;
+}
+
+.blockquote_style1 {
+	border-color: #CF6F24;
+}

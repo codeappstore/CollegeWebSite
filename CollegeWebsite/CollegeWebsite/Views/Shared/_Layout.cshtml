@@ -1,0 +1,261 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Meta -->
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta content="CodeAppStore" name="author">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Shahid Bishnu Dhani Memorial Polytechnic Institute.">
+    <meta name="keywords" content="College Website">
+
+    <!-- SITE TITLE -->
+    <title>@ViewData["Title"]  Shahid Bishnu Dhani Memorial Polytechnic Institute</title>
+
+    <!-- Favicon Icon -->
+    <link rel="shortcut icon" type="image/x-icon" href="~/favicon.ico">
+    <link rel="apple-touch-icon" sizes="180x180" href="~/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="~/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="~/favicon-16x16.png">
+
+    <!-- Animation CSS -->
+    <link rel="stylesheet" href="~/css/animate.css">
+
+    <!-- Latest Bootstrap min CSS -->
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+
+    <!-- Google Font -->
+    <link href="~/css/css.css?family=Poppins:200,300,400,500,600,700,800,900&amp;display=swap" rel="stylesheet">
+    <link href="~/css/css2-2.css?family=Roboto:wght@100;300;400;500;700;900&display=swap" rel="stylesheet">
+
+    <!-- Icon Font CSS -->
+    <link rel="stylesheet" href="~/css/all.min.css">
+    <link rel="stylesheet" href="~/css/ionicons.min.css">
+    <link rel="stylesheet" href="~/css/themify-icons.css">
+    <link rel="stylesheet" href="~/css/linearicons.css">
+    <link rel="stylesheet" href="~/css/flaticon.css">
+
+    <!--- owl carousel CSS-->
+    <link rel="stylesheet" href="~/lib/owlcarousel/css/owl.carousel.min.css">
+    <link rel="stylesheet" href="~/lib/owlcarousel/css/owl.theme.css">
+    <link rel="stylesheet" href="~/lib/owlcarousel/css/owl.theme.default.min.css">
+
+    <!-- Magnific Popup CSS -->
+    <link rel="stylesheet" href="~/css/magnific-popup.css">
+
+    <!-- Style CSS -->
+    <link rel="stylesheet" href="~/css/style.css">
+    <link rel="stylesheet" href="~/css/responsive.css">
+    <link rel="stylesheet" id="layoutstyle" href="~/color/theme-blue.css">
+
+</head>
+<body>
+    <!-- LOADER -->
+    <div id="preloader">
+        <div class="lds-ellipsis">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+    </div>
+    <!-- END LOADER -->
+    <!-- START HEADER -->
+    <header class="header_wrap fixed-top light_skin sticky_dark_skin main_menu_uppercase transparent_header header_with_topbar dd_dark_skin">
+        <div class="top-header light_skin d-none d-md-block">
+            <div class="container">
+                <div class="row align-items-center">
+                    <div class="col-md-6">
+
+                    </div>
+                    <div class="col-md-6">
+                        <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-end">
+                            <ul class="social_icons social_white">
+                                <li><a href="#"><i class="ion-social-facebook"></i></a></li>
+                                <li><a href="#"><i class="ion-social-twitter"></i></a></li>
+                                <li><a href="#"><i class="ion-social-googleplus"></i></a></li>
+                                <li><a href="#"><i class="ion-social-instagram-outline"></i></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="container">
+            <nav class="navbar navbar-expand-lg">
+                <a class="navbar-brand" href="index.html">
+                    <img class="logo_light" src="~/Nav_Logo_Light.png" alt="logo">
+                    <img class="logo_dark" src="~/Nav_Logo_Dark.png" alt="logo">
+                </a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse"
+                        data-target="#navbarSupportedContent" aria-expanded="false">
+                    <span class="ion-android-menu"></span>
+                </button>
+                <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
+                    <ul class="navbar-nav">
+                        <li class="dropdown">
+                            <a class="dropdown-toggle nav-link active" data-toggle="dropdown"
+                               href="#">HOME</a>
+                            <div class="dropdown-menu">
+                                <ul>
+                                    <li><a class="dropdown-item nav-link nav_item" href="index.html">ABOUT US</a></li>
+                                    <li>
+                                        <a class="dropdown-item nav-link nav_item" href="index-2.html">BACKGROUND</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>
+                        <li class="dropdown">
+                            <a class="dropdown-toggle nav-link" data-toggle="dropdown"
+                               href="#">ACADEMICS</a>
+                            <div class="dropdown-menu">
+                                <ul>
+                                    <li><a class="dropdown-item nav-link nav_item" href="index.html">FORESTRY</a></li>
+                                    <li>
+                                        <a class="dropdown-item nav-link nav_item" href="index-2.html">AGRICULTURE</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+        </div>
+    </header>
+    <!-- END HEADER -->
+
+    @RenderBody()
+    <!-- START FOOTER -->
+    <footer class="footer_dark">
+        <div class="footer_top">
+            <div class="container">
+                <div class="row">
+                    <div class="col-xl-4 col-sm-6">
+                        <div class="widget">
+                            <div class="footer_logo">
+                                <a href="#"><img src="~/Nav_Logo_Light.png" alt="logo"></a>
+                            </div>
+                            <p>
+                                If you are going to use a passage of Lorem Ipsum you need to be sure there isn't anything
+                                embarrassing hidden in the middle of text
+                            </p>
+                            <ul class="social_icons rounded_social social_white social_style1">
+                                <li><a href="#"><i class="ion-social-facebook"></i></a></li>
+                                <li><a href="#"><i class="ion-social-twitter"></i></a></li>
+                                <li><a href="#"><i class="ion-social-googleplus"></i></a></li>
+                                <li><a href="#"><i class="ion-social-youtube-outline"></i></a></li>
+                                <li><a href="#"><i class="ion-social-instagram-outline"></i></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-xl-2 col-sm-6 col-6">
+                        <div class="widget">
+                            <h6 class="widget_title">Useful Links</h6>
+                            <ul class="widget_links">
+                                <li><a href="#">About Us</a></li>
+                                <li><a href="#">Company history</a></li>
+                                <li><a href="#">Latest Projects</a></li>
+                                <li><a href="#">Our Mission</a></li>
+                                <li><a href="#">Contact Us</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-xl-2 col-sm-6">
+                        <div class="widget">
+                            <h6 class="widget_title">Support</h6>
+                            <ul class="widget_links">
+                                <li><a href="#">Support Center</a></li>
+                                <li><a href="#">Privacy Policy</a></li>
+                                <li><a href="#">Our Packages</a></li>
+                                <li><a href="#">Register Key</a></li>
+                                <li><a href="#">Terms Of Use</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-xl-4 col-sm-6">
+                        <div class="widget">
+                            <h6 class="widget_title">Contact Info</h6>
+                            <ul class="contact_info contact_info_light">
+                                <li>
+                                    <i class="ti-location-pin"></i>
+                                    <p>Barbardiya Municipality, Ward No. 5, Bardiya District</p>
+                                </li>
+                                <li>
+                                    <i class="ti-email"></i>
+                                    <a href="#" class="text-light">mail@user.com</a>
+                                </li>
+                                <li>
+                                    <i class="ti-mobile"></i>
+                                    <a href="tel:9876655444" class="text-light">9876543287</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="bottom_footer bg_dark2">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-6">
+                        <p class="mb-md-0 text-center text-md-left">
+                            © 2020 All Rights Reserved by <span class="text_default">CodeAppStore</span>
+                        </p>
+                    </div>
+                    <div class="col-md-6">
+                        <ul class="list_none footer_link text-center text-md-right">
+                            <li><a href="#">Privacy Policy</a></li>
+                            <li><a href="#">Terms &amp; Conditions</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12 text-center">
+                        <p class=" mb-md-0 ">
+                            Powered by <a class="text_default" href="https://codeappstore.com"
+                                          target="blank">CodeAppStore</a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <!-- END FOOTER -->
+
+    <a href="#" class="scrollup" style="display: none;"><i class="ion-ios-arrow-up"></i></a>
+
+    <!-- Latest jQuery -->
+    <script src="~/js/jquery-1.12.4.min.js"></script>
+    @* <script src="~/lib/jquery/dist/jquery.min.js"></script> *@
+    <!-- Latest compiled and minified Bootstrap -->
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- owl-carousel min js  -->
+    <script src="~/lib/owlcarousel/js/owl.carousel.min.js"></script>
+    <!-- magnific-popup min js  -->
+    <script src="~/js/magnific-popup.min.js"></script>
+    <!-- waypoints min js  -->
+    <script src="~/js/waypoints.min.js"></script>
+    <!-- parallax js  -->
+    <script src="~/js/parallax.js"></script>
+    <!-- countdown js  -->
+    <script src="~/js/jquery.countdown.min.js"></script>
+    <!-- jquery.countTo js  -->
+    <script src="~/js/jquery.countTo.js"></script>
+    <!-- imagesloaded js -->
+    <script src="~/js/imagesloaded.pkgd.min.js"></script>
+    <!-- isotope min js -->
+    <script src="~/js/isotope.min.js"></script>
+    <!-- jquery.appear js  -->
+    <script src="~/js/jquery.appear.js"></script>
+    <!-- jquery.dd.min js -->
+    <script src="~/js/jquery.dd.min.js"></script>
+    <!-- slick js -->
+    <script src="~/js/slick.min.js"></script>
+    <!-- scripts js -->
+    <script src="~/js/scripts.js"></script>
+
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @RenderSection("Scripts", required: false)
+</body>
+</html>
