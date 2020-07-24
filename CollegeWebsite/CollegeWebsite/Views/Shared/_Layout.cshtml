@@ -1,5 +1,6 @@
 ﻿@{
     string pageName = @ViewContext.RouteData.Values["action"].ToString();
+    string baseUrl = Url.ActionContext.HttpContext.Request.Scheme + "://" + Url.ActionContext.HttpContext.Request.Host;
 }
 <!DOCTYPE html>
 <html lang="en">
@@ -16,8 +17,8 @@
     <!-- Open Graph -->
     <meta property="og:title" content="Shahid Bishnu Dhani Memorial Polytechnic Institute">
     <meta property="og:description" content="Shahid Bishnu Dhani Memorial Polytechnic Institute | Shahid Bishnu Dhani Memorial Polytechnic Institute is a newly established educational institution which primarily attempts to contribute to the development of the country through the production of skilled and semi-skilled human resources. ">
-    <meta property="og:image" content="http://codeappstore-001-site1.ftempurl.com/Nav_Logo_Light.png">
-    <meta property="og:url" content="http://codeappstore-001-site1.ftempurl.com">
+    <meta property="og:image" content="@(baseUrl+"/Nav_Logo_Dark.png")">
+    <meta property="og:url" content="@baseUrl">
     <meta name="twitter:card" content="Shahid Bishnu Dhani Memorial Polytechnic Institute | Shahid Bishnu Dhani Memorial Polytechnic Institute is a newly established educational institution which primarily attempts to contribute to the development of the country through the production of skilled and semi-skilled human resources. ">
 
 
@@ -287,7 +288,9 @@
                                 <li><a asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
                                 <li><a asp-area="" asp-controller="Home" asp-action="About">About Us</a></li>
                                 <li><a asp-area="" asp-controller="Home" asp-action="Background">Background</a></li>
-                                <h6 class="widget_title">Academics</h6>
+                                <li>
+                                    <h6 class="widget_title">Academics</h6>
+                                </li>
                                 <li><a asp-area="" asp-controller="Home" asp-action="Forestry">Forestry</a></li>
                                 <li><a asp-area="" asp-controller="Home" asp-action="Agriculture">Agriculture</a></li>
 
@@ -329,14 +332,6 @@
                         <ul class="list_none footer_link text-center text-md-right">
                             <li><a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy Policy</a></li>
                         </ul>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-12 text-center">
-                        <p class=" mb-md-0 ">
-                            Powered by <a class="text_default" href="https://codeappstore.com"
-                                          target="blank">CodeAppStore</a>
-                        </p>
                     </div>
                 </div>
             </div>
