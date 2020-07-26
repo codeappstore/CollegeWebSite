@@ -1,4 +1,4 @@
-﻿namespace CollegeWebsite.DataAccess.Pages.Dtos
+﻿namespace CollegeWebsite.DataAccess.Models.Pages.Dtos
 {
     class StaticPagesUpdateDto : StaticPagesCreateDto
     {

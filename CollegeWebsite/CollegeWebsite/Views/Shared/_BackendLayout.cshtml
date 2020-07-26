@@ -161,7 +161,7 @@
                                                 </div>
                                             </div>
                                             <div class="account-dropdown__footer">
-                                                <a href="#">
+                                                <a asp-controller="Login" asp-action="Logout" method="get">
                                                     <i class="zmdi zmdi-power"></i>Logout
                                                 </a>
                                             </div>
@@ -195,12 +195,10 @@
             <div class="row mt-80 d-sm-none d-md-none d-lg-block d-xl-none ">
                 <br /><br />
             </div>
-            <div class="row mt-40 d-lg-none d-sm-block">
-                <div id="devtool-status"></div>
-            </div>
         </div>
     </div>
 
+    <!-- Jquery JS-->
     <!-- Jquery JS-->
     <script src="~/assets/vendor/jquery-3.2.1.min.js"></script>
     <!-- Bootstrap JS-->
@@ -225,6 +223,16 @@
     <!-- Main JS-->
     <script src="~/assets/js/main.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
+
+    <!--Validation Dependencies-->
+    <script src="~/validation/jquery.validate.min.js"></script>
+    <script src="~/validation/jquery.validate.unobtrusive.min.js"></script>
+
+    <script>
+        setTimeout(() => {
+            $('.alert').slideUp();
+        }, 5000);
+    </script>
     @RenderSection("Scripts", required: false)
 </body>
 </html>

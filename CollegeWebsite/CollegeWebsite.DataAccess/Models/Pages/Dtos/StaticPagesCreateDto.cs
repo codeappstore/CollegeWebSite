@@ -1,8 +1,7 @@
-﻿namespace CollegeWebsite.DataAccess.Pages.Dtos
+﻿namespace CollegeWebsite.DataAccess.Models.Pages.Dtos
 {
-    public class StaticPagesReadDto
+    public class StaticPagesCreateDto
     {
-        public string PageId { get; set; }
         public string PageTitle { get; set; }
         public string Controller { get; set; }
         public string Action { get; set; }

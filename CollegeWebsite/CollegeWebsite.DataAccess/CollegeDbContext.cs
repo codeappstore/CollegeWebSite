@@ -1,5 +1,5 @@
-﻿using CollegeWebsite.DataAccess.Pages.EntityConfiguration;
-using CollegeWebsite.DataAccess.Pages.Model;
+﻿using CollegeWebsite.DataAccess.Models.Pages.EntityConfiguration;
+using CollegeWebsite.DataAccess.Models.Pages.Model;
 using Microsoft.EntityFrameworkCore;
 
 namespace CollegeWebsite.DataAccess

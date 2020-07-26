@@ -1,4 +1,4 @@
-﻿namespace CollegeWebsite.DataAccess.Pages.Model
+﻿namespace CollegeWebsite.DataAccess.Models.Pages.Model
 {
     public class StaticPages
     {

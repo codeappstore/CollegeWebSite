@@ -1,8 +1,8 @@
-﻿using CollegeWebsite.DataAccess.Pages.Model;
+﻿using CollegeWebsite.DataAccess.Models.Pages.Model;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace CollegeWebsite.DataAccess.Pages.EntityConfiguration
+namespace CollegeWebsite.DataAccess.Models.Pages.EntityConfiguration
 {
     public class StaticPagesConfig : IEntityTypeConfiguration<StaticPages>
     {

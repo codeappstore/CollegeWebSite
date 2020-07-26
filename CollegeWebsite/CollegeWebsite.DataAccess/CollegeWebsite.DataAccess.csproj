@@ -5,12 +5,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Emails\Dtos\" />
-    <Folder Include="Emails\EntityConfiguration\" />
-    <Folder Include="Emails\Model\" />
-    <Folder Include="Emails\Profile\" />
-    <Folder Include="Emails\Services\IRepo\" />
-    <Folder Include="Emails\Services\Repo\" />
+    <Folder Include="Models\Emails\EntityConfiguration\" />
+    <Folder Include="Models\Emails\Model\" />
+    <Folder Include="Models\Emails\Profile\" />
   </ItemGroup>
 
   <ItemGroup>

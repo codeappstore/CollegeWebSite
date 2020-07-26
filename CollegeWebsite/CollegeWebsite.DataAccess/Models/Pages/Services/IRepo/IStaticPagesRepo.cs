@@ -1,8 +1,8 @@
-﻿using CollegeWebsite.DataAccess.Pages.Model;
+﻿using CollegeWebsite.DataAccess.Models.Pages.Model;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace CollegeWebsite.DataAccess.Pages.Services.IRepo
+namespace CollegeWebsite.DataAccess.Models.Pages.Services.IRepo
 {
     public interface IStaticPagesRepo
     {

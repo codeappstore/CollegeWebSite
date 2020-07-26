@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
-using CollegeWebsite.DataAccess.Pages.Dtos;
-using CollegeWebsite.DataAccess.Pages.Model;
+using CollegeWebsite.DataAccess.Models.Pages.Dtos;
+using CollegeWebsite.DataAccess.Models.Pages.Model;
 
-namespace CollegeWebsite.DataAccess.Pages.Profiles
+namespace CollegeWebsite.DataAccess.Models.Pages.Profiles
 {
     public class StaticPagesProfile : Profile
     {

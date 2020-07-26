@@ -1,12 +1,12 @@
 ﻿using CollegeWebsite.DataAccess.Helper;
-using CollegeWebsite.DataAccess.Pages.Model;
-using CollegeWebsite.DataAccess.Pages.Services.IRepo;
+using CollegeWebsite.DataAccess.Models.Pages.Model;
+using CollegeWebsite.DataAccess.Models.Pages.Services.IRepo;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace CollegeWebsite.DataAccess.Pages.Services.Repo
+namespace CollegeWebsite.DataAccess.Models.Pages.Services.Repo
 {
     public class StaticPagesRepo : IStaticPagesRepo
     {
