@@ -1,6 +1,13 @@
-﻿@{
+﻿@using CollegeWebsite.Override
+@using CollegeWebsite.DataAccess.Models.Miscellaneous.Dtos
+@using Microsoft.AspNetCore.Http
+@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
+@{
     string pageName = @ViewContext.RouteData.Values["action"].ToString();
-    string baseUrl = Url.ActionContext.HttpContext.Request.Scheme + "://" + Url.ActionContext.HttpContext.Request.Host;
+    string baseUrl = HttpContextAccessor.HttpContext.Request.Scheme + "://" + Url.ActionContext.HttpContext.Request.Host;
+}
+@{
+    var UserInfo = HttpContextAccessor.HttpContext.Session.GetComplexData<BasicDetailsDto>("_Details");
 }
 <!DOCTYPE html>
 <html lang="en">
@@ -17,7 +24,7 @@
     <!-- Open Graph -->
     <meta property="og:title" content="Shahid Bishnu Dhani Memorial Polytechnic Institute">
     <meta property="og:description" content="Shahid Bishnu Dhani Memorial Polytechnic Institute | Shahid Bishnu Dhani Memorial Polytechnic Institute is a newly established educational institution which primarily attempts to contribute to the development of the country through the production of skilled and semi-skilled human resources. ">
-    <meta property="og:image" content="@(baseUrl+"/Nav_Logo_Dark.png")">
+    <meta property="og:image" content="@(baseUrl+"/Polytechnic Institute_Dark.png")">
     <meta property="og:url" content="@baseUrl">
     <meta name="twitter:card" content="Shahid Bishnu Dhani Memorial Polytechnic Institute | Shahid Bishnu Dhani Memorial Polytechnic Institute is a newly established educational institution which primarily attempts to contribute to the development of the country through the production of skilled and semi-skilled human resources. ">
 
@@ -62,7 +69,7 @@
             <div class="header-mobile__bar">
                 <div class="container-fluid">
                     <div class="header-mobile-inner">
-                        <a class="logo" href="index.html">
+                        <a class="logo" asp-controller="ControlPanel" asp-action="Index">
                             <h4><i class="fas fa-cogs"></i>  Control Panel</h4>
                         </a>
                         <button class="hamburger hamburger--slider" type="button">
@@ -139,18 +146,18 @@
                                             <img src="~/images/post_user.jpg" alt="" style="max-height:500px; width:auto;" />
                                         </div>
                                         <div class="content">
-                                            <a class="js-acc-btn">Dibesh Raj Subedi</a>
+                                            <a class="js-acc-btn">@UserInfo.UserName</a>
                                         </div>
                                         <div class="account-dropdown js-dropdown">
                                             <div class="info clearfix">
                                                 <div class="image">
-                                                    <img src="~/images/post_user.jpg" alt="" style="max-height:500px; width:auto;" />
+                                                    <img src="~/images/testi_user1.jpg" alt="" style="max-height:500px; width:auto;" />
                                                 </div>
                                                 <div class="content">
                                                     <h5 class="name">
-                                                        Dibesh Raj Subedi
+                                                        @UserInfo.FullName
                                                     </h5>
-                                                    <span class="email">Dibesh@gmail.com </span>
+                                                    <span class="email">@UserInfo.Email </span>
                                                 </div>
                                             </div>
                                             <div class="account-dropdown__body">
@@ -177,7 +184,16 @@
 
             <div class="main-content">
                 <div class="section__content--p30">
-                    <div class="container-fluid dark">
+                    <div class="container-fluid">
+                        @if (!UserInfo.IsEmailVerified)
+                        {
+                            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                <i class="fas fa-bullhorn"></i>&nbsp;&nbsp; <strong>Email not Verified :</strong> &nbsp;&nbsp;  Your email is not verified please <a asp-controller="Verification" asp-action="SendVerificationEmail" methord="get">verify it now. <i class="fas fa-envelope"></i> </a>
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                        }
                         @RenderBody()
 
                         <div class="row">
@@ -225,12 +241,12 @@
     <script src="~/js/site.js" asp-append-version="true"></script>
 
     <!--Validation Dependencies-->
-    <script src="~/validation/jquery.validate.min.js"></script>
-    <script src="~/validation/jquery.validate.unobtrusive.min.js"></script>
+    <!-- <script src="~/validation/jquery.validate.min.js"></script>
+    <script src="~/validation/jquery.validate.unobtrusive.min.js"></script> -->
 
     <script>
         setTimeout(() => {
-            $('.alert').slideUp();
+            $('.flash').slideUp();
         }, 5000);
     </script>
     @RenderSection("Scripts", required: false)

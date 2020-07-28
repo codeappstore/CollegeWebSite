@@ -20,12 +20,23 @@ namespace CollegeWebsite.DataAccess.Models.Miscellaneous.Dtos
         Disabled,
         Enabled
     }
+
+    public enum VendorAccess
+    {
+        Disable,
+        Enabled,
+        Expired
+    }
+
     public class BasicDetailsDto
     {
         public string AuthId { get; set; }
         public string FullName { get; set; }
         public string UserName { get; set; }
         public string ImageURL { get; set; }
+
+        public bool IsEmailVerified { get; set; }
+        public DateTime DateEmailVerified { get; set; }
 
         public string Email { get; set; }
         public string PhoneNumber { get; set; }
@@ -47,5 +58,8 @@ namespace CollegeWebsite.DataAccess.Models.Miscellaneous.Dtos
         public bool Create { get; set; }
         public bool Update { get; set; }
         public bool Delete { get; set; }
+
+        public string VendorURL { get; set; }
+        public VendorAccess VendorAccess { get; set; }
     }
 }

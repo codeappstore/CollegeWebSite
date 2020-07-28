@@ -23,6 +23,7 @@ namespace CollegeWebsite.Controllers
             this._emailConfig = _emailConfig;
         }
 
+        [HttpGet]
         public async Task<IActionResult> Index()
         {
             var isRememberedToken = HttpContext.Session.GetString("_Remember");

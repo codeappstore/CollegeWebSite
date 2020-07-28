@@ -3,23 +3,24 @@
 <div>
     @if (HttpContextAccessor.HttpContext.Session.GetString("Success") != null)
     {
-        <div class="alert alert-success" role="alert">
-            <i class="fas fa-bullhorn"></i>&nbsp;&nbsp; Information : &nbsp;&nbsp; <span> @HttpContextAccessor.HttpContext.Session.GetString("Success") </span>
+        <div class="alert flash alert-success" role="alert">
+            <b> <i class="fas fa-bullhorn"></i>&nbsp;&nbsp; Information :</b> &nbsp;&nbsp; <span> @HttpContextAccessor.HttpContext.Session.GetString("Success") </span>
         </div>
-        Context.Session.Remove("Success");
+        HttpContextAccessor.HttpContext.Session.Remove("Success");
     }
     @if (HttpContextAccessor.HttpContext.Session.GetString("Warning") != null)
     {
-        <div class="alert alert-warning" role="alert">
-            <i class="fas fa-bullhorn"></i>&nbsp;&nbsp; Warning : &nbsp;&nbsp; <span> @HttpContextAccessor.HttpContext.Session.GetString("Warning") </span>
+        <div class="alert flash alert-warning" role="alert">
+            <b> <i class="fas fa-bullhorn"></i>&nbsp;&nbsp; Warning :</b> &nbsp; &nbsp; <span> @HttpContextAccessor.HttpContext.Session.GetString("Warning") </span>
         </div>
-        Context.Session.Remove("Warning");
+        HttpContextAccessor.HttpContext.Session.Remove("Warning");
     }
     @if (HttpContextAccessor.HttpContext.Session.GetString("Error") != null)
     {
-        <div class="alert alert-danger" role="alert">
-            <i class="fas fa-bullhorn"></i>&nbsp;&nbsp; Error : &nbsp;&nbsp; <span> @HttpContextAccessor.HttpContext.Session.GetString("Error") </span>
+        <div class="alert flash alert-danger" role="alert">
+            <b> <i class="fas fa-bullhorn"></i>&nbsp;&nbsp; Error :</b> &nbsp; &nbsp; <span> @HttpContextAccessor.HttpContext.Session.GetString("Error") </span>
         </div>
-        Context.Session.Remove("Error");
+        HttpContextAccessor.HttpContext.Session.Remove("Error");
     }
+
 </div>

@@ -17,7 +17,7 @@
     <!-- Open Graph -->
     <meta property="og:title" content="Shahid Bishnu Dhani Memorial Polytechnic Institute">
     <meta property="og:description" content="Shahid Bishnu Dhani Memorial Polytechnic Institute | Shahid Bishnu Dhani Memorial Polytechnic Institute is a newly established educational institution which primarily attempts to contribute to the development of the country through the production of skilled and semi-skilled human resources. ">
-    <meta property="og:image" content="@(baseUrl+"/Nav_Logo_Dark.png")">
+    <meta property="og:image" content="@(baseUrl+"/Polytechnic Institute_Dark.png")">
     <meta property="og:url" content="@baseUrl">
     <meta name="twitter:card" content="Shahid Bishnu Dhani Memorial Polytechnic Institute | Shahid Bishnu Dhani Memorial Polytechnic Institute is a newly established educational institution which primarily attempts to contribute to the development of the country through the production of skilled and semi-skilled human resources. ">
 
@@ -85,12 +85,13 @@
     <script src="~/js/site.js" asp-append-version="true"></script>
 
     <!--Validation Dependencies-->
-    <script src="~/validation/jquery.validate.min.js"></script>
-    <script src="~/validation/jquery.validate.unobtrusive.min.js"></script>
+    <!-- <script src="~/validation/jquery.validate.min.js"></script>
+    <script src="~/validation/jquery.validate.unobtrusive.min.js"></script> -->
+
 
     <script>
         setTimeout(() => {
-            $('.alert').slideUp();
+            $('.flash').slideUp();
         }, 5000);
     </script>
     @RenderSection("Scripts", required: false)

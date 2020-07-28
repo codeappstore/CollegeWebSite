@@ -17,7 +17,8 @@
     <!-- Open Graph -->
     <meta property="og:title" content="Shahid Bishnu Dhani Memorial Polytechnic Institute">
     <meta property="og:description" content="Shahid Bishnu Dhani Memorial Polytechnic Institute | Shahid Bishnu Dhani Memorial Polytechnic Institute is a newly established educational institution which primarily attempts to contribute to the development of the country through the production of skilled and semi-skilled human resources. ">
-    <meta property="og:image" content="@(baseUrl+"/Nav_Logo_Dark.png")">
+    <meta property="og:image" content="@(baseUrl+"/Polytechnic Institute_Dark.png")">
+
     <meta property="og:url" content="@baseUrl">
     <meta name="twitter:card" content="Shahid Bishnu Dhani Memorial Polytechnic Institute | Shahid Bishnu Dhani Memorial Polytechnic Institute is a newly established educational institution which primarily attempts to contribute to the development of the country through the production of skilled and semi-skilled human resources. ">
 
@@ -95,7 +96,7 @@
         </div>
         <div class="container">
             <nav class="navbar navbar-expand-lg">
-                <a class="navbar-brand" href="index.html">
+                <a class="navbar-brand" asp-controller="Home" asp-action="Index">
                     <img class="logo_light" src="~/Nav_Logo_Light.png" alt="logo">
                     <img class="logo_dark" src="~/Nav_Logo_Dark.png" alt="logo">
                 </a>
@@ -266,7 +267,7 @@
                     <div class="col-xl-4 col-sm-6">
                         <div class="widget">
                             <div class="footer_logo">
-                                <a href="#"><img src="~/Nav_Logo_Light.png" alt="logo"></a>
+                                <a asp-controller="Home" asp-action="Index"><img src="~/Nav_Logo_Light.png" alt="logo"></a>
                             </div>
                             <p>
                                 If you are going to use a passage of Lorem Ipsum you need to be sure there isn't anything

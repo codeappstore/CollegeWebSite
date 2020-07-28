@@ -1,6 +1,7 @@
 ﻿@using Microsoft.AspNetCore.Components.Forms
 @model CollegeWebsite.DataAccess.Models.Miscellaneous.Dtos.LoginInputClientDto
 @{
+    ViewData["Title"] = "Login -";
     Layout = "~/Views/Shared/_AuthLayout.cshtml";
 }
 <div class="page-wrapper">
@@ -52,3 +53,7 @@
         </div>
     </div>
 </div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

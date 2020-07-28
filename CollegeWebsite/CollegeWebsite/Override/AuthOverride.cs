@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace CollegeWebsite.Override
 {
-    [AttributeUsage(AttributeTargets.Class)]
+    [AttributeUsage(AttributeTargets.All)]
     public class AuthOverride : Attribute, IAsyncAuthorizationFilter
     {
         public async Task OnAuthorizationAsync(AuthorizationFilterContext context)
@@ -67,6 +67,10 @@ namespace CollegeWebsite.Override
                     }
 
                 }
+
+                // Check if cors vendor access
+                Console.WriteLine(detailsToken.VendorAccess);
+                Console.WriteLine(detailsToken.VendorURL);
 
             }
             else
