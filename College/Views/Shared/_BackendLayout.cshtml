@@ -1,0 +1,323 @@
+﻿@using College.Helpers
+@using College.Model.DataTransferObject.AuthDto
+@using Microsoft.AspNetCore.Http
+@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
+@{
+    string pageName = @ViewContext.RouteData.Values["action"].ToString();
+    string baseUrl = HttpContextAccessor.HttpContext.Request.Scheme + "://" + Url.ActionContext.HttpContext.Request.Host;
+}
+@{
+    var UserInfo = HttpContextAccessor.HttpContext.Session.GetComplexData<AuthBasicDetailsModelDto>("_Details");
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Meta -->
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta content="CodeAppStore" name="author">
+    <meta content="CodeAppStore" name="Developer">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Shahid Bishnu Dhani Memorial Polytechnic Institute.">
+    <meta name="keywords" content="College Website">
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="Shahid Bishnu Dhani Memorial Polytechnic Institute">
+    <meta property="og:description" content="Shahid Bishnu Dhani Memorial Polytechnic Institute | Shahid Bishnu Dhani Memorial Polytechnic Institute is a newly established educational institution which primarily attempts to contribute to the development of the country through the production of skilled and semi-skilled human resources. ">
+    <meta property="og:image" content="@(baseUrl+"/Polytechnic Institute_Dark.png")">
+    <meta property="og:url" content="@baseUrl">
+    <meta name="twitter:card" content="Shahid Bishnu Dhani Memorial Polytechnic Institute | Shahid Bishnu Dhani Memorial Polytechnic Institute is a newly established educational institution which primarily attempts to contribute to the development of the country through the production of skilled and semi-skilled human resources. ">
+
+
+    <!-- SITE TITLE -->
+    <title>@ViewData["Title"]  Shahid Bishnu Dhani Memorial Polytechnic Institute</title>
+
+    <!-- Favicon Icon -->
+    <link rel="shortcut icon" type="image/x-icon" href="~/favicon.ico">
+    <link rel="apple-touch-icon" sizes="180x180" href="~/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="~/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="~/favicon-16x16.png">
+
+    <!-- Fontfaces CSS-->
+    <link href="~/assets/css/font-face.css" rel="stylesheet" media="all">
+    <link href="~/assets/vendor/font-awesome-4.7/css/font-awesome.min.css" rel="stylesheet" media="all">
+    <link href="~/assets/vendor/font-awesome-5/css/fontawesome-all.min.css" rel="stylesheet" media="all">
+    <link href="~/assets/vendor/mdi-font/css/material-design-iconic-font.min.css" rel="stylesheet" media="all">
+
+    <!-- Bootstrap CSS-->
+    <link href="~/assets/vendor/bootstrap-4.1/bootstrap.min.css" rel="stylesheet" media="all">
+
+    <!-- Vendor CSS-->
+    <link href="~/assets/vendor/animsition/animsition.min.css" rel="stylesheet" media="all">
+    <link href="~/assets/vendor/bootstrap-progressbar/bootstrap-progressbar-3.3.4.min.css" rel="stylesheet" media="all">
+    <link href="~/assets/vendor/wow/animate.css" rel="stylesheet" media="all">
+    <link href="~/assets/vendor/css-hamburgers/hamburgers.min.css" rel="stylesheet" media="all">
+    <link href="~/assets/vendor/slick/slick.css" rel="stylesheet" media="all">
+    <link href="~/assets/vendor/select2/select2.min.css" rel="stylesheet" media="all">
+    <link href="~/assets/vendor/perfect-scrollbar/perfect-scrollbar.css" rel="stylesheet" media="all">
+
+    <!-- Main CSS-->
+    <link href="~/assets/css/theme.css" rel="stylesheet" media="all">
+
+
+</head>
+
+<body class="animsition">
+    <div class="page-wrapper">
+        <!-- HEADER MOBILE-->
+        <header class="header-mobile d-block d-lg-none">
+            <div class="header-mobile__bar">
+                <div class="container-fluid">
+                    <div class="header-mobile-inner">
+                        <div>
+
+                        </div>
+                        <button class="hamburger hamburger--slider" type="button">
+                            <span class="hamburger-box">
+                                <span class="hamburger-inner"></span>
+                            </span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <nav class="navbar-mobile">
+                <div class="container-fluid">
+                    <ul class="navbar-mobile__list list-unstyled">
+                        <li>
+                            <a href="#">
+                                <i class="fas fa-tachometer-alt"></i>Dashboard
+                            </a>
+                        </li>
+
+                        <li class="has-sub">
+                            <a class="js-arrow" href="#">
+                                <i class="fas fa-cogs"></i>User Controls
+                            </a>
+                            <ul class="navbar-mobile-sub__list list-unstyled js-sub-list">
+                                <li>
+                                    <a href="#">Users</a>
+                                </li>
+                                <li>
+                                    <a href="#">Roles</a>
+                                </li>
+                                <li>
+                                    <a href="#">Privilage</a>
+                                </li>
+                            </ul>
+                        </li>
+
+                        <li>
+                            <a href="#">
+                                <i class="fas fa-laptop"></i>Web Site
+                            </a>
+                        </li>
+
+
+                        <li class="has-sub">
+                            <a class="js-arrow" href="#">
+                                <i class="fas fa-envelope"></i>Email Manager
+                            </a>
+                            <ul class="navbar-mobile-sub__list list-unstyled js-sub-list">
+                                <li>
+                                    <a href="#">Send Email</a>
+                                </li>
+                                <li>
+                                    <a href="#">Manage Settings</a>
+                                </li>
+                            </ul>
+                        </li>
+
+                    </ul>
+                </div>
+            </nav>
+        </header>
+        <!-- END HEADER MOBILE-->
+        <!-- MENU SIDEBAR-->
+        <aside class="menu-sidebar d-none d-lg-block">
+            <div class="menu-sidebar__content js-scrollbar1">
+                <nav class="navbar-sidebar">
+                    <ul class="list-unstyled navbar__list">
+                        <li class="active">
+                            <a href="#">
+                                <i class="fas fa-tachometer-alt"></i>Dashboard
+                            </a>
+                        </li>
+
+                        <li class="has-sub">
+                            <a class="js-arrow" href="#">
+                                <i class="fas fa-cogs"></i>User Controls
+                            </a>
+                            <ul class="list-unstyled navbar__sub-list js-sub-list">
+                                <li>
+                                    <a href="#">Users</a>
+                                </li>
+                                <li>
+                                    <a href="#">Roles</a>
+                                </li>
+                                <li>
+                                    <a href="#">Privilage</a>
+                                </li>
+                            </ul>
+                        </li>
+
+                        <li>
+
+                            <a href="#">
+                                <i class="fas fa-laptop"></i>Web Site
+                            </a>
+                        </li>
+
+                        <li class="has-sub">
+                            <a class="js-arrow" href="#">
+                                <i class="fas fa-envelope"></i>Email Manager
+                            </a>
+                            <ul class="list-unstyled navbar__sub-list js-sub-list">
+                                <li>
+                                    <a href="#">Send Email</a>
+                                </li>
+                                <li>
+                                    <a href="#">Manage Settings</a>
+                                </li>
+                            </ul>
+                        </li>
+
+                    </ul>
+                </nav>
+            </div>
+        </aside>
+        <!-- END MENU SIDEBAR-->
+        <!-- PAGE CONTAINER-->
+        <div class="page-container">
+            <!-- HEADER DESKTOP-->
+            <header class="header-desktop">
+                <div class="section__content section__content--p30">
+                    <div class="container-fluid">
+                        <div class="header-wrap">
+                            <div></div>
+                            <div class="header-button">
+                                <div class="noti-wrap">
+                                    <div></div>
+                                    <div></div>
+                                    <div></div>
+                                </div>
+                                <div class="account-wrap">
+                                    <div class="account-item clearfix js-item-menu">
+                                        <div class="image">
+                                            <img src="~/images/testi_user4.jpg" alt="@UserInfo.FullName" />
+                                        </div>
+                                        <div class="content">
+                                            <a class="js-acc-btn" href="#">@UserInfo.UserName</a>
+                                        </div>
+                                        <div class="account-dropdown js-dropdown">
+                                            <div class="info clearfix">
+                                                <div class="image">
+                                                    <a href="#">
+                                                        <img src="~/images/testi_user4.jpg" alt="@UserInfo.FullName" />
+                                                    </a>
+                                                </div>
+                                                <div class="content">
+                                                    <h5 class="name">
+                                                        <a href="#">@UserInfo.FullName</a>
+                                                    </h5>
+                                                    <span class="email">@UserInfo.Email</span>
+                                                </div>
+                                            </div>
+                                            <div class="account-dropdown__body">
+                                                <div class="account-dropdown__item">
+                                                    <a href="#">
+                                                        <i class="zmdi zmdi-account"></i>Account
+                                                    </a>
+                                                </div>
+                                                <div class="account-dropdown__item">
+                                                    <a href="#">
+                                                        <i class="zmdi zmdi-settings"></i>Setting
+                                                    </a>
+                                                </div>
+                                            </div>
+                                            <div class="account-dropdown__footer">
+                                                <a asp-controller="Login" asp-action="Logout" method="get">
+                                                    <i class="zmdi zmdi-power"></i>Logout
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </header>
+            <!-- HEADER DESKTOP-->
+            <!-- MAIN CONTENT-->
+            <div class="main-content">
+                <div class="section__content section__content--p30">
+                    <div class="container-fluid">
+                        @if (!UserInfo.IsEmailVerified)
+                        {
+                            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                <i class="fas fa-bullhorn"></i>&nbsp;&nbsp; <strong>Email not Verified :</strong> &nbsp;&nbsp;  Your email is not verified please <a asp-controller="Verification" asp-action="SendVerificationEmail" methord="get">verify it now. <i class="fas fa-envelope"></i> </a>
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                        }
+                        <!-- Body Section -->
+                        @RenderBody()
+
+                        <!-- End Body Section -->
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="copyright">
+                                    <p>© @DateTime.Now.Year All Rights Reserved by Shahid Bishnu Dhani Memorial Polytechnic Institute</p>
+                                    <p>Queries for <a href="mailto:dibesh@codeappstore.com" target="_blank">Support Team</a></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row mt-80 d-sm-none d-md-none d-lg-block d-xl-none ">
+                <br /><br />
+            </div>
+        </div>
+    </div>
+
+    <!-- Jquery JS-->
+    <!-- Jquery JS-->
+    <script src="~/assets/vendor/jquery-3.2.1.min.js"></script>
+    <!-- Bootstrap JS-->
+    <script src="~/assets/vendor/bootstrap-4.1/popper.min.js"></script>
+    <script src="~/assets/vendor/bootstrap-4.1/bootstrap.min.js"></script>
+    <!-- Vendor JS       -->
+    <script src="~/assets/vendor/slick/slick.min.js">
+    </script>
+    <script src="~/assets/vendor/wow/wow.min.js"></script>
+    <script src="~/assets/vendor/animsition/animsition.min.js"></script>
+    <script src="~/assets/vendor/bootstrap-progressbar/bootstrap-progressbar.min.js">
+    </script>
+    <script src="~/assets/vendor/counter-up/jquery.waypoints.min.js"></script>
+    <script src="~/assets/vendor/counter-up/jquery.counterup.min.js">
+    </script>
+    <script src="~/assets/vendor/circle-progress/circle-progress.min.js"></script>
+    <script src="~/assets/vendor/perfect-scrollbar/perfect-scrollbar.js"></script>
+    <script src="~/assets/vendor/chartjs/Chart.bundle.min.js"></script>
+    <script src="~/assets/vendor/select2/select2.min.js">
+    </script>
+
+    <!-- Main JS-->
+    <script src="~/assets/js/main.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+
+    <!--Validation Dependencies-->
+    <!-- <script src="~/validation/jquery.validate.min.js"></script>
+    <script src="~/validation/jquery.validate.unobtrusive.min.js"></script> -->
+
+    <script>
+        setTimeout(() => {
+            $('.flash').slideUp();
+        }, 5000);
+    </script>
+    @RenderSection("Scripts", required: false)
+</body>
+</html>
