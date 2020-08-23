@@ -8,6 +8,10 @@ namespace College.Controllers
         {
             return View();
         }
+        public IActionResult ErrorIndex500()
+        {
+            return View();
+        }
 
     }
 }

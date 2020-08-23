@@ -25,9 +25,17 @@ namespace College.Controllers
         {
             return View();
         }
+
         public IActionResult Settings()
         {
             return View();
+        }
+
+        public IActionResult SettingsResetRequest()
+        {
+            var userDetails = HttpContext.Session.GetComplexData<AuthBasicDetailsModelDto>("_Details");
+            HttpContext.Session.SetString("_Reset", userDetails.Email);
+            return RedirectToAction("ResetPassword", "Reset");
         }
 
         [HttpPost]
@@ -99,6 +107,7 @@ namespace College.Controllers
                 return RedirectToAction(nameof(Account));
             }
         }
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> UpdateAccountInfo(AuthUpdateModelDto auth)
@@ -140,7 +149,6 @@ namespace College.Controllers
         public async Task<IActionResult> Account()
         {
             var userDetails = HttpContext.Session.GetComplexData<AuthBasicDetailsModelDto>("_Details");
-
             if (userDetails != null)
             {
                 var authEditDetails = await _auth.FetchUserByFilter(userDetails.Email);

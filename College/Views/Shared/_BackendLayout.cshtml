@@ -8,7 +8,6 @@
 }
 @{
     var UserInfo = HttpContextAccessor.HttpContext.Session.GetComplexData<AuthBasicDetailsModelDto>("_Details");
-
 }
 <!DOCTYPE html>
 <html lang="en">
@@ -62,7 +61,8 @@
     <!-- Main CSS-->
     <link href="~/assets/css/theme.css" rel="stylesheet" media="all">
 
-
+    <script src="~/assets/vendor/tinymce/themes/mobile/theme.min.js"></script>
+    <script src="~/assets/vendor/tinymce/themes/silver/theme.min.js"></script>
 </head>
 
 <body class="animsition">
@@ -122,10 +122,10 @@
                             </a>
                             <ul class="navbar-mobile-sub__list list-unstyled js-sub-list">
                                 <li>
-                                    <a href="#">Send Email</a>
+                                    <a asp-controller="Email" asp-action="Sender">Send Email</a>
                                 </li>
                                 <li>
-                                    <a href="#">Manage Settings</a>
+                                    <a asp-controller="Email" asp-action="Manager">Manage Settings</a>
                                 </li>
                             </ul>
                         </li>
@@ -176,10 +176,10 @@
                             </a>
                             <ul class="list-unstyled navbar__sub-list js-sub-list">
                                 <li>
-                                    <a href="#">Send Email</a>
+                                    <a asp-controller="Email" asp-action="Sender">Send Email</a>
                                 </li>
                                 <li>
-                                    <a href="#">Manage Settings</a>
+                                    <a asp-controller="Email" asp-action="Manager">Manage Settings</a>
                                 </li>
                             </ul>
                         </li>
@@ -320,6 +320,9 @@
     </script>
     <script src="~/assets/vendor/dropify/js/dropify.js"></script>
     <!-- Main JS-->
+    <script src="~/assets/vendor/tinymce/jquery.tinymce.min.js"></script>
+    <script src="~/assets/vendor/tinymce/tinymce.min.js"></script>
+
     <script src="~/assets/js/main.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
     <script src="~/assets/js/custom.js"></script>

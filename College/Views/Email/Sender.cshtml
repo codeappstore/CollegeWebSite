@@ -1,0 +1,56 @@
+﻿@model College.Model.DataTransferObject.EmailExtraDto.EmailSenderModelDto
+@using Microsoft.AspNetCore.Components.Forms
+@{
+    Layout = "~/Views/Shared/_BackendLayout.cshtml";
+    ViewData["Title"] = "Manage Settings  -";
+}
+@(await Html.PartialAsync("~/Views/Shared/_AlertLayout.cshtml"))
+
+<div class="col-lg-6 col-md-12 col-sm-12">
+    <div class="card">
+        <div class="card-header"><h5>Email Information</h5></div>
+        <div class="card-body card-block">
+            <form asp-action="Sender" asp-controller="Email" method="post" asp-antiforgery="true">
+                <div class="form-group">
+                    <div asp-validation-summary="ModelOnly" class="text-danger">
+                        <span>Please correct the following errors</span>
+                    </div>
+                </div>
+                <div class="row form-group">
+                    <div class="col col-md-3">
+                        <label asp-for="Purpose" class=" form-control-label"></label>
+                    </div>
+                    <div class="col-12 col-md-9">
+                        <input asp-for="Purpose" type="text" placeholder="Purpose of Email" class="form-control">
+                        <span asp-validation-for="Purpose" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="row form-group">
+                    <div class="col col-md-3">
+                        <label asp-for="To" class=" form-control-label"></label>
+                    </div>
+                    <div class="col-12 col-md-9">
+                        <input asp-for="To" type="email" placeholder="To receivers email" class="form-control">
+                        <span asp-validation-for="To" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="row form-group">
+                    <div class="col col-md-3">
+                        <label asp-for="Message" class=" form-control-label"></label>
+                    </div>
+                    <div class="col-12 col-md-9">
+                        <textarea asp-for="Message" rows="5" placeholder="Message" class="form-control textarea-init" cols="40"></textarea>
+                        <span asp-validation-for="Message" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="form-actions form-group">
+                    <button class="btn btn-success btn-sm"><i class="fas fa-plane"></i> Send</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

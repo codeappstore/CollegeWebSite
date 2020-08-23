@@ -1,4 +1,9 @@
 ﻿@{
     Layout = "~/Views/Shared/_BackendLayout.cshtml";
+    ViewData["Title"] = "Settings -";
 }
 @(await Html.PartialAsync("~/Views/Shared/_AlertLayout.cshtml"))
+
+<a asp-controller="ControlPanel" asp-action="SettingsResetRequest" class="btn btn-primary btn-md active">
+    <i class="fas fa-lock"></i>  Reset Password
+</a>

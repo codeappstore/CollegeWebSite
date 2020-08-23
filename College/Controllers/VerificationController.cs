@@ -91,7 +91,7 @@ namespace College.Controllers
             };
 
             // Send Email And show verification send email redirecting to index 
-            EmailController email = new EmailController(_hostingEnvironment);
+            EmailController email = new EmailController(_hostingEnvironment, _email);
             var response = await email.SendEmail(null, resetEmailObject, emailConfigDbDetails);
             if (response)
             {
