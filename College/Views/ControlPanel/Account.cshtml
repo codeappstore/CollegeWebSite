@@ -1,0 +1,144 @@
+﻿@using College.Model.Models
+@using Microsoft.AspNetCore.Components.Forms
+@model College.Model.DataTransferObject.AuthDto.AuthUpdateModelDto
+@using Microsoft.AspNetCore.Http
+@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
+@{
+    Layout = "~/Views/Shared/_BackendLayout.cshtml";
+    ViewData["Title"] = "Account -";
+    string baseUrl = HttpContextAccessor.HttpContext.Request.Scheme + "://" + Url.ActionContext.HttpContext.Request.Host;
+}
+@(await Html.PartialAsync("~/Views/Shared/_AlertLayout.cshtml"))
+
+<div class="row">
+
+    <div class="col-lg-6 col-md-12 col-sm-12">
+        <div class="card">
+            <div class="card-header"><h5>User Information</h5></div>
+            <div class="card-body card-block">
+                <form asp-action="UpdateAccountInfo" asp-controller="ControlPanel" method="post" asp-antiforgery="true">
+                    <div class="form-group">
+                        <div asp-validation-summary="ModelOnly" class="text-danger">
+                            <span>Please correct the following errors</span>
+                        </div>
+                    </div>
+                    <input type="hidden" asp-for="AuthId" />
+                    <input type="hidden" asp-for="IsEmailVerified" />
+                    <input type="hidden" asp-for="DateEmailVerified" />
+                    <input type="hidden" asp-for="Allowed" />
+                    <input type="hidden" asp-for="RoleId" />
+                    <div class="form-group">
+                        <div class="input-group">
+                            <div class="input-group-addon">
+                                <i class="fa fa-user"></i>
+                                &nbsp;&nbsp;
+                                <label asp-for="FullName"></label>
+                            </div>
+                            <input asp-for="FullName" type="text" placeholder="Full Name" class="form-control">
+                            <span asp-validation-for="FullName" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="input-group">
+                            <div class="input-group-addon">
+                                <i class="fa fa-cogs"></i>
+                                &nbsp;&nbsp;
+                                <label asp-for="UserName"></label>
+                            </div>
+                            <input asp-for="UserName" type="text" class="form-control">
+                            <span asp-validation-for="UserName" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="input-group">
+                            <div class="input-group-addon">
+                                <i class="fa fa-tablet"></i>
+                                &nbsp;&nbsp;
+                                <label asp-for="PhoneNumber"></label>
+                            </div>
+                            <input asp-for="PhoneNumber" type="text" placeholder="Phone Number" class="form-control">
+                            <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="input-group">
+                            <div class="input-group-addon">
+                                <i class="fas fa-calendar-alt"></i>
+                                &nbsp;&nbsp;
+                                <label asp-for="DateOfBirth"></label>
+                            </div>
+                            <input asp-for="DateOfBirth" type="date" class="form-control">
+                            <span asp-validation-for="DateOfBirth" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="input-group">
+                            <div class="input-group-addon">
+                                <i class="fa fa-female"></i>
+                                &nbsp;&nbsp;
+                                <label asp-for="Gender"></label>
+                            </div>
+                            <select asp-for="Gender" asp-items="Html.GetEnumSelectList<AuthGender>()" class="form-control">
+                                <option value="">Pick one</option>
+                            </select>
+                            <span asp-validation-for="Gender" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="input-group">
+                            <div class="input-group-addon">
+                                <i class="fa fa-globe"></i>
+                                &nbsp;&nbsp;
+                                <label asp-for="Address"></label>
+                            </div>
+                            <input asp-for="Address" placeholder="Address" type="text" class="form-control">
+                            <span asp-validation-for="Address" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="form-actions form-group">
+                        <button class="btn btn-success btn-sm"><i class="fas fa-edit"></i> Update</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-6 col-md-12 col-sm-12">
+        <div class="card">
+            <div class="card-header"><h5>User Image</h5></div>
+            <div class="card-body card-block">
+                <form asp-controller="ControlPanel" asp-antiforgery="true" asp-action="UpdateAccountImage" method="post" enctype="multipart/form-data">
+                    <div class="form-group">
+                        @if (Model.Image != null)
+                        {
+                            <div class="row">
+                                <div class="col-sm-12 d-flex justify-content-center ">
+                                    <img asp-append-version="true" src="@Model.Image" alt="@Model.FullName's image not found" style="max-height: 200px; width: auto;" />
+                                </div>
+                                <div class="col-sm-12">
+                                    <p class="text-center">Current Image</p>
+                                </div>
+                            </div>
+                        }
+                        <div class="input-group">
+                            <div class="input-group-addon">
+                                <i class="fa fa-photo"></i>
+                                &nbsp;&nbsp;
+                                <label asp-for="Image"></label>
+                            </div>
+                            <input asp-for="Image" type="file" class="dropify form-control-file" data-max-file-size="5M" data-allowed-file-extensions="jpg jpeg png">
+                            <p for="ImageString">Image (5MB)</p>
+                            <span asp-validation-for="Image" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="form-actions form-group">
+                        <button class="btn btn-success btn-sm"><i class="fas fa-edit"></i> Update</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+</div>
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

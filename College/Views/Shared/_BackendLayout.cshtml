@@ -8,6 +8,7 @@
 }
 @{
     var UserInfo = HttpContextAccessor.HttpContext.Session.GetComplexData<AuthBasicDetailsModelDto>("_Details");
+
 }
 <!DOCTYPE html>
 <html lang="en">
@@ -56,6 +57,7 @@
     <link href="~/assets/vendor/slick/slick.css" rel="stylesheet" media="all">
     <link href="~/assets/vendor/select2/select2.min.css" rel="stylesheet" media="all">
     <link href="~/assets/vendor/perfect-scrollbar/perfect-scrollbar.css" rel="stylesheet" media="all">
+    <link href="~/assets/vendor/dropify/css/dropify.css" rel="stylesheet" />
 
     <!-- Main CSS-->
     <link href="~/assets/css/theme.css" rel="stylesheet" media="all">
@@ -204,33 +206,45 @@
                                 <div class="account-wrap">
                                     <div class="account-item clearfix js-item-menu">
                                         <div class="image">
-                                            <img src="~/images/testi_user4.jpg" alt="@UserInfo.FullName" />
+                                            @if (UserInfo.Image != null)
+                                            {
+                                                <img src="..@(UserInfo.Image)" alt="@(UserInfo.FullName)'s image " />
+                                            }
+                                            else
+                                            {
+                                                <img src="~/images/user.png" alt="@UserInfo.FullName" />
+                                            }
                                         </div>
                                         <div class="content">
-                                            <a class="js-acc-btn" href="#">@UserInfo.UserName</a>
+                                            <a class="js-acc-btn" href="javastript:void();">@UserInfo.UserName</a>
                                         </div>
                                         <div class="account-dropdown js-dropdown">
                                             <div class="info clearfix">
                                                 <div class="image">
-                                                    <a href="#">
-                                                        <img src="~/images/testi_user4.jpg" alt="@UserInfo.FullName" />
-                                                    </a>
+                                                    @if (UserInfo.Image != null)
+                                                    {
+                                                        <img src="..@(UserInfo.Image)" alt="@(UserInfo.FullName)'s image " />
+                                                    }
+                                                    else
+                                                    {
+                                                        <img src="~/images/user.png" alt="@UserInfo.FullName" />
+                                                    }
                                                 </div>
                                                 <div class="content">
                                                     <h5 class="name">
-                                                        <a href="#">@UserInfo.FullName</a>
+                                                        @UserInfo.FullName
                                                     </h5>
                                                     <span class="email">@UserInfo.Email</span>
                                                 </div>
                                             </div>
                                             <div class="account-dropdown__body">
                                                 <div class="account-dropdown__item">
-                                                    <a href="#">
+                                                    <a asp-controller="ControlPanel" asp-action="Account">
                                                         <i class="zmdi zmdi-account"></i>Account
                                                     </a>
                                                 </div>
                                                 <div class="account-dropdown__item">
-                                                    <a href="#">
+                                                    <a asp-controller="ControlPanel" asp-action="Settings">
                                                         <i class="zmdi zmdi-settings"></i>Setting
                                                     </a>
                                                 </div>
@@ -304,15 +318,15 @@
     <script src="~/assets/vendor/chartjs/Chart.bundle.min.js"></script>
     <script src="~/assets/vendor/select2/select2.min.js">
     </script>
-
+    <script src="~/assets/vendor/dropify/js/dropify.js"></script>
     <!-- Main JS-->
     <script src="~/assets/js/main.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="~/assets/js/custom.js"></script>
 
     <!--Validation Dependencies-->
     <!-- <script src="~/validation/jquery.validate.min.js"></script>
     <script src="~/validation/jquery.validate.unobtrusive.min.js"></script> -->
-
     <script>
         setTimeout(() => {
             $('.flash').slideUp();

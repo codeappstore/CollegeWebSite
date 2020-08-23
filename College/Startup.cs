@@ -93,7 +93,7 @@ namespace College
             app.Use(async (context, next) =>
             {
                 await next();
-                if (context.Response.StatusCode == 404 || context.Response.StatusCode == 512 || context.Response.StatusCode == 401)
+                if (context.Response.StatusCode <= 400 && context.Response.StatusCode >= 500)
                 {
                     context.Request.Path = "/Error";
                     await next();
