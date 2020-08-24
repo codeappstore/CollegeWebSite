@@ -126,6 +126,11 @@ namespace College.Controllers
                     var completeUserInfo = await _auth.FetchUserByFilter(null, auth.AuthId);
                     auth.Email = completeUserInfo.Email;
                     auth.Password = completeUserInfo.Password;
+                    auth.Image = completeUserInfo.Image;
+                    auth.IsEmailVerified = completeUserInfo.IsEmailVerified;
+                    auth.DateEmailVerified = completeUserInfo.DateEmailVerified;
+                    auth.Allowed = completeUserInfo.Allowed;
+                    auth.RoleId = completeUserInfo.RoleId;
                     if (await _auth.UpdateExistingUserAsyncTask(auth))
                     {
                         var userSessionDetails = HttpContext.Session.GetComplexData<AuthBasicDetailsModelDto>("_Details");

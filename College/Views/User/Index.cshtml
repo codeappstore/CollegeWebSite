@@ -19,7 +19,7 @@
             <strong>User</strong>
             @if (UserInfo.RoleId != 3)
             {
-                <a asp-controller="User" asp-action="Create" class="btn btn-primary text-light" style="float: right;">
+                <a asp-controller="User" asp-action="Create" class="btn btn-primary text-light btn-sm" style="float: right;">
                     <i class="fas fa-plus"></i> Add
                 </a>
             }
@@ -41,7 +41,7 @@
                                 <div class="card-body">
                                     <div class="mx-auto d-block">
                                         <div class="img-thumbnail d-flex justify-content-center">
-                                            <img class="img-fluid" src="@(UserItem.Image == null ? "/images/user.png" : UserItem.Image)" alt="Not Found" style="max-height: 200px; width: auto;" />
+                                            <a href="@(UserItem.Image == null ? "/images/user.png" : UserItem.Image)"> <img class="img-fluid" src="@(UserItem.Image == null ? "/images/user.png" : UserItem.Image)" alt="Not Found" style="max-height: 200px; width: auto;" /></a>
                                         </div>
                                         <h5 class="text-sm-center mt-2 mb-1">
                                             <i class="fa fa-user"></i>  @UserItem.FullName

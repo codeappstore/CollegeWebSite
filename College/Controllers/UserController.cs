@@ -229,6 +229,7 @@ namespace College.Controllers
             }
         }
 
+
         // POST: UserController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -238,6 +239,14 @@ namespace College.Controllers
             {
                 try
                 {
+                    var authData = await _auth.FetchUserByFilter(null, authUpdate.AuthId);
+                    authUpdate.Email = authData.Email;
+                    authUpdate.Password = authData.Password;
+                    authUpdate.IsEmailVerified = authData.IsEmailVerified;
+                    authUpdate.DateEmailVerified = authData.DateEmailVerified;
+                    authUpdate.Allowed = authData.Allowed;
+                    authUpdate.Image = authData.Image;
+
                     if (await _auth.UpdateExistingUserAsyncTask(authUpdate))
                     {
                         HttpContext.Session.SetString("Success", "User " + authUpdate.FullName + " Updated Successfully!! ");
