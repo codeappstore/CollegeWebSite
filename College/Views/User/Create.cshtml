@@ -1,0 +1,106 @@
+﻿@model College.Model.DataTransferObject.OtherDto.AuthImageModelDto
+@using College.Model.Models
+@using Microsoft.AspNetCore.Components.Forms
+@{
+    Layout = "~/Views/Shared/_BackendLayout.cshtml";
+    ViewData["Title"] = "Create User  -";
+}
+@(await Html.PartialAsync("~/Views/Shared/_AlertLayout.cshtml"))
+<div class="col-lg-12 col-md-12 col-sm-12">
+    <div class="card">
+        <div class="card-header"><h5>Create New User</h5></div>
+        <div class="card-body card-block">
+            <form asp-action="Create" asp-controller="User" method="post" enctype="multipart/form-data" asp-antiforgery="true">
+                <div class="form-group">
+                    <div asp-validation-summary="ModelOnly" class="text-danger">
+                        <span>Please correct the following errors</span>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-12 col-md-6 col-sm-6">
+                        <div class="form-group">
+                            <label asp-for="AuthModel.FullName"></label>
+                            <input asp-for="AuthModel.FullName" class="au-input au-input--full" type="text" required />
+                            <span asp-validation-for="AuthModel.FullName" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-sm-12 col-md-6 col-sm-6">
+                        <div class="form-group">
+                            <label asp-for="AuthModel.UserName"></label>
+                            <input asp-for="AuthModel.UserName" class="au-input au-input--full" type="text" required />
+                            <span asp-validation-for="AuthModel.UserName" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-sm-12 col-md-6 col-sm-6">
+                        <div class="form-group">
+                            <label asp-for="AuthModel.Email"></label>
+                            <input asp-for="AuthModel.Email" class="au-input au-input--full" type="email" required />
+                            <span asp-validation-for="AuthModel.Email" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-sm-12 col-md-6 col-sm-6">
+                        <div class="form-group">
+                            <label asp-for="AuthModel.Address"></label>
+                            <input asp-for="AuthModel.Address" class="au-input au-input--full" type="text" required />
+                            <span asp-validation-for="AuthModel.Address" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-sm-12 col-md-6 col-sm-6">
+                        <div class="form-group">
+                            <label asp-for="AuthModel.DateOfBirth"></label>
+                            <input asp-for="AuthModel.DateOfBirth" class="au-input au-input--full" type="date" required />
+                            <span asp-validation-for="AuthModel.DateOfBirth" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-sm-12 col-md-6 col-sm-6">
+                        <div class="form-group">
+                            <label asp-for="AuthModel.Gender"></label>
+                            <select asp-for="AuthModel.Gender" asp-items="Html.GetEnumSelectList<AuthGender>()" class="form-control">
+                                <option value="">Pick one</option>
+                            </select>
+                            <span asp-validation-for="AuthModel.Gender" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-sm-12 col-md-6 col-sm-6">
+                        <div class="form-group">
+                            <label asp-for="AuthModel.RoleId"></label>
+                            <select asp-for="AuthModel.RoleId" class="form-control">
+                                <option value="">Pick one</option>
+                                <option value="1">Admin</option>
+                                <option value="2">Developer</option>
+                                <option value="3">Manager</option>
+                            </select>
+                            <span asp-validation-for="AuthModel.RoleId" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-sm-12 col-md-6 col-sm-6">
+                        <div class="form-group">
+                            <label asp-for="AuthModel.PhoneNumber"></label>
+                            <input asp-for="AuthModel.PhoneNumber" class="au-input au-input--full" type="tel" required />
+                            <span asp-validation-for="AuthModel.PhoneNumber" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-sm-12 col-md-6 col-sm-6">
+                        <div class="form-group">
+                            <label asp-for="ImageModel.Image"></label>
+                            <input asp-for="ImageModel.Image" type="file" class="dropify form-control-file" data-max-file-size="5M" data-allowed-file-extensions="jpg jpeg png">
+                            <p for="ImageString">Image (5MB)</p>
+                            <span asp-validation-for="ImageModel.Image" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="form-actions form-group">
+                    <button class="btn btn-success btn-sm" type="submit"><i class="fas fa-rocket"></i> Add</button>
+                    <button class="btn btn-danger btn-sm" type="reset"><i class="fas fa-trash"></i> Reset</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

@@ -58,6 +58,8 @@
     <link href="~/assets/vendor/perfect-scrollbar/perfect-scrollbar.css" rel="stylesheet" media="all">
     <link href="~/assets/vendor/dropify/css/dropify.css" rel="stylesheet" />
 
+    <link href="~/assets/vendor/data-tables/css/jquery.dataTables.min.css" rel="stylesheet" />
+    <link href="~/assets/vendor/data-tables/extensions/responsive/css/responsive.dataTables.min.css" rel="stylesheet" />
     <!-- Main CSS-->
     <link href="~/assets/css/theme.css" rel="stylesheet" media="all">
 
@@ -98,7 +100,7 @@
                             </a>
                             <ul class="navbar-mobile-sub__list list-unstyled js-sub-list">
                                 <li>
-                                    <a href="#">Users</a>
+                                    <a asp-controller="User" asp-action="Index">Users</a>
                                 </li>
                                 <li>
                                     <a href="#">Roles</a>
@@ -152,7 +154,7 @@
                             </a>
                             <ul class="list-unstyled navbar__sub-list js-sub-list">
                                 <li>
-                                    <a href="#">Users</a>
+                                    <a asp-controller="User" asp-action="Index">Users</a>
                                 </li>
                                 <li>
                                     <a href="#">Roles</a>
@@ -322,6 +324,10 @@
     <!-- Main JS-->
     <script src="~/assets/vendor/tinymce/jquery.tinymce.min.js"></script>
     <script src="~/assets/vendor/tinymce/tinymce.min.js"></script>
+    <script src="~/assets/vendor/sweetalert/sweetalert.min.js"></script>
+
+    <script src="~/assets/vendor/data-tables/extensions/responsive/js/dataTables.responsive.min.js"></script>
+    <script src="~/assets/vendor/data-tables/js/jquery.dataTables.min.js"></script>
 
     <script src="~/assets/js/main.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
