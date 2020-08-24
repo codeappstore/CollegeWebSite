@@ -58,13 +58,17 @@
     <link href="~/assets/vendor/perfect-scrollbar/perfect-scrollbar.css" rel="stylesheet" media="all">
     <link href="~/assets/vendor/dropify/css/dropify.css" rel="stylesheet" />
 
-    <link href="~/assets/vendor/data-tables/css/jquery.dataTables.min.css" rel="stylesheet" />
-    <link href="~/assets/vendor/data-tables/extensions/responsive/css/responsive.dataTables.min.css" rel="stylesheet" />
+    <link href="~/assets/vendor/tinymce/skins/ui/oxide/content.min.css" rel="stylesheet" />
+    <link href="~/assets/vendor/tinymce/skins/ui/oxide/content.mobile.min.css" rel="stylesheet" />
+    <link href="~/assets/vendor/tinymce/skins/ui/oxide/skin.mobile.min.css" rel="stylesheet" />
+    <link href="~/assets/vendor/tinymce/skins/ui/oxide-dark/content.min.css" rel="stylesheet" />
+    <link href="~/assets/vendor/tinymce/skins/ui/oxide-dark/content.mobile.min.css" rel="stylesheet" />
+    <link href="~/assets/vendor/tinymce/skins/ui/oxide-dark/skin.mobile.min.css" rel="stylesheet" />
+
     <!-- Main CSS-->
     <link href="~/assets/css/theme.css" rel="stylesheet" media="all">
 
-    <script src="~/assets/vendor/tinymce/themes/mobile/theme.min.js"></script>
-    <script src="~/assets/vendor/tinymce/themes/silver/theme.min.js"></script>
+
 </head>
 
 <body class="animsition">
@@ -89,28 +93,25 @@
                 <div class="container-fluid">
                     <ul class="navbar-mobile__list list-unstyled">
                         <li>
-                            <a href="#">
+                            <a asp-controller="ControlPanel" asp-action="Index">
                                 <i class="fas fa-tachometer-alt"></i>Dashboard
                             </a>
                         </li>
 
-                        <li class="has-sub">
-                            <a class="js-arrow" href="#">
-                                <i class="fas fa-cogs"></i>User Controls
-                            </a>
-                            <ul class="navbar-mobile-sub__list list-unstyled js-sub-list">
-                                <li>
-                                    <a asp-controller="User" asp-action="Index">Users</a>
-                                </li>
-                                <li>
-                                    <a href="#">Roles</a>
-                                </li>
-                                <li>
-                                    <a href="#">Privilage</a>
-                                </li>
-                            </ul>
-                        </li>
+                        @if (UserInfo.RoleId != 3)
+                        {
 
+                            <li class="has-sub">
+                                <a class="js-arrow" href="#">
+                                    <i class="fas fa-cogs"></i>User Controls
+                                </a>
+                                <ul class="navbar-mobile-sub__list list-unstyled js-sub-list">
+                                    <li>
+                                        <a asp-controller="User" asp-action="Index">Users</a>
+                                    </li>
+                                </ul>
+                            </li>
+                        }
                         <li>
                             <a href="#">
                                 <i class="fas fa-laptop"></i>Web Site
@@ -126,9 +127,12 @@
                                 <li>
                                     <a asp-controller="Email" asp-action="Sender">Send Email</a>
                                 </li>
-                                <li>
-                                    <a asp-controller="Email" asp-action="Manager">Manage Settings</a>
-                                </li>
+                                @if (UserInfo.RoleId != 3)
+                                {
+                                    <li>
+                                        <a asp-controller="Email" asp-action="Manager">Manage Settings</a>
+                                    </li>
+                                }
                             </ul>
                         </li>
 
@@ -143,28 +147,23 @@
                 <nav class="navbar-sidebar">
                     <ul class="list-unstyled navbar__list">
                         <li class="active">
-                            <a href="#">
+                            <a asp-controller="ControlPanel" asp-action="Index">
                                 <i class="fas fa-tachometer-alt"></i>Dashboard
                             </a>
                         </li>
-
-                        <li class="has-sub">
-                            <a class="js-arrow" href="#">
-                                <i class="fas fa-cogs"></i>User Controls
-                            </a>
-                            <ul class="list-unstyled navbar__sub-list js-sub-list">
-                                <li>
-                                    <a asp-controller="User" asp-action="Index">Users</a>
-                                </li>
-                                <li>
-                                    <a href="#">Roles</a>
-                                </li>
-                                <li>
-                                    <a href="#">Privilage</a>
-                                </li>
-                            </ul>
-                        </li>
-
+                        @if (UserInfo.RoleId != 3)
+                        {
+                            <li class="has-sub">
+                                <a class="js-arrow" href="#">
+                                    <i class="fas fa-cogs"></i>User Controls
+                                </a>
+                                <ul class="list-unstyled navbar__sub-list js-sub-list">
+                                    <li>
+                                        <a asp-controller="User" asp-action="Index">Users</a>
+                                    </li>
+                                </ul>
+                            </li>
+                        }
                         <li>
 
                             <a href="#">
@@ -180,9 +179,12 @@
                                 <li>
                                     <a asp-controller="Email" asp-action="Sender">Send Email</a>
                                 </li>
-                                <li>
-                                    <a asp-controller="Email" asp-action="Manager">Manage Settings</a>
-                                </li>
+                                @if (UserInfo.RoleId != 3)
+                                {
+                                    <li>
+                                        <a asp-controller="Email" asp-action="Manager">Manage Settings</a>
+                                    </li>
+                                }
                             </ul>
                         </li>
 
@@ -208,14 +210,7 @@
                                 <div class="account-wrap">
                                     <div class="account-item clearfix js-item-menu">
                                         <div class="image">
-                                            @if (UserInfo.Image != null)
-                                            {
-                                                <img src="..@(UserInfo.Image)" alt="@(UserInfo.FullName)'s image " />
-                                            }
-                                            else
-                                            {
-                                                <img src="~/images/user.png" alt="@UserInfo.FullName" />
-                                            }
+                                            <img src="@(UserInfo.Image == null ? "/images/user.png" : UserInfo.Image)" alt="@(UserInfo.FullName)'s image " />
                                         </div>
                                         <div class="content">
                                             <a class="js-acc-btn" href="javastript:void();">@UserInfo.UserName</a>
@@ -223,14 +218,7 @@
                                         <div class="account-dropdown js-dropdown">
                                             <div class="info clearfix">
                                                 <div class="image">
-                                                    @if (UserInfo.Image != null)
-                                                    {
-                                                        <img src="..@(UserInfo.Image)" alt="@(UserInfo.FullName)'s image " />
-                                                    }
-                                                    else
-                                                    {
-                                                        <img src="~/images/user.png" alt="@UserInfo.FullName" />
-                                                    }
+                                                    <img src="@(UserInfo.Image == null ? " /images/user.png" : UserInfo.Image)" alt="@(UserInfo.FullName)'s image " />
                                                 </div>
                                                 <div class="content">
                                                     <h5 class="name">
@@ -324,10 +312,10 @@
     <!-- Main JS-->
     <script src="~/assets/vendor/tinymce/jquery.tinymce.min.js"></script>
     <script src="~/assets/vendor/tinymce/tinymce.min.js"></script>
-    <script src="~/assets/vendor/sweetalert/sweetalert.min.js"></script>
 
-    <script src="~/assets/vendor/data-tables/extensions/responsive/js/dataTables.responsive.min.js"></script>
-    <script src="~/assets/vendor/data-tables/js/jquery.dataTables.min.js"></script>
+    <script src="~/assets/vendor/tinymce/themes/mobile/theme.min.js"></script>
+    <script src="~/assets/vendor/tinymce/themes/silver/theme.min.js"></script>
+    <script src="~/assets/vendor/sweetalert/sweetalert.min.js"></script>
 
     <script src="~/assets/js/main.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>

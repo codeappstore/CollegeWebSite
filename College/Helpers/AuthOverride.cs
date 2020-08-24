@@ -5,26 +5,24 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.Extensions.DependencyInjection;
 using System;
-using System.Threading.Tasks;
 
 namespace College.Helpers
 {
     [AttributeUsage(AttributeTargets.All)]
-    public class AuthOverride : Attribute, IAsyncAuthorizationFilter
+    public class AuthOverride : Attribute, IAuthorizationFilter
     {
-        public async Task OnAuthorizationAsync(AuthorizationFilterContext context)
+        public void OnAuthorization(AuthorizationFilterContext context)
         {
             var detailsToken = context.HttpContext.Session.GetComplexData<AuthBasicDetailsModelDto>("_Details");
             var access = context.HttpContext.RequestServices.GetRequiredService<IAccessRepo>();
             if (detailsToken != null)
             {
                 context.HttpContext.Session.SetComplexData("_Remember", new string("True"));
-                var accessList = await access.FetchAccessByRoleIdFilter(detailsToken.RoleId);
-                // Check if the page is can be accessed or not and redirect
-                /* foreach (var accessModel in accessList)
-                 {
 
-                 }*/
+                if (detailsToken.RoleId == 3)
+                {
+                    // Validate request
+                }
             }
             else
             {
@@ -35,5 +33,11 @@ namespace College.Helpers
                 context.Result = new RedirectResult("~/Login/Index");
             }
         }
+
+        /*  public async Task OnAuthorizationAsync(AuthorizationFilterContext context)
+          {
+
+          }
+        */
     }
 }

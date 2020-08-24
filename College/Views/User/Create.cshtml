@@ -8,7 +8,14 @@
 @(await Html.PartialAsync("~/Views/Shared/_AlertLayout.cshtml"))
 <div class="col-lg-12 col-md-12 col-sm-12">
     <div class="card">
-        <div class="card-header"><h5>Create New User</h5></div>
+        <div class="card-header">
+            <h5>
+                Create New User
+                <a asp-controller="User" asp-action="Index" class="btn btn-primary btn-sm text-light" style="float: right;">
+                    <i class="fas fa-arrow-left"></i>  Back to user list
+                </a>
+            </h5>
+        </div>
         <div class="card-body card-block">
             <form asp-action="Create" asp-controller="User" method="post" enctype="multipart/form-data" asp-antiforgery="true">
                 <div class="form-group">

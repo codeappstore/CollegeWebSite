@@ -1,0 +1,102 @@
+﻿@model College.Model.DataTransferObject.AuthDto.AuthUpdateModelDto
+@using College.Model.Models
+@using Microsoft.AspNetCore.Components.Forms
+@{
+    Layout = "~/Views/Shared/_BackendLayout.cshtml";
+    ViewData["Title"] = "Create User  -";
+}
+@(await Html.PartialAsync("~/Views/Shared/_AlertLayout.cshtml"))
+<div class="col-lg-12 col-md-12 col-sm-12">
+    <div class="card">
+        <div class="card-header">
+            <h5>
+                Create New User
+                <a asp-controller="User" asp-action="Index" class="btn btn-primary btn-sm text-light" style="float: right;">
+                    <i class="fas fa-arrow-left"></i>  Back to user list
+                </a>
+            </h5>
+        </div>
+        <div class="card-body card-block">
+            <form asp-action="Edit" asp-controller="User" method="post" asp-antiforgery="true">
+                <div class="form-group">
+                    <div asp-validation-summary="ModelOnly" class="text-danger">
+                        <span>Please correct the following errors</span>
+                    </div>
+                </div>
+                <input type="hidden" asp-for="AuthId" />
+                <input type="hidden" asp-for="Email" />
+                <input type="hidden" asp-for="IsEmailVerified" />
+                <input type="hidden" asp-for="DateEmailVerified" />
+                <input type="hidden" asp-for="Allowed" />
+                <input type="hidden" asp-for="Image" />
+                <div class="row">
+                    <div class="col-sm-12 col-md-6 col-sm-6">
+                        <div class="form-group">
+                            <label asp-for="FullName"></label>
+                            <input asp-for="FullName" class="au-input au-input--full" type="text" required />
+                            <span asp-validation-for="FullName" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-sm-12 col-md-6 col-sm-6">
+                        <div class="form-group">
+                            <label asp-for="UserName"></label>
+                            <input asp-for="UserName" class="au-input au-input--full" type="text" required />
+                            <span asp-validation-for="UserName" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-12 col-md-6 col-sm-6">
+                        <div class="form-group">
+                            <label asp-for="Address"></label>
+                            <input asp-for="Address" class="au-input au-input--full" type="text" required />
+                            <span asp-validation-for="Address" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-sm-12 col-md-6 col-sm-6">
+                        <div class="form-group">
+                            <label asp-for="DateOfBirth"></label>
+                            <input asp-for="DateOfBirth" class="au-input au-input--full" type="date" required />
+                            <span asp-validation-for="DateOfBirth" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-sm-12 col-md-6 col-sm-6">
+                        <div class="form-group">
+                            <label asp-for="Gender"></label>
+                            <select asp-for="Gender" asp-items="Html.GetEnumSelectList<AuthGender>()" class="form-control">
+                                <option value="">Pick one</option>
+                            </select>
+                            <span asp-validation-for="Gender" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-sm-12 col-md-6 col-sm-6">
+                        <div class="form-group">
+                            <label asp-for="RoleId"></label>
+                            <select asp-for="RoleId" class="form-control">
+                                <option value="">Pick one</option>
+                                <option value="1">Admin</option>
+                                <option value="2">Developer</option>
+                                <option value="3">Manager</option>
+                            </select>
+                            <span asp-validation-for="RoleId" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-sm-12 col-md-6 col-sm-6">
+                        <div class="form-group">
+                            <label asp-for="PhoneNumber"></label>
+                            <input asp-for="PhoneNumber" class="au-input au-input--full" type="tel" required />
+                            <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-actions form-group">
+                    <button class="btn btn-success btn-sm" type="submit"><i class="fas fa-edit"></i> Update</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

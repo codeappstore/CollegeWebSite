@@ -1,4 +1,72 @@
-﻿@{
+﻿@model College.Model.DataTransferObject.AuthExtraDto.CountModelDto
+@using College.Model.Models
+@{
     Layout = "~/Views/Shared/_BackendLayout.cshtml";
+    ViewData["Title"] = "Dashboard  -";
 }
 @(await Html.PartialAsync("~/Views/Shared/_AlertLayout.cshtml"))
+
+<div class="col-lg-12">
+    <div class="row">
+        <div class="col-sm-6 col-lg-3">
+            <div class="overview-item overview-item--c1">
+                <div class="overview__inner">
+                    <div class="overview-box clearfix">
+                        <div class="icon">
+                            <i class="zmdi zmdi-accounts"></i>
+                        </div>
+                        <div class="text p-b-20">
+                            <h3 class="text-light"><label asp-for="Users"></label></h3>
+                            <span><b>@Model.Users</b></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-6 col-lg-3">
+            <div class="overview-item overview-item--c2">
+                <div class="overview__inner">
+                    <div class="overview-box clearfix">
+                        <div class="icon">
+                            <i class="zmdi zmdi-account-circle"></i>
+                        </div>
+                        <div class="text p-b-20">
+                            <h3 class="text-light"><label asp-for="Administrator"></label></h3>
+                            <span><b>@Model.Administrator</b></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-6 col-lg-3">
+            <div class="overview-item overview-item--c3">
+                <div class="overview__inner">
+                    <div class="overview-box clearfix">
+                        <div class="icon">
+                            <i class="zmdi zmdi-face"></i>
+                        </div>
+                        <div class="text p-b-20">
+                            <h3 class="text-light"><label asp-for="Developer"></label></h3>
+                            <span><b>@Model.Developer</b></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-6 col-lg-3">
+            <div class="overview-item overview-item--c4">
+                <div class="overview__inner">
+                    <div class="overview-box clearfix">
+                        <div class="icon">
+                            <i class="zmdi zmdi-account-box"></i>
+                        </div>
+                        <div class="text p-b-20">
+                            <h3 class="text-light"><label asp-for="Manager"></label></h3>
+                            <span><b>@Model.Manager</b></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

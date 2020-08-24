@@ -23,7 +23,14 @@ namespace College.Controllers
         }
         public IActionResult Index()
         {
-            return View();
+            var countMode = new CountModelDto()
+            {
+                Administrator = _auth.AdminCount(),
+                Developer = _auth.DeveloperCount(),
+                Manager = _auth.ManagerCount(),
+                Users = _auth.UserCount()
+            };
+            return View(countMode);
         }
 
         public IActionResult Settings()
