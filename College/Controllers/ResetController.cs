@@ -136,18 +136,21 @@ namespace College.Controllers
             };
             if (string.IsNullOrWhiteSpace(Email) && string.IsNullOrWhiteSpace(Token))
             {
+                await _auth.RemoveInvalidResetRequest(responseModel);
                 HttpContext.Session.SetString("Error", "Invalid Token!");
                 return RedirectToAction("ForgetPassword", "Reset");
             }
 
             if (ExpirationDateTime < DateTime.Now)
             {
+                await _auth.RemoveInvalidResetRequest(responseModel);
                 HttpContext.Session.SetString("Error", "Token has Expired!");
                 return RedirectToAction("ForgetPassword", "Reset");
             }
 
             if (!await _auth.ResetInformationValid(responseModel))
             {
+                await _auth.RemoveInvalidResetRequest(responseModel);
                 HttpContext.Session.SetString("Error", "Invalid Token!");
                 return RedirectToAction("ForgetPassword", "Reset");
             }

@@ -1,0 +1,86 @@
+﻿@model IList<College.Model.DataTransferObject.SalientFeaturesDto.SalientFeaturesModelDto>
+@{
+    Layout = "~/Views/Shared/_BackendLayout.cshtml";
+    ViewData["Title"] = "Salient Features List -";
+    int serialize = 1;
+}
+@(await Html.PartialAsync("~/Views/Shared/_AlertLayout.cshtml"))
+
+
+<div class="col-sm-12">
+    <div class="card">
+        <div class="card-header">
+            <strong>Salient Features </strong>
+            <a asp-controller="WebSite" asp-action="FeatureCreate" class="btn btn-primary text-light btn-sm" style="float: right;">
+                <i class="fas fa-plus"></i> Add
+            </a>
+
+        </div>
+        <div class="card-body card-block">
+
+            @if (Model.Count > 0)
+            {
+                foreach (var Feature in Model)
+                {
+                    <ul class="list-group">
+                        <li class="list-group-item">
+                            <b>@(serialize++).</b>&nbsp; @Feature.Feature
+                            <div class="card-text text-sm-center float-sm-right">
+                                <a asp-controller="WebSite" asp-action="FeaturesUpdate" asp-route-id="@Feature.SalientFeatureId"> <i class="fas fa-edit text-success"></i> Edit</a> |
+                                <a href="#" onclick="NotifyAndDelete(@Feature.SalientFeatureId)"><i class="fas fa-trash" style="color: red;"></i> Delete</a>
+                            </div>
+                        </li>
+                    </ul>
+                }
+            }
+            else
+            {
+                <div class="text-center"><h4>Dat not found</h4></div>
+            }
+        </div>
+    </div>
+</div>
+
+
+@section Scripts{
+    <script>
+        function NotifyAndDelete(id) {
+            swal({
+                title: "Are you sure?",
+                text: "You want to delete this feature, You won't be able to revert this data!",
+                icon: 'warning',
+                closeOnEsc: false,
+                closeOnClickOutside: false,
+                buttons: true,
+                dangerMode: true,
+            }).then((willDelete) => {
+                if (willDelete) {
+                    $.ajax({
+                        type: "POST",
+                        url: "/WebSite/FeaturesDelete",
+                        dataType: "json",
+                        headers: {
+                            "RequestVerificationToken": $('input[name = __RequestVerificationToken]').val()
+                        },
+                        data: {
+                            id: id
+                        },
+                        success: function (response) {
+                            swal("Poof all gone! " + response, {
+                                icon: "success",
+                            }).then(function () {
+                                window.location.href = "/WebSite/Features"
+                            });
+                        },
+                        failure: function (response) {
+                            alert(response.responseText);
+                        },
+                        error: function (response) {
+                            alert(response.responseText);
+                        }
+                    });
+                }
+            });
+        }
+    </script>
+}

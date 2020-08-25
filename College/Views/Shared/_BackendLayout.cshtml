@@ -98,22 +98,26 @@
                             </a>
                         </li>
 
-                        @if (UserInfo.RoleId != 3)
+                        @if (UserInfo != null)
                         {
+                            if (UserInfo.RoleId != 3)
+                            {
 
-                            <li class="has-sub">
-                                <a class="js-arrow" href="#">
-                                    <i class="fas fa-cogs"></i>User Controls
-                                </a>
-                                <ul class="navbar-mobile-sub__list list-unstyled js-sub-list">
-                                    <li>
-                                        <a asp-controller="User" asp-action="Index">Users</a>
-                                    </li>
-                                </ul>
-                            </li>
+                                <li class="has-sub">
+                                    <a class="js-arrow" href="#">
+                                        <i class="fas fa-cogs"></i>User Controls
+                                    </a>
+                                    <ul class="navbar-mobile-sub__list list-unstyled js-sub-list">
+                                        <li>
+                                            <a asp-controller="User" asp-action="Index">Users</a>
+                                        </li>
+                                    </ul>
+                                </li>
+                            }
                         }
+
                         <li>
-                            <a href="#">
+                            <a asp-controller="WebSite" asp-action="Index">
                                 <i class="fas fa-laptop"></i>Web Site
                             </a>
                         </li>
@@ -127,11 +131,14 @@
                                 <li>
                                     <a asp-controller="Email" asp-action="Sender">Send Email</a>
                                 </li>
-                                @if (UserInfo.RoleId != 3)
+                                @if (UserInfo != null)
                                 {
-                                    <li>
-                                        <a asp-controller="Email" asp-action="Manager">Manage Settings</a>
-                                    </li>
+                                    if (UserInfo.RoleId != 3)
+                                    {
+                                        <li>
+                                            <a asp-controller="Email" asp-action="Manager">Manage Settings</a>
+                                        </li>
+                                    }
                                 }
                             </ul>
                         </li>
@@ -151,22 +158,25 @@
                                 <i class="fas fa-tachometer-alt"></i>Dashboard
                             </a>
                         </li>
-                        @if (UserInfo.RoleId != 3)
+                        @if (UserInfo != null)
                         {
-                            <li class="has-sub">
-                                <a class="js-arrow" href="#">
-                                    <i class="fas fa-cogs"></i>User Controls
-                                </a>
-                                <ul class="list-unstyled navbar__sub-list js-sub-list">
-                                    <li>
-                                        <a asp-controller="User" asp-action="Index">Users</a>
-                                    </li>
-                                </ul>
-                            </li>
+                            if (UserInfo.RoleId != 3)
+                            {
+                                <li class="has-sub">
+                                    <a class="js-arrow" href="#">
+                                        <i class="fas fa-cogs"></i>User Controls
+                                    </a>
+                                    <ul class="list-unstyled navbar__sub-list js-sub-list">
+                                        <li>
+                                            <a asp-controller="User" asp-action="Index">Users</a>
+                                        </li>
+                                    </ul>
+                                </li>
+                            }
                         }
                         <li>
 
-                            <a href="#">
+                            <a asp-controller="WebSite" asp-action="Index">
                                 <i class="fas fa-laptop"></i>Web Site
                             </a>
                         </li>
@@ -179,11 +189,14 @@
                                 <li>
                                     <a asp-controller="Email" asp-action="Sender">Send Email</a>
                                 </li>
-                                @if (UserInfo.RoleId != 3)
+                                @if (UserInfo != null)
                                 {
-                                    <li>
-                                        <a asp-controller="Email" asp-action="Manager">Manage Settings</a>
-                                    </li>
+                                    if (UserInfo.RoleId != 3)
+                                    {
+                                        <li>
+                                            <a asp-controller="Email" asp-action="Manager">Manage Settings</a>
+                                        </li>
+                                    }
                                 }
                             </ul>
                         </li>
@@ -208,44 +221,48 @@
                                     <div></div>
                                 </div>
                                 <div class="account-wrap">
-                                    <div class="account-item clearfix js-item-menu">
-                                        <div class="image">
-                                            <img src="@(string.IsNullOrWhiteSpace(UserInfo.Image)? "/images/user.png" : UserInfo.Image)" alt="@(UserInfo.FullName)'s image " />
-                                        </div>
-                                        <div class="content">
-                                            <a class="js-acc-btn" href="javastript:void();">@UserInfo.UserName</a>
-                                        </div>
-                                        <div class="account-dropdown js-dropdown">
-                                            <div class="info clearfix">
-                                                <div class="image">
-                                                    <img src="@(string.IsNullOrWhiteSpace(UserInfo.Image) ? "/images/user.png" : UserInfo.Image)" alt="@(UserInfo.FullName)'s image " />
-                                                </div>
-                                                <div class="content">
-                                                    <h5 class="name">
-                                                        @UserInfo.FullName
-                                                    </h5>
-                                                    <span class="email">@UserInfo.Email</span>
-                                                </div>
+                                    @if (UserInfo != null)
+                                    {
+                                        <div class="account-item clearfix js-item-menu">
+                                            <div class="image">
+                                                <img src="@(string.IsNullOrWhiteSpace(UserInfo.Image) ? "/images/user.png" : UserInfo.Image)" alt="@(UserInfo.FullName)'s image " />
                                             </div>
-                                            <div class="account-dropdown__body">
-                                                <div class="account-dropdown__item">
-                                                    <a asp-controller="ControlPanel" asp-action="Account">
-                                                        <i class="zmdi zmdi-account"></i>Account
+                                            <div class="content">
+                                                <a class="js-acc-btn" href="javastript:void();">@UserInfo.UserName</a>
+                                            </div>
+                                            <div class="account-dropdown js-dropdown">
+                                                <div class="info clearfix">
+                                                    <div class="image">
+                                                        <img src="@(string.IsNullOrWhiteSpace(UserInfo.Image) ? "/images/user.png" : UserInfo.Image)" alt="@(UserInfo.FullName)'s image " />
+                                                    </div>
+                                                    <div class="content">
+                                                        <h5 class="name">
+                                                            @UserInfo.FullName
+                                                        </h5>
+                                                        <span class="email">@UserInfo.Email</span>
+                                                    </div>
+                                                </div>
+                                                <div class="account-dropdown__body">
+                                                    <div class="account-dropdown__item">
+                                                        <a asp-controller="ControlPanel" asp-action="Account">
+                                                            <i class="zmdi zmdi-account"></i>Account
+                                                        </a>
+                                                    </div>
+                                                    <div class="account-dropdown__item">
+                                                        <a asp-controller="ControlPanel" asp-action="Settings">
+                                                            <i class="zmdi zmdi-settings"></i>Setting
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                                <div class="account-dropdown__footer">
+                                                    <a asp-controller="Login" asp-action="Logout" method="get">
+                                                        <i class="zmdi zmdi-power"></i>Logout
                                                     </a>
                                                 </div>
-                                                <div class="account-dropdown__item">
-                                                    <a asp-controller="ControlPanel" asp-action="Settings">
-                                                        <i class="zmdi zmdi-settings"></i>Setting
-                                                    </a>
-                                                </div>
-                                            </div>
-                                            <div class="account-dropdown__footer">
-                                                <a asp-controller="Login" asp-action="Logout" method="get">
-                                                    <i class="zmdi zmdi-power"></i>Logout
-                                                </a>
+
                                             </div>
                                         </div>
-                                    </div>
+                                    }
                                 </div>
                             </div>
                         </div>
@@ -257,14 +274,17 @@
             <div class="main-content">
                 <div class="section__content section__content--p30">
                     <div class="container-fluid">
-                        @if (!UserInfo.IsEmailVerified)
+                        @if (UserInfo != null)
                         {
-                            <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                                <i class="fas fa-bullhorn"></i>&nbsp;&nbsp; <strong>Email not Verified :</strong> &nbsp;&nbsp;  Your email is not verified please <a asp-controller="Verification" asp-action="SendVerificationEmail" methord="get">verify it now. <i class="fas fa-envelope"></i> </a>
-                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
-                            </div>
+                            if (!UserInfo.IsEmailVerified)
+                            {
+                                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                    <i class="fas fa-bullhorn"></i>&nbsp;&nbsp; <strong>Email not Verified :</strong> &nbsp;&nbsp; Your email is not verified please <a asp-controller="Verification" asp-action="SendVerificationEmail" methord="get">verify it now. <i class="fas fa-envelope"></i> </a>
+                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                            }
                         }
                         <!-- Body Section -->
                         @RenderBody()

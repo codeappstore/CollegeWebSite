@@ -1,4 +1,5 @@
 ﻿using College.Access.IRepository;
+using College.Database.Helper;
 using College.Helpers;
 using College.Model.DataTransferObject.AuthDto;
 using College.Model.DataTransferObject.AuthExtraDto;
@@ -61,6 +62,7 @@ namespace College.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Create(AuthImageModelDto authImage)
         {
+            var builder = new RandomStringBuilder();
             if (ModelState.IsValid)
             {
                 if (authImage.AuthModel != null || authImage.ImageModel != null)
@@ -94,7 +96,7 @@ namespace College.Controllers
                             }
                             _ = !string.IsNullOrWhiteSpace(imageString) ? authImage.AuthModel.Image = imageString : authImage.AuthModel.Image = null;
 
-                            authImage.AuthModel.Password = "DemoUserReset";
+                            authImage.AuthModel.Password = builder.RandStringGenerator((int)RandomStringBuilder.PurposeOfString.PASSWORD);
                             authImage.AuthModel.Allowed = IsAllowed.Enabled;
                             if (await _auth.CreateNewUserAsyncTask(authImage.AuthModel))
                             {

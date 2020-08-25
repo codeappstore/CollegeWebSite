@@ -25,42 +25,42 @@
                 </div>
 
                 <div class="row">
-                    <div class="col-sm-12 col-md-6 col-sm-6">
+                    <div class="col-sm-12 col-md-6 col-lg-6">
                         <div class="form-group">
                             <label asp-for="AuthModel.FullName"></label>
                             <input asp-for="AuthModel.FullName" class="au-input au-input--full" type="text" required />
                             <span asp-validation-for="AuthModel.FullName" class="text-danger"></span>
                         </div>
                     </div>
-                    <div class="col-sm-12 col-md-6 col-sm-6">
+                    <div class="col-sm-12 col-md-6 col-lg-6">
                         <div class="form-group">
                             <label asp-for="AuthModel.UserName"></label>
                             <input asp-for="AuthModel.UserName" class="au-input au-input--full" type="text" required />
                             <span asp-validation-for="AuthModel.UserName" class="text-danger"></span>
                         </div>
                     </div>
-                    <div class="col-sm-12 col-md-6 col-sm-6">
+                    <div class="col-sm-12 col-md-6 col-lg-6">
                         <div class="form-group">
                             <label asp-for="AuthModel.Email"></label>
                             <input asp-for="AuthModel.Email" class="au-input au-input--full" type="email" required />
                             <span asp-validation-for="AuthModel.Email" class="text-danger"></span>
                         </div>
                     </div>
-                    <div class="col-sm-12 col-md-6 col-sm-6">
+                    <div class="col-sm-12 col-md-6 col-lg-6">
                         <div class="form-group">
                             <label asp-for="AuthModel.Address"></label>
                             <input asp-for="AuthModel.Address" class="au-input au-input--full" type="text" required />
                             <span asp-validation-for="AuthModel.Address" class="text-danger"></span>
                         </div>
                     </div>
-                    <div class="col-sm-12 col-md-6 col-sm-6">
+                    <div class="col-sm-12 col-md-6 col-lg-6">
                         <div class="form-group">
                             <label asp-for="AuthModel.DateOfBirth"></label>
                             <input asp-for="AuthModel.DateOfBirth" class="au-input au-input--full" type="date" required />
                             <span asp-validation-for="AuthModel.DateOfBirth" class="text-danger"></span>
                         </div>
                     </div>
-                    <div class="col-sm-12 col-md-6 col-sm-6">
+                    <div class="col-sm-12 col-md-6 col-lg-6">
                         <div class="form-group">
                             <label asp-for="AuthModel.Gender"></label>
                             <select asp-for="AuthModel.Gender" asp-items="Html.GetEnumSelectList<AuthGender>()" class="form-control">
@@ -69,7 +69,7 @@
                             <span asp-validation-for="AuthModel.Gender" class="text-danger"></span>
                         </div>
                     </div>
-                    <div class="col-sm-12 col-md-6 col-sm-6">
+                    <div class="col-sm-12 col-md-6 col-lg-6">
                         <div class="form-group">
                             <label asp-for="AuthModel.RoleId"></label>
                             <select asp-for="AuthModel.RoleId" class="form-control">
@@ -81,14 +81,14 @@
                             <span asp-validation-for="AuthModel.RoleId" class="text-danger"></span>
                         </div>
                     </div>
-                    <div class="col-sm-12 col-md-6 col-sm-6">
+                    <div class="col-sm-12 col-md-6 col-lg-6">
                         <div class="form-group">
                             <label asp-for="AuthModel.PhoneNumber"></label>
                             <input asp-for="AuthModel.PhoneNumber" class="au-input au-input--full" type="tel" required />
                             <span asp-validation-for="AuthModel.PhoneNumber" class="text-danger"></span>
                         </div>
                     </div>
-                    <div class="col-sm-12 col-md-6 col-sm-6">
+                    <div class="col-sm-12 col-md-6 col-lg-6">
                         <div class="form-group">
                             <label asp-for="ImageModel.Image"></label>
                             <input asp-for="ImageModel.Image" type="file" class="dropify form-control-file" data-max-file-size="5M" data-allowed-file-extensions="jpg jpeg png">

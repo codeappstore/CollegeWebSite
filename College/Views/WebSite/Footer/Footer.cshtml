@@ -1,0 +1,239 @@
+﻿@model College.Model.DataTransferObject.OtherDto.FooterImportantLinkModelDto
+@{
+    Layout = "~/Views/Shared/_BackendLayout.cshtml";
+    ViewData["Title"] = "Footer Page Update -";
+    int serialize = 1;
+}
+@(await Html.PartialAsync("~/Views/Shared/_AlertLayout.cshtml"))
+<div class="row">
+    <div class="col-lg-6 col-md-6 col-sm-12">
+        <div class="card">
+            <div class="card-header">
+                <h5>
+                    Footer Links and Slogan
+                    <a asp-controller="WebSite" asp-action="Index" class="btn btn-primary btn-sm text-light" style="float: right;">
+                        <i class="fas fa-arrow-left"></i>  Back to website manager
+                    </a>
+                </h5>
+            </div>
+            <div class="card-body card-block">
+                <form asp-action="UpdateFooter" asp-controller="WebSite" method="post" asp-antiforgery="true">
+                    <input type="hidden" asp-for="FooterUpdateModel.FooterHeaderId" />
+                    <div class="form-group">
+                        <div asp-validation-summary="ModelOnly" class="text-danger">
+                            <span>Please correct the following errors</span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12 col-md-6">
+                            <div class="form-group">
+                                <div class="input-group">
+                                    <div class="input-group-addon">
+                                        <i class="fab fa-facebook"></i>
+                                        &nbsp;&nbsp;
+                                        <label asp-for="FooterUpdateModel.FacebookLink"></label>
+                                    </div>
+                                    <input asp-for="FooterUpdateModel.FacebookLink" class="au-input au-input--full" type="url" />
+                                    <span asp-validation-for="FooterUpdateModel.FacebookLink" class="text-danger"></span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-12 col-md-6">
+                            <div class="form-group">
+                                <div class="input-group">
+                                    <div class="input-group-addon">
+                                        <i class="fab fa-twitter"></i>
+                                        &nbsp;&nbsp;
+                                        <label asp-for="FooterUpdateModel.TweeterLink"></label>
+                                    </div>
+                                    <input asp-for="FooterUpdateModel.TweeterLink" class="au-input au-input--full" type="url" />
+                                    <span asp-validation-for="FooterUpdateModel.TweeterLink" class="text-danger"></span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-12 col-md-6">
+                            <div class="form-group">
+                                <div class="input-group">
+                                    <div class="input-group-addon">
+                                        <i class="fab fa-instagram"></i>
+                                        &nbsp;&nbsp;
+                                        <label asp-for="FooterUpdateModel.InstaGramLink"></label>
+                                    </div>
+                                    <input asp-for="FooterUpdateModel.InstaGramLink" class="au-input au-input--full" type="url" />
+                                    <span asp-validation-for="FooterUpdateModel.InstaGramLink" class="text-danger"></span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-12 col-md-6">
+                            <div class="form-group">
+                                <div class="input-group">
+                                    <div class="input-group-addon">
+                                        <i class="fab fa-google-plus"></i>
+                                        &nbsp;&nbsp;
+                                        <label asp-for="FooterUpdateModel.GooglePlusLink"></label>
+                                    </div>
+                                    <input asp-for="FooterUpdateModel.GooglePlusLink" class="au-input au-input--full" type="url" />
+                                    <span asp-validation-for="FooterUpdateModel.GooglePlusLink" class="text-danger"></span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-12 col-md-6">
+                            <div class="form-group">
+                                <div class="input-group">
+                                    <div class="input-group-addon">
+                                        <i class="fab fa-youtube"></i>
+                                        &nbsp;&nbsp;
+                                        <label asp-for="FooterUpdateModel.YoutubeLink"></label>
+                                    </div>
+                                    <input asp-for="FooterUpdateModel.YoutubeLink" class="au-input au-input--full" type="url" />
+                                    <span asp-validation-for="FooterUpdateModel.YoutubeLink" class="text-danger"></span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-12 col-md-6">
+                            <div class="form-group">
+                                <div class="input-group">
+                                    <div class="input-group-addon">
+                                        <i class="fa fa-location-arrow"></i>
+                                        &nbsp;&nbsp;
+                                        <label asp-for="FooterUpdateModel.ContactAddress"></label>
+                                    </div>
+                                    <input asp-for="FooterUpdateModel.ContactAddress" class="au-input au-input--full" type="text" required />
+                                    <span asp-validation-for="FooterUpdateModel.ContactAddress" class="text-danger"></span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-12 col-md-6">
+                            <div class="form-group">
+                                <div class="input-group">
+                                    <div class="input-group-addon">
+                                        <i class="fa fa-envelope"></i>
+                                        &nbsp;&nbsp;
+                                        <label asp-for="FooterUpdateModel.ContactEmail"></label>
+                                    </div>
+                                    <input asp-for="FooterUpdateModel.ContactEmail" class="au-input au-input--full" type="email" required />
+                                    <span asp-validation-for="FooterUpdateModel.ContactEmail" class="text-danger"></span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-12 col-md-6">
+                            <div class="form-group">
+                                <div class="input-group">
+                                    <div class="input-group-addon">
+                                        <i class="fa fa-mobile"></i>
+                                        &nbsp;&nbsp;
+                                        <label asp-for="FooterUpdateModel.ContactNumber"></label>
+                                    </div>
+                                    <input asp-for="FooterUpdateModel.ContactNumber" class="au-input au-input--full" type="tel" required />
+                                    <span asp-validation-for="FooterUpdateModel.ContactNumber" class="text-danger"></span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-12 col-md-12">
+                            <div class="form-group">
+                                <div class="input-group">
+                                    <div class="input-group-addon">
+                                        <i class="fa fa-comments"></i>
+                                        &nbsp;&nbsp;
+                                        <label asp-for="FooterUpdateModel.Slogan"></label>
+                                    </div>
+                                    <textarea asp-for="FooterUpdateModel.Slogan" placeholder="Slogan" class="form-control textarea-init" required>@Model.FooterUpdateModel.Slogan</textarea>
+                                    <span asp-validation-for="FooterUpdateModel.Slogan" class="text-danger"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-actions form-group">
+                        <button class="btn btn-success btn-sm" type="submit"><i class="fas fa-edit"></i> Update</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-6 col-md-6 col-sm-12">
+        <div class="card">
+            <div class="card-header">
+                <strong>Important Links </strong>
+                <a asp-controller="WebSite" asp-action="LinkItemCreate" class="btn btn-primary text-light btn-sm" style="float: right;">
+                    <i class="fas fa-plus"></i> Add
+                </a>
+
+            </div>
+            <div class="card-body card-block">
+
+                @if (Model.ImportantLinksModel.Count > 0)
+                {
+                    foreach (var links in Model.ImportantLinksModel)
+                    {
+                        <ul class="list-group">
+                            <li class="list-group-item">
+                                <b>@(serialize++).</b>&nbsp; @links.Title
+                                <div class="card-text text-sm-center float-sm-right">
+                                    <a asp-controller="WebSite" asp-action="LinkItemUpdate" asp-route-id="@links.ImportantLinkId"> <i class="fas fa-edit text-success"></i> Edit</a> |
+                                    <a href="#" onclick="NotifyAndDelete(@links.ImportantLinkId)"><i class="fas fa-trash" style="color: red;"></i> Delete</a>
+                                </div>
+                            </li>
+                        </ul>
+                    }
+                }
+                else
+                {
+                    <div class="text-center"><h4>Dat not found</h4></div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script>
+        function NotifyAndDelete(id) {
+            swal({
+                title: "Are you sure?",
+                text: "You want to delete this feature, You won't be able to revert this data!",
+                icon: 'warning',
+                closeOnEsc: false,
+                closeOnClickOutside: false,
+                buttons: true,
+                dangerMode: true,
+            }).then((willDelete) => {
+                if (willDelete) {
+                    $.ajax({
+                        type: "POST",
+                        url: "/WebSite/LinkItemDelete",
+                        dataType: "json",
+                        headers: {
+                            "RequestVerificationToken": $('input[name = __RequestVerificationToken]').val()
+                        },
+                        data: {
+                            id: id
+                        },
+                        success: function (response) {
+                            swal("Poof all gone! " + response, {
+                                icon: "success",
+                            }).then(function () {
+                                window.location.href = "/WebSite/Footer"
+                            });
+                        },
+                        failure: function (response) {
+                            alert(response.responseText);
+                        },
+                        error: function (response) {
+                            alert(response.responseText);
+                        }
+                    });
+                }
+            });
+        }
+    </script>
+}

@@ -1,0 +1,45 @@
+﻿@model College.Model.DataTransferObject.SalientFeaturesDto.SalientFeaturesModelDto
+@{
+    Layout = "~/Views/Shared/_BackendLayout.cshtml";
+    ViewData["Title"] = " Update Salient Features -";
+}
+@(await Html.PartialAsync("~/Views/Shared/_AlertLayout.cshtml"))
+<div class="col-lg-12 col-md-12 col-sm-12">
+    <div class="card">
+        <div class="card-header">
+            <h5>
+                Update Feature
+                <a asp-controller="WebSite" asp-action="Features" class="btn btn-primary btn-sm text-light" style="float: right;">
+                    <i class="fas fa-arrow-left"></i>  Back to features list
+                </a>
+            </h5>
+        </div>
+        <div class="card-body card-block">
+            <form asp-action="FeaturesUpdate" asp-controller="WebSite" method="post" asp-antiforgery="true">
+                <div class="form-group">
+                    <div asp-validation-summary="ModelOnly" class="text-danger">
+                        <span>Please correct the following errors</span>
+                    </div>
+                </div>
+                <input type="hidden" asp-for="SalientFeatureId" />
+                <div class="row">
+                    <div class="col-sm-12 col-md-12 col-lg-12">
+                        <div class="form-group">
+                            <label asp-for="Feature"></label>
+                            <input asp-for="Feature" class="au-input au-input--full" type="text" required />
+                            <span asp-validation-for="Feature" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-actions form-group">
+                    <button class="btn btn-success btn-sm" type="submit"><i class="fas fa-edit"></i> Update</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

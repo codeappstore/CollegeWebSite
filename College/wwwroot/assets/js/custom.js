@@ -21,7 +21,7 @@ tinymce.init({
     toolbar: 'formatselect | bold italic strikethrough forecolor backcolor permanentpen formatpainter | link image media pageembed | alignleft aligncenter alignright alignjustify  | numlist bullist outdent indent | removeformat | addcomment',
     paste_data_images: true,
     menubar: true,
-    height: 500,
+    height: 300,
     theme: 'silver',
     mobile: {
         theme: 'mobile',

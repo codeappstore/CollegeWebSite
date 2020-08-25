@@ -1,0 +1,93 @@
+﻿@using Microsoft.AspNetCore.Http
+@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
+@{ string pageName = @ViewContext.RouteData.Values["action"].ToString();
+    string baseUrl = HttpContextAccessor.HttpContext.Request.Scheme + "://" + Url.ActionContext.HttpContext.Request.Host;
+}
+@{
+    Layout = "~/Views/Shared/_BackendLayout.cshtml";
+    ViewData["Title"] = "Web Site  -";
+}
+@(await Html.PartialAsync("~/Views/Shared/_AlertLayout.cshtml"))
+
+<div class="row">
+    <div class="col-sm-12 col-md-6 col-lg-6">
+        <div class="card">
+            <div class="card-header">
+                <h4 class="card-title text-center">
+                    <i class="fas fa-columns text-primary"></i> Footer
+                </h4>
+            </div>
+            <div class="card-body card-text">
+                <p>
+                    If you are going to use a passage of Lorem Ipsum you need to be sure there isn't anything
+                    embarrassing hidden in the middle of text
+                </p>
+            </div>
+            <div class="card-footer text-center">
+                <a asp-controller="WebSite" asp-action="Footer" class="btn btn-primary"><i class="fas fa-edit"></i> Edit</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-sm-12 col-md-6 col-lg-6">
+        <div class="card">
+            <div class="card-header">
+                <h4 class="card-title text-center">
+                    <i class="fas fa-outdent text-primary"></i> The Salient Features
+                </h4>
+            </div>
+            <div class="card-body">
+                <div class="align-items-center">
+                    <ul class="pl-3 text-left">
+                        <li>Situated in the peaceful area away from the noise of the city</li>
+                        <li>Well ventilated and echo free classrooms with comfortable seating arrangement</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="card-footer text-center">
+                <a asp-controller="WebSite" asp-action="Features" class="btn btn-primary"><i class="fas fa-edit"></i> Edit</a>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="col-sm-12 col-md-6 col-lg-6">
+        <div class="card">
+            <div class="card-header">
+                <h4 class="card-title text-center">
+                    <i class="fas fa-users text-primary"></i> Our Students Say!
+                </h4>
+            </div>
+            <div class="card-body card-text">
+                <p>
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
+                    tempor incididunt ut labore.
+                </p>
+            </div>
+            <div class="card-footer text-center">
+                <a href="#" class="btn btn-primary"><i class="fas fa-edit"></i> Edit</a>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="col-sm-12 col-md-6 col-lg-6">
+        <div class="card">
+            <div class="card-header">
+                <h4 class="card-title text-center">
+                    <i class="fas fa-desktop text-primary"></i> Other Pages
+                </h4>
+            </div>
+            <div class="card-body text-center">
+                <a href="#" class="btn btn-primary img-thumbnail m-2"><i class="fas fa-home"></i> Home</a>
+                <a href="#" class="btn btn-primary img-thumbnail m-2"><i class="fas fa-user"></i> About Us</a>
+                <a href="#" class="btn btn-primary img-thumbnail m-2"><i class="fas fa-exclamation-circle"></i> Background</a>
+                <a href="#" class="btn btn-primary img-thumbnail m-2"><i class="fas fa-users"></i> Staff and Faculties</a>
+                <a href="#" class="btn btn-primary img-thumbnail m-2"><i class="fas fa-fire"></i> Agriculture</a>
+                <a href="#" class="btn btn-primary img-thumbnail m-2"><i class="fas fa-globe"></i> Forestry</a>
+                <a href="#" class="btn btn-primary img-thumbnail m-2"><i class="fas fa-info"></i> Privacy Policy</a>
+            </div>
+        </div>
+    </div>
+
+</div>
