@@ -1,4 +1,5 @@
 ﻿@using Microsoft.AspNetCore.Http
+@model College.Model.DataTransferObject.OtherDto.FooterStudentSlogan
 @inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
 @{ string pageName = @ViewContext.RouteData.Values["action"].ToString();
     string baseUrl = HttpContextAccessor.HttpContext.Request.Scheme + "://" + Url.ActionContext.HttpContext.Request.Host;
@@ -19,8 +20,7 @@
             </div>
             <div class="card-body card-text">
                 <p>
-                    If you are going to use a passage of Lorem Ipsum you need to be sure there isn't anything
-                    embarrassing hidden in the middle of text
+                    @Model.FooterSlogan
                 </p>
             </div>
             <div class="card-footer text-center">
@@ -60,12 +60,11 @@
             </div>
             <div class="card-body card-text">
                 <p>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-                    tempor incididunt ut labore.
+                    @Model.StudentSaySlogan
                 </p>
             </div>
             <div class="card-footer text-center">
-                <a href="#" class="btn btn-primary"><i class="fas fa-edit"></i> Edit</a>
+                <a sp-controller="WebSite" asp-action="StudentsSay" class="btn btn-primary"><i class="fas fa-edit"></i> Edit</a>
             </div>
         </div>
     </div>
@@ -86,6 +85,7 @@
                 <a href="#" class="btn btn-primary img-thumbnail m-2"><i class="fas fa-fire"></i> Agriculture</a>
                 <a href="#" class="btn btn-primary img-thumbnail m-2"><i class="fas fa-globe"></i> Forestry</a>
                 <a href="#" class="btn btn-primary img-thumbnail m-2"><i class="fas fa-info"></i> Privacy Policy</a>
+                <a href="#" class="btn btn-primary img-thumbnail m-2"><i class="fas fa-copy"></i> Popup</a>
             </div>
         </div>
     </div>

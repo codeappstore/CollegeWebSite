@@ -4,8 +4,11 @@ using College.Model.DataTransferObject.FooterDto;
 using College.Model.DataTransferObject.ImportantLinksDto;
 using College.Model.DataTransferObject.OtherDto;
 using College.Model.DataTransferObject.SalientFeaturesDto;
+using College.Model.DataTransferObject.StudentSayStudents;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.IO;
 using System.Threading.Tasks;
 
 namespace College.Controllers
@@ -14,13 +17,16 @@ namespace College.Controllers
     public class WebSiteController : Controller
     {
         private readonly ILayoutRepo _repo;
-        public WebSiteController(ILayoutRepo _repo)
+        private readonly IWebHostEnvironment _env;
+        public WebSiteController(ILayoutRepo _repo, IWebHostEnvironment _env)
         {
             this._repo = _repo;
+            this._env = _env;
         }
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            return View();
+            var data = await _repo.FetchFooterStudentSlogan();
+            return View(data);
         }
 
         #region Salient Features
@@ -263,6 +269,236 @@ namespace College.Controllers
             }
         }
 
+        #endregion
+
+        #region Student Say
+
+        public async Task<IActionResult> StudentsSay()
+        {
+            var combinedModel = new StudentSaysStudentsModelDto()
+            {
+                SayModel = await _repo.FetchStudentsSayAsyncTask(1),
+                StudentsModel = await _repo.FetchStudentsSayingListAsyncTask()
+            };
+            return View("SayStudents/StudentsSay", combinedModel);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> StudentsSay(StudentSaysStudentsModelDto combinedModel)
+        {
+            if (ModelState.IsValid)
+            {
+                if (combinedModel.SayModel != null)
+                {
+                    // Update Image
+                    var imageString = "";
+                    if (combinedModel.SayModel.BackgroundImage != null)
+                    {
+                        // Users Folder
+                        var userImagePath = @"\User_Information\Students_Say\Images\";
+                        // Root Path
+                        var webRootPath = _env.WebRootPath;
+                        // Base Path
+                        var basePath = Path.Combine(webRootPath + userImagePath);
+                        // Base Path Exists or create new base path
+                        bool basePathExists = System.IO.Directory.Exists(basePath);
+                        if (!basePathExists) Directory.CreateDirectory(basePath);
+                        // File
+                        var fileName = Path.GetFileNameWithoutExtension(combinedModel.SayModel.BackgroundImage.FileName + Path.GetExtension(combinedModel.SayModel.BackgroundImage.FileName));
+                        var filePath = Path.Combine(basePath, fileName);
+                        var fileExists = System.IO.File.Exists(filePath);
+                        if (fileExists) System.IO.File.Delete(filePath);
+                        using (var stream = new FileStream(filePath, FileMode.Create))
+                        {
+                            await combinedModel.SayModel.BackgroundImage.CopyToAsync(stream);
+                        }
+                        imageString = userImagePath + fileName;
+                    }
+                    combinedModel.SayModel.Image = imageString;
+
+                    // Update in db
+                    if (await _repo.UpdateStudentSayAsyncTask(combinedModel.SayModel))
+                    {
+                        HttpContext.Session.SetString("Success", "Student's Say Updated Successfully.");
+                        return RedirectToAction(nameof(StudentsSay));
+                    }
+                    else
+                    {
+                        HttpContext.Session.SetString("Error", "Problem while updating the data!");
+                        return RedirectToAction(nameof(StudentsSay));
+                    }
+                }
+                else
+                {
+                    HttpContext.Session.SetString("Error", "Input fields might be empty or invalid!");
+                    return RedirectToAction(nameof(StudentsSay));
+                }
+            }
+            else
+            {
+                HttpContext.Session.SetString("Error", "Input fields might be empty or invalid!");
+                return RedirectToAction(nameof(StudentsSay));
+            }
+        }
+
+        public IActionResult StudentSayCreate()
+        {
+            var model = new StudentSayStudentsModelDto();
+            return View("SayStudents/StudentSayCreate", model);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> StudentSayCreate(StudentSayStudentsModelDto studentSay)
+        {
+            if (ModelState.IsValid)
+            {
+                if (studentSay != null)
+                {
+                    // Update image 
+                    // Update Image
+                    var imageString = "";
+                    if (studentSay.ImageString != null)
+                    {
+                        // Users Folder
+                        var userImagePath = @"\User_Information\Students_Say\Images\";
+                        // Root Path
+                        var webRootPath = _env.WebRootPath;
+                        // Base Path
+                        var basePath = Path.Combine(webRootPath + userImagePath);
+                        // Base Path Exists or create new base path
+                        bool basePathExists = System.IO.Directory.Exists(basePath);
+                        if (!basePathExists) Directory.CreateDirectory(basePath);
+                        // File
+                        var fileName = Path.GetFileNameWithoutExtension(studentSay.ImageString.FileName + Path.GetExtension(studentSay.ImageString.FileName));
+                        var filePath = Path.Combine(basePath, fileName);
+                        var fileExists = System.IO.File.Exists(filePath);
+                        if (fileExists) System.IO.File.Delete(filePath);
+                        using (var stream = new FileStream(filePath, FileMode.Create))
+                        {
+                            await studentSay.ImageString.CopyToAsync(stream);
+                        }
+                        imageString = userImagePath + fileName;
+                    }
+                    studentSay.Image = imageString;
+
+                    // Update db
+                    if (await _repo.CreateStudentsSayingAsyncTask(studentSay))
+                    {
+                        HttpContext.Session.SetString("Success", "Student saying created Successfully.");
+                        return RedirectToAction(nameof(StudentsSay));
+                    }
+                    else
+                    {
+                        HttpContext.Session.SetString("Error", "Problem while adding the data!");
+                        return RedirectToAction(nameof(StudentsSay));
+                    }
+                }
+                else
+                {
+                    HttpContext.Session.SetString("Error", "Input fields might be empty or invalid!");
+                    return RedirectToAction(nameof(StudentsSay));
+                }
+            }
+            else
+            {
+                HttpContext.Session.SetString("Error", "Input fields might be empty or invalid!");
+                return RedirectToAction(nameof(StudentsSay));
+            }
+        }
+
+        public async Task<IActionResult> StudentSayUpdate(int id)
+        {
+            var dataSet = await _repo.FetchStudentsSayingByIdAsyncTask(id);
+            return View("SayStudents/StudentSayUpdate", dataSet);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> StudentSayUpdate(StudentSayStudentsModelDto sayStudents)
+        {
+            if (ModelState.IsValid)
+            {
+                if (sayStudents != null)
+                {
+                    // Update image 
+                    var imageString = "";
+                    if (sayStudents.ImageString != null)
+                    {
+                        // Users Folder
+                        var userImagePath = @"\User_Information\Students_Say\Images\";
+                        // Root Path
+                        var webRootPath = _env.WebRootPath;
+                        // Base Path
+                        var basePath = Path.Combine(webRootPath + userImagePath);
+                        // Base Path Exists or create new base path
+                        bool basePathExists = System.IO.Directory.Exists(basePath);
+                        if (!basePathExists) Directory.CreateDirectory(basePath);
+                        // File
+                        var fileName = Path.GetFileNameWithoutExtension(sayStudents.ImageString.FileName + Path.GetExtension(sayStudents.ImageString.FileName));
+                        var filePath = Path.Combine(basePath, fileName);
+                        var fileExists = System.IO.File.Exists(filePath);
+                        if (fileExists) System.IO.File.Delete(filePath);
+                        using (var stream = new FileStream(filePath, FileMode.Create))
+                        {
+                            await sayStudents.ImageString.CopyToAsync(stream);
+                        }
+                        imageString = userImagePath + fileName;
+                    }
+                    sayStudents.Image = imageString;
+
+
+                    // Update database
+                    if (await _repo.UpdateStudentsSayingAsyncTask(sayStudents))
+                    {
+                        HttpContext.Session.SetString("Success", "Students saying updated Successfully.");
+                        return RedirectToAction(nameof(StudentsSay));
+                    }
+                    else
+                    {
+                        HttpContext.Session.SetString("Error", "Problem while updating the data!");
+                        return RedirectToAction(nameof(StudentsSay));
+                    }
+                }
+                else
+                {
+                    HttpContext.Session.SetString("Error", "Input fields might be empty or invalid!");
+                    return RedirectToAction(nameof(StudentsSay));
+                }
+            }
+            else
+            {
+                HttpContext.Session.SetString("Error", "Input fields might be empty or invalid!");
+                return RedirectToAction(nameof(StudentsSay));
+            }
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> StudentSayDelete(int id)
+        {
+
+            var dataSet = await _repo.FetchStudentsSayingByIdAsyncTask(id);
+
+            var userImagePath = dataSet.Image;
+            // Root Path
+            var webRootPath = _env.WebRootPath;
+            // Base Path
+            var basePath = Path.Combine(webRootPath + userImagePath);
+
+            var fileExists = System.IO.File.Exists(basePath);
+            if (fileExists) System.IO.File.Delete(basePath);
+
+            // Delete user
+            if (await _repo.DeleteStudentsSayingAsyncTask(dataSet.StudentSayId))
+            {
+                return Json("Success, Students saying successfully");
+            }
+            else
+            {
+                return Json("Error Problem Deleting User");
+            }
+        }
 
         #endregion
     }
