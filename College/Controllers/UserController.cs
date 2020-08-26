@@ -75,7 +75,7 @@ namespace College.Controllers
                             if (authImage.ImageModel != null)
                             {
                                 // Users Folder
-                                var userImagePath = @"\User_Information\" + authImage.AuthModel.Email + @"\Images\";
+                                var userImagePath = @"\User_Information\Users\" + authImage.AuthModel.Email + @"\Images\";
                                 // Root Path
                                 var webRootPath = _env.WebRootPath;
                                 // Base Path
@@ -293,7 +293,7 @@ namespace College.Controllers
             {
                 // Delete User image folder
                 // Users Folder
-                var userFolderPath = @"\User_Information\" + userData.Email;
+                var userFolderPath = @"\User_Information\Users\" + userData.Email;
                 // Root Path
                 var webRootPath = _env.WebRootPath;
                 // Base Path

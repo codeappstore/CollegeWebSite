@@ -64,6 +64,15 @@
                                             <a href="#" onclick="NotifyAndDelete(@UserItem.AuthId, '@UserItem.FullName')"><i class="fas fa-trash" style="color: red;"></i> Delete</a>
                                         </div>
                                     }
+
+                                    @if (UserInfo.RoleId == 2)
+                                    {
+                                        <hr>
+                                        <div class="card-text text-sm-center">
+                                            <a asp-controller="User" asp-action="Details" asp-route-id="@UserItem.AuthId"> <i class="fas fa-eye text-primary"></i> View</a> |
+                                            <a href="#" onclick="NotifyAndDelete(@UserItem.AuthId, '@UserItem.FullName')"><i class="fas fa-trash" style="color: red;"></i> Delete</a>
+                                        </div>
+                                    }
                                 </div>
                             </div>
                         </div>

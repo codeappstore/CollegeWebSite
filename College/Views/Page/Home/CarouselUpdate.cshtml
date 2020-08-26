@@ -1,0 +1,74 @@
+﻿@model College.Model.DataTransferObject.CarouselDto.CarouselModelDto
+@{
+    Layout = "~/Views/Shared/_BackendLayout.cshtml";
+    ViewData["Title"] = " Add Carousel -";
+}
+@(await Html.PartialAsync("~/Views/Shared/_AlertLayout.cshtml"))
+<div class="col-lg-12 col-md-12 col-sm-12">
+    <div class="card">
+        <div class="card-header">
+            <h5>
+                Create New Feature
+                <a asp-controller="Page" asp-action="Home" class="btn btn-primary btn-sm text-light" style="float: right;">
+                    <i class="fas fa-arrow-left"></i>  Back to home page settings
+                </a>
+            </h5>
+        </div>
+        <div class="card-body card-block">
+            <form asp-action="CarouselUpdate" asp-controller="Page" method="post" enctype="multipart/form-data" asp-antiforgery="true">
+                <div class="form-group">
+                    <div asp-validation-summary="ModelOnly" class="text-danger">
+                        <span>Please correct the following errors</span>
+                    </div>
+                </div>
+
+                <input type="hidden" asp-for="CarouselId" />
+
+                <div class="row">
+                    <div class="col-sm-12 col-md-12 col-lg-12">
+                        <div class="form-group">
+                            <label asp-for="Title"></label>
+                            <input asp-for="Title" class="au-input au-input--full" type="text" required />
+                            <span asp-validation-for="Title" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-sm-12 col-md-6 col-lg-6">
+                        <div class="form-group">
+                            <label asp-for="Summary"></label>
+                            <textarea asp-for="Summary" rows="5" placeholder="Description" class="au-input au-input--full textarea-init" cols="40" required></textarea>
+                            <span asp-validation-for="Summary" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-sm-12 col-md-6 col-lg-6">
+                        <div class="form-group">
+                            <label asp-for="ImageString"></label>
+                            <input asp-for="ImageString" type="file" class="dropify form-control-file" data-max-file-size="5M" data-allowed-file-extensions="jpg jpeg png">
+                            <p for="ImageString">Image (5MB)</p>
+                            <span asp-validation-for="ImageString" class="text-danger"></span>
+                        </div>
+                        @if (Model.Image != null)
+                        {
+                            <div class="row">
+                                <div class="col-sm-12 d-flex justify-content-center ">
+                                    <img asp-append-version="true" src="@Model.Image" alt="@Model.Image's image not found" style="max-height: 200px; width: auto;" />
+                                </div>
+                                <div class="col-sm-12">
+                                    <p class="text-center">Current Image</p>
+                                </div>
+                            </div>
+
+                        }
+                    </div>
+                </div>
+
+                <div class="form-actions form-group">
+                    <button class="btn btn-success btn-sm" type="submit"><i class="fas fa-edit"></i> Update</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

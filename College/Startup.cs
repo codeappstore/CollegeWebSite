@@ -73,9 +73,15 @@ namespace College
 
             #endregion
 
-            #region Email
+            #region Layout
 
             services.AddScoped<ILayoutRepo, LayoutRepo>();
+
+            #endregion
+
+            #region Frontend
+
+            services.AddScoped<IFrontEndRepo, FrontEndRepo>();
 
             #endregion
 

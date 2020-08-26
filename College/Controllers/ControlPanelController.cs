@@ -59,7 +59,7 @@ namespace College.Controllers
                         var userSessionDetails = HttpContext.Session.GetComplexData<AuthBasicDetailsModelDto>("_Details");
 
                         // Users Folder
-                        var userImagePath = @"\User_Information\" + userSessionDetails.Email + @"\Images\";
+                        var userImagePath = @"\User_Information\Users\" + userSessionDetails.Email + @"\Images\";
 
                         // Root Path
                         var webRootPath = _env.WebRootPath;

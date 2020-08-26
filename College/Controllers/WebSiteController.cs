@@ -293,10 +293,11 @@ namespace College.Controllers
                 {
                     // Update Image
                     var imageString = "";
+                    var userDetails = await _repo.FetchStudentsSayAsyncTask(combinedModel.SayModel.StudentSayId);
                     if (combinedModel.SayModel.BackgroundImage != null)
                     {
                         // Users Folder
-                        var userImagePath = @"\User_Information\Students_Say\Images\";
+                        var userImagePath = @"\User_Information\Pages\Students Say\Images\";
                         // Root Path
                         var webRootPath = _env.WebRootPath;
                         // Base Path
@@ -314,8 +315,18 @@ namespace College.Controllers
                             await combinedModel.SayModel.BackgroundImage.CopyToAsync(stream);
                         }
                         imageString = userImagePath + fileName;
+                        if (string.IsNullOrWhiteSpace(imageString) && string.IsNullOrWhiteSpace(userDetails.Image))
+                        {
+                            HttpContext.Session.SetString("Error", "Image is required!");
+                            return RedirectToAction(nameof(StudentsSay));
+                        }
+                        combinedModel.SayModel.Image = imageString;
                     }
-                    combinedModel.SayModel.Image = imageString;
+                    else
+                    {
+                        combinedModel.SayModel.Image = userDetails.Image;
+                    }
+
 
                     // Update in db
                     if (await _repo.UpdateStudentSayAsyncTask(combinedModel.SayModel))
@@ -362,7 +373,7 @@ namespace College.Controllers
                     if (studentSay.ImageString != null)
                     {
                         // Users Folder
-                        var userImagePath = @"\User_Information\Students_Say\Images\";
+                        var userImagePath = @"\User_Information\Pages\Students Say\Images\";
                         // Root Path
                         var webRootPath = _env.WebRootPath;
                         // Base Path
@@ -381,6 +392,12 @@ namespace College.Controllers
                         }
                         imageString = userImagePath + fileName;
                     }
+                    if (string.IsNullOrWhiteSpace(imageString))
+                    {
+                        HttpContext.Session.SetString("Error", "Image is required!");
+                        return RedirectToAction(nameof(StudentsSay));
+                    }
+
                     studentSay.Image = imageString;
 
                     // Update db
@@ -424,10 +441,11 @@ namespace College.Controllers
                 {
                     // Update image 
                     var imageString = "";
+                    var userDetails = await _repo.FetchStudentsSayingByIdAsyncTask(sayStudents.StudentSayId);
                     if (sayStudents.ImageString != null)
                     {
                         // Users Folder
-                        var userImagePath = @"\User_Information\Students_Say\Images\";
+                        var userImagePath = @"\User_Information\Pages\Students Say\Images\";
                         // Root Path
                         var webRootPath = _env.WebRootPath;
                         // Base Path
@@ -445,9 +463,17 @@ namespace College.Controllers
                             await sayStudents.ImageString.CopyToAsync(stream);
                         }
                         imageString = userImagePath + fileName;
+                        if (string.IsNullOrWhiteSpace(imageString) && string.IsNullOrWhiteSpace(userDetails.Image))
+                        {
+                            HttpContext.Session.SetString("Error", "Image is required!");
+                            return RedirectToAction(nameof(StudentsSay));
+                        }
+                        sayStudents.Image = imageString;
                     }
-                    sayStudents.Image = imageString;
-
+                    else
+                    {
+                        sayStudents.Image = userDetails.Image;
+                    }
 
                     // Update database
                     if (await _repo.UpdateStudentsSayingAsyncTask(sayStudents))
@@ -481,13 +507,16 @@ namespace College.Controllers
             var dataSet = await _repo.FetchStudentsSayingByIdAsyncTask(id);
 
             var userImagePath = dataSet.Image;
+            // Base Path
+
+            // Delete User image folder
             // Root Path
             var webRootPath = _env.WebRootPath;
             // Base Path
             var basePath = Path.Combine(webRootPath + userImagePath);
-
-            var fileExists = System.IO.File.Exists(basePath);
-            if (fileExists) System.IO.File.Delete(basePath);
+            // Base Path Exists or create new base path
+            bool basePathExists = System.IO.Directory.Exists(basePath);
+            if (basePathExists) System.IO.File.Delete(basePath);
 
             // Delete user
             if (await _repo.DeleteStudentsSayingAsyncTask(dataSet.StudentSayId))
