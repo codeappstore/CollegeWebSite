@@ -1,0 +1,124 @@
+﻿@model College.Model.DataTransferObject.TeacherDto.TeacherModelDto
+@{
+    Layout = "~/Views/Shared/_BackendLayout.cshtml";
+    ViewData["Title"] = " Add Staffs -";
+}
+@(await Html.PartialAsync("~/Views/Shared/_AlertLayout.cshtml"))
+<div class="col-lg-12 col-md-12 col-sm-12">
+    <div class="card">
+        <div class="card-header">
+            <h5>
+                Create New Feature
+                <a asp-controller="Page" asp-action="Staffs" class="btn btn-primary btn-sm text-light" style="float: right;">
+                    <i class="fas fa-arrow-left"></i>  Back to staffs settings
+                </a>
+            </h5>
+        </div>
+        <div class="card-body card-block">
+            <form asp-action="StaffsAdd" asp-controller="Page" method="post" enctype="multipart/form-data" asp-antiforgery="true">
+                <div class="form-group">
+                    <div asp-validation-summary="ModelOnly" class="text-danger">
+                        <span>Please correct the following errors</span>
+                    </div>
+                </div>
+
+                <div class="row">
+
+                    <div class="col-sm-12 col-md-6 col-lg-6">
+                        <div class="form-group">
+                            <div class="input-group-addon">
+                                <i class="fa fa-user"></i>
+                                &nbsp;&nbsp;
+                                <label asp-for="TeacherName"></label>
+                            </div>
+                            <input asp-for="TeacherName" class="au-input au-input--full" type="text" required />
+                            <span asp-validation-for="TeacherName" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-12 col-md-6 col-lg-6">
+                        <div class="form-group">
+                            <div class="input-group-addon">
+                                <i class="fa fa-users"></i>
+                                &nbsp;&nbsp;
+                                <label asp-for="Designation"></label>
+                            </div>
+                            <input asp-for="Designation" class="au-input au-input--full" type="text" required />
+                            <span asp-validation-for="Designation" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-12 col-md-6 col-lg-6">
+                        <div class="form-group">
+                            <div class="input-group-addon">
+                                <i class="fab fa-facebook"></i>
+                                &nbsp;&nbsp;
+                                <label asp-for="Facebook"></label>
+                            </div>
+                            <input asp-for="Facebook" class="au-input au-input--full" type="url" />
+                            <span asp-validation-for="Facebook" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-12 col-md-6 col-lg-6">
+                        <div class="form-group">
+                            <div class="input-group-addon">
+                                <i class="fab fa-instagram"></i>
+                                &nbsp;&nbsp;
+                                <label asp-for="Instagram"></label>
+                            </div>
+                            <input asp-for="Instagram" class="au-input au-input--full" type="url" />
+                            <span asp-validation-for="Instagram" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-12 col-md-6 col-lg-6">
+                        <div class="form-group">
+                            <div class="input-group-addon">
+                                <i class="fab fa-twitter"></i>
+                                &nbsp;&nbsp;
+                                <label asp-for="Twitter"></label>
+                            </div>
+                            <input asp-for="Twitter" class="au-input au-input--full" type="url" />
+                            <span asp-validation-for="Twitter" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-12 col-md-6 col-lg-6">
+                        <div class="form-group">
+                            <div class="input-group-addon">
+                                <i class="fab fa-google-plus"></i>
+                                &nbsp;&nbsp;
+                                <label asp-for="GooglePlus"></label>
+                            </div>
+                            <input asp-for="GooglePlus" class="au-input au-input--full" type="url" />
+                            <span asp-validation-for="GooglePlus" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-12 col-md-6 col-lg-6">
+                        <div class="form-group">
+                            <div class="input-group-addon">
+                                <i class="fa fa-picture-o"></i>
+                                &nbsp;&nbsp;
+                                <label asp-for="ImageString"></label>
+                            </div>
+                            <input asp-for="ImageString" type="file" class="dropify form-control-file" data-max-file-size="5M" data-allowed-file-extensions="jpg jpeg png">
+                            <p for="ImageString">Image (5MB)</p>
+                            <span asp-validation-for="ImageString" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-actions form-group">
+                    <button class="btn btn-success btn-sm" type="submit"><i class="fas fa-rocket"></i> Add</button>
+                    <button class="btn btn-danger btn-sm" type="reset"><i class="fas fa-trash"></i> Reset</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

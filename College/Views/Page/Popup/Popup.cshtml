@@ -1,0 +1,74 @@
+﻿@model College.Model.DataTransferObject.PopupDto.PopupModelDto
+@{
+    Layout = "~/Views/Shared/_BackendLayout.cshtml";
+    ViewData["Title"] = "Popup -";
+}
+@(await Html.PartialAsync("~/Views/Shared/_AlertLayout.cshtml"))
+<div class="col-lg-12 col-md-12 col-sm-12">
+    <div class="card">
+        <div class="card-header">
+            <h5>
+                Popup Page
+                <a asp-controller="WebSite" asp-action="Index" class="btn btn-primary btn-sm text-light" style="float: right;">
+                    <i class="fas fa-arrow-left"></i>  Back to website manager
+                </a>
+            </h5>
+        </div>
+        <div class="card-body card-block">
+            <form asp-controller="Page" asp-action="Popup" method="post" enctype="multipart/form-data" asp-antiforgery="true">
+                <div class="form-group">
+                    <div asp-validation-summary="ModelOnly" class="text-danger">
+                        <span>Please correct the following errors</span>
+                    </div>
+                </div>
+                <input type="hidden" asp-for="PopupId" />
+
+                <div class="row">
+
+                    <div class="col-sm-12 col-md-6 col-lg-6">
+                        <div class="form-group">
+                            <div class="input-group-addon">
+                                <i class="fa fa-laptop"></i>
+                                &nbsp;&nbsp;
+                                <label asp-for="Name"></label>
+                            </div>
+                            <input asp-for="Name" class="au-input au-input--full" type="text" required />
+                            <span asp-validation-for="Name" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-12 col-md-6 col-lg-6">
+                        <div class="form-group">
+                            <div class="input-group-addon">
+                                <i class="fa fa-photo"></i>
+                                &nbsp;&nbsp;
+                                <label asp-for="ImageString"></label>
+                            </div>
+                            <input asp-for="ImageString" type="file" class="dropify form-control-file" data-max-file-size="5M" data-allowed-file-extensions="jpg jpeg png">
+                            <p for="ImageString">Image (5MB)</p>
+                            <span asp-validation-for="ImageString" class="text-danger"></span>
+                        </div>
+                        @if (Model.Link != null)
+                        {
+                            <div class="row">
+                                <div class="col-sm-12 d-flex justify-content-center ">
+                                    <img asp-append-version="false" src="@Model.Link" alt="@Model.Name's image not found" style="max-height: 200px; width: auto;" />
+                                </div>
+                                <div class="col-sm-12">
+                                    <p class="text-center">Current Image</p>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+
+                <div class="form-actions form-group">
+                    <button class="btn btn-success btn-sm" type="submit"><i class="fas fa-edit"></i> Update</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

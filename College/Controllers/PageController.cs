@@ -4,6 +4,8 @@ using College.Model.DataTransferObject.AcademicItemsDto;
 using College.Model.DataTransferObject.CarouselDto;
 using College.Model.DataTransferObject.OtherDto;
 using College.Model.DataTransferObject.PageDto;
+using College.Model.DataTransferObject.PopupDto;
+using College.Model.DataTransferObject.TeacherDto;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -315,7 +317,6 @@ namespace College.Controllers
             }
         }
 
-
         public async Task<IActionResult> CarouselUpdate(int id)
         {
             if (id != 0)
@@ -442,17 +443,23 @@ namespace College.Controllers
 
         public async Task<IActionResult> Forestry()
         {
-            var pages = await _repo.FetchPageDataByIdAsyncTask(4);
-            return View("Forestry/Forestry", pages);
+            var combinedModel = new AttachmentPageModel()
+            {
+                Attachment = await _repo.FetchAttachmentByIdAsyncTask(4),
+                Page = await _repo.FetchPageDataByIdAsyncTask(4)
+            };
+            return View("Forestry/Forestry", combinedModel);
         }
-
 
         public async Task<IActionResult> Agriculture()
         {
-            var pages = await _repo.FetchPageDataByIdAsyncTask(5);
-            return View("Agriculture/Agriculture", pages);
+            var combinedModel = new AttachmentPageModel()
+            {
+                Attachment = await _repo.FetchAttachmentByIdAsyncTask(5),
+                Page = await _repo.FetchPageDataByIdAsyncTask(5)
+            };
+            return View("Agriculture/Agriculture", combinedModel);
         }
-
 
         public async Task<IActionResult> Privacy()
         {
@@ -460,6 +467,121 @@ namespace College.Controllers
             return View("Privacy/Privacy", pages);
         }
 
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> UpdatePageWithAttachment(AttachmentPageModel combinedModel)
+        {
+            if (ModelState.IsValid)
+            {
+                if (combinedModel.Page != null)
+                {
+                    // Update Image
+                    var imageString = "";
+                    var pageDetails = await _repo.FetchPageDataByIdAsyncTask(combinedModel.Page.PageId);
+                    if (combinedModel.Page.ImageString != null)
+                    {
+                        // Users Folder
+                        var userImagePath = @"\User_Information\Pages\" + combinedModel.Page.PageName + @"\";
+                        // Root Path
+                        var webRootPath = _env.WebRootPath;
+                        // Base Path
+                        var basePath = Path.Combine(webRootPath + userImagePath);
+                        // Base Path Exists or create new base path
+                        bool basePathExists = System.IO.Directory.Exists(basePath);
+                        if (!basePathExists) Directory.CreateDirectory(basePath);
+                        // File
+                        var fileName = Path.GetFileNameWithoutExtension(combinedModel.Page.ImageString.FileName + Path.GetExtension(combinedModel.Page.ImageString.FileName));
+                        var filePath = Path.Combine(basePath, fileName);
+                        var fileExists = System.IO.File.Exists(filePath);
+                        if (fileExists) System.IO.File.Delete(filePath);
+                        using (var stream = new FileStream(filePath, FileMode.Create))
+                        {
+                            await combinedModel.Page.ImageString.CopyToAsync(stream);
+                        }
+                        imageString = userImagePath + fileName;
+                        if (string.IsNullOrWhiteSpace(imageString) && string.IsNullOrWhiteSpace(pageDetails.BackgroundImage))
+                        {
+                            HttpContext.Session.SetString("Error", "Image is required!");
+                            return RedirectToAction("Index", "WebSite");
+                        }
+                        combinedModel.Page.BackgroundImage = imageString;
+                    }
+                    else
+                    {
+                        combinedModel.Page.BackgroundImage = pageDetails.BackgroundImage;
+                    }
+
+                    if (combinedModel.Attachment != null)
+                    {
+                        var fileString = "";
+                        var fileDetails = await _repo.FetchAttachmentByIdAsyncTask(combinedModel.Page.PageId);
+                        if (combinedModel.Attachment.FileString != null)
+                        {
+                            var userFilePath = @"\User_Information\Pages\" + combinedModel.Page.PageName + @"\";
+                            // Root Path
+                            var webRootPath = _env.WebRootPath;
+                            // Base Path
+                            var basePath = Path.Combine(webRootPath + userFilePath);
+                            // Base Path Exists or create new base path
+                            bool basePathExists = System.IO.Directory.Exists(basePath);
+                            if (!basePathExists) Directory.CreateDirectory(basePath);
+                            // File
+                            var fileName = Path.GetFileNameWithoutExtension(combinedModel.Attachment.FileString.FileName + Path.GetExtension(combinedModel.Attachment.FileString.FileName));
+                            var filePath = Path.Combine(basePath, fileName);
+                            var fileExists = System.IO.File.Exists(filePath);
+                            if (fileExists) System.IO.File.Delete(filePath);
+                            using (var stream = new FileStream(filePath, FileMode.Create))
+                            {
+                                await combinedModel.Attachment.FileString.CopyToAsync(stream);
+                            }
+                            fileString = userFilePath + fileName;
+                            if (string.IsNullOrWhiteSpace(fileString) && string.IsNullOrWhiteSpace(fileDetails.FileName))
+                            {
+                                HttpContext.Session.SetString("Error", "File is required!");
+                                return RedirectToAction("Index", "WebSite");
+                            }
+                            combinedModel.Attachment.Link = fileString;
+                        }
+                        else
+                        {
+                            combinedModel.Attachment.Link = fileDetails.Link;
+                        }
+                        // Update in db
+                        if (await _repo.UpdateAttachmentAsyncTask(combinedModel.Attachment))
+                        {
+                            HttpContext.Session.SetString("Success", combinedModel.Attachment.FileName + " page updated Successfully.");
+                        }
+                        else
+                        {
+                            HttpContext.Session.SetString("Error", "Problem while updating the data!");
+                        }
+                    }
+
+
+                    // Update in db
+                    if (await _repo.UpdatePageDataAsyncTask(combinedModel.Page))
+                    {
+                        HttpContext.Session.SetString("Success", combinedModel.Page.PageName + " page updated Successfully.");
+                        return RedirectToAction("Index", "WebSite");
+                    }
+                    else
+                    {
+                        HttpContext.Session.SetString("Error", "Problem while updating the data!");
+                        return RedirectToAction("Index", "WebSite");
+                    }
+                }
+                else
+                {
+                    HttpContext.Session.SetString("Error", "Input fields might be empty or invalid!");
+                    return RedirectToAction("Index", "WebSite");
+                }
+            }
+            else
+            {
+                HttpContext.Session.SetString("Error", "Input fields might be empty or invalid!");
+                return RedirectToAction("Index", "WebSite");
+            }
+        }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -530,5 +652,340 @@ namespace College.Controllers
                 return RedirectToAction("Index", "WebSite");
             }
         }
+
+        public async Task<IActionResult> Staffs()
+        {
+            var comboModel = new StaffPagesModelDto()
+            {
+                Page = await _repo.FetchPageDataByIdAsyncTask(9),
+                Staff = await _repo.FetchTeacherListAsyncTask()
+            };
+            return View("Staffs/Staffs", comboModel);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Staffs(StaffPagesModelDto combinedModel)
+        {
+            if (ModelState.IsValid)
+            {
+                if (combinedModel.Page != null)
+                {
+                    // Update Image
+                    var imageString = "";
+                    var pageDetails = await _repo.FetchPageDataByIdAsyncTask(combinedModel.Page.PageId);
+                    if (combinedModel.Page.ImageString != null)
+                    {
+                        // Users Folder
+                        var userImagePath = @"\User_Information\Pages\" + combinedModel.Page.PageName + @"\";
+                        // Root Path
+                        var webRootPath = _env.WebRootPath;
+                        // Base Path
+                        var basePath = Path.Combine(webRootPath + userImagePath);
+                        // Base Path Exists or create new base path
+                        bool basePathExists = System.IO.Directory.Exists(basePath);
+                        if (!basePathExists) Directory.CreateDirectory(basePath);
+                        // File
+                        var fileName = Path.GetFileNameWithoutExtension(combinedModel.Page.ImageString.FileName + Path.GetExtension(combinedModel.Page.ImageString.FileName));
+                        var filePath = Path.Combine(basePath, fileName);
+                        var fileExists = System.IO.File.Exists(filePath);
+                        if (fileExists) System.IO.File.Delete(filePath);
+                        using (var stream = new FileStream(filePath, FileMode.Create))
+                        {
+                            await combinedModel.Page.ImageString.CopyToAsync(stream);
+                        }
+                        imageString = userImagePath + fileName;
+                        if (string.IsNullOrWhiteSpace(imageString) && string.IsNullOrWhiteSpace(pageDetails.BackgroundImage))
+                        {
+                            HttpContext.Session.SetString("Error", "Image is required!");
+                            return RedirectToAction(nameof(Staffs));
+                        }
+                        combinedModel.Page.BackgroundImage = imageString;
+                    }
+                    else
+                    {
+                        combinedModel.Page.BackgroundImage = pageDetails.BackgroundImage;
+                    }
+
+
+                    // Update in db
+                    if (await _repo.UpdatePageDataAsyncTask(combinedModel.Page))
+                    {
+                        HttpContext.Session.SetString("Success", "Staffs and faculties page updated Successfully.");
+                        return RedirectToAction(nameof(Staffs));
+                    }
+                    else
+                    {
+                        HttpContext.Session.SetString("Error", "Problem while updating the data!");
+                        return RedirectToAction(nameof(Staffs));
+                    }
+                }
+                else
+                {
+                    HttpContext.Session.SetString("Error", "Input fields might be empty or invalid!");
+                    return RedirectToAction(nameof(Staffs));
+                }
+            }
+            else
+            {
+                HttpContext.Session.SetString("Error", "Input fields might be empty or invalid!");
+                return RedirectToAction(nameof(Staffs));
+            }
+        }
+
+        public IActionResult StaffsAdd()
+        {
+            var staffModel = new TeacherModelDto();
+            return View("Staffs/StaffAdd", staffModel);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> StaffsAdd(TeacherModelDto staff)
+        {
+            if (ModelState.IsValid)
+            {
+                if (staff != null)
+                {
+                    // Update Image
+                    var imageString = "";
+                    if (staff.ImageString != null)
+                    {
+                        // Users Folder
+                        var userImagePath = @"\User_Information\Staffs\" + staff.TeacherName + @"\";
+                        // Root Path
+                        var webRootPath = _env.WebRootPath;
+                        // Base Path
+                        var basePath = Path.Combine(webRootPath + userImagePath);
+                        // Base Path Exists or create new base path
+                        bool basePathExists = System.IO.Directory.Exists(basePath);
+                        if (!basePathExists) Directory.CreateDirectory(basePath);
+                        // File
+                        var fileName = Path.GetFileNameWithoutExtension(staff.ImageString.FileName + Path.GetExtension(staff.ImageString.FileName));
+                        var filePath = Path.Combine(basePath, fileName);
+                        var fileExists = System.IO.File.Exists(filePath);
+                        if (fileExists) System.IO.File.Delete(filePath);
+                        using (var stream = new FileStream(filePath, FileMode.Create))
+                        {
+                            await staff.ImageString.CopyToAsync(stream);
+                        }
+                        imageString = userImagePath + fileName;
+                        if (string.IsNullOrWhiteSpace(imageString))
+                        {
+                            HttpContext.Session.SetString("Error", "Image is required!");
+                            return RedirectToAction(nameof(Staffs));
+                        }
+                        staff.Image = imageString;
+                    }
+
+
+                    // Update in db
+                    if (await _repo.CreateTeacherAsyncTask(staff))
+                    {
+                        HttpContext.Session.SetString("Success", "Staff added Successfully.");
+                        return RedirectToAction(nameof(Staffs));
+                    }
+                    else
+                    {
+                        HttpContext.Session.SetString("Error", "Problem while updating the data!");
+                        return RedirectToAction(nameof(Staffs));
+                    }
+                }
+                else
+                {
+                    HttpContext.Session.SetString("Error", "Input fields might be empty or invalid!");
+                    return RedirectToAction(nameof(Staffs));
+                }
+            }
+            else
+            {
+                HttpContext.Session.SetString("Error", "Input fields might be empty or invalid!");
+                return RedirectToAction(nameof(Home));
+            }
+        }
+
+        public async Task<IActionResult> StaffsUpdate(int id)
+        {
+            if (id != 0)
+            {
+                var staffModel = await _repo.FetchTeacherByIdAsyncTask(id);
+                return View("Staffs/StaffUpdate", staffModel);
+            }
+            else
+            {
+                HttpContext.Session.SetString("Error", "Staff not found!");
+                return RedirectToAction(nameof(Staffs));
+            }
+        }
+
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> StaffsUpdate(TeacherModelDto staff)
+        {
+            if (ModelState.IsValid)
+            {
+                if (staff != null)
+                {
+                    // Update Image
+                    var imageString = "";
+                    var teacher = await _repo.FetchTeacherByIdAsyncTask(staff.TeacherId);
+                    if (staff.ImageString != null)
+                    {
+                        // Users Folder
+                        var userImagePath = @"\User_Information\Staffs\" + staff.TeacherName + @"\";
+                        // Root Path
+                        var webRootPath = _env.WebRootPath;
+                        // Base Path
+                        var basePath = Path.Combine(webRootPath + userImagePath);
+                        // Base Path Exists or create new base path
+                        bool basePathExists = System.IO.Directory.Exists(basePath);
+                        if (!basePathExists) Directory.CreateDirectory(basePath);
+                        // File
+                        var fileName = Path.GetFileNameWithoutExtension(staff.ImageString.FileName + Path.GetExtension(staff.ImageString.FileName));
+                        var filePath = Path.Combine(basePath, fileName);
+                        var fileExists = System.IO.File.Exists(filePath);
+                        if (fileExists) System.IO.File.Delete(filePath);
+                        using (var stream = new FileStream(filePath, FileMode.Create))
+                        {
+                            await staff.ImageString.CopyToAsync(stream);
+                        }
+                        imageString = userImagePath + fileName;
+                        if (string.IsNullOrWhiteSpace(imageString) && string.IsNullOrWhiteSpace(teacher.Image))
+                        {
+                            HttpContext.Session.SetString("Error", "Image is required!");
+                            return RedirectToAction(nameof(Staffs));
+                        }
+                        staff.Image = imageString;
+                    }
+                    else
+                    {
+                        staff.Image = teacher.Image;
+                    }
+
+
+                    // Update in db
+                    if (await _repo.UpdateTeacherAsyncTask(staff))
+                    {
+                        HttpContext.Session.SetString("Success", "Staffs and faculties page updated Successfully.");
+                        return RedirectToAction(nameof(Staffs));
+                    }
+                    else
+                    {
+                        HttpContext.Session.SetString("Error", "Problem while updating the data!");
+                        return RedirectToAction(nameof(Staffs));
+                    }
+                }
+                else
+                {
+                    HttpContext.Session.SetString("Error", "Input fields might be empty or invalid!");
+                    return RedirectToAction(nameof(Staffs));
+                }
+            }
+            else
+            {
+                HttpContext.Session.SetString("Error", "Input fields might be empty or invalid!");
+                return RedirectToAction(nameof(Staffs));
+            }
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> StaffsDelete(int id)
+        {
+            var dataSet = await _repo.FetchTeacherByIdAsyncTask(id);
+            // Delete User image folder
+            // Users Folder
+            var userFolderPath = @"\User_Information\Staffs\" + dataSet.TeacherName + @"\";
+            // Root Path
+            var webRootPath = _env.WebRootPath;
+            // Base Path
+            var basePath = Path.Combine(webRootPath + userFolderPath);
+            // Base Path Exists or create new base path
+            bool basePathExists = System.IO.Directory.Exists(basePath);
+            if (basePathExists) Directory.Delete(basePath, true);
+
+            // Delete user
+            if (await _repo.DeleteTeacherAsyncTask(dataSet.TeacherId))
+            {
+                return Json("Success, Staff deleted successfully");
+            }
+            else
+            {
+                return Json("Error Problem Deleting User");
+            }
+        }
+
+
+        public async Task<IActionResult> Popup()
+        {
+            var popup = await _repo.FetchPopUpByIdAsyncTask(1);
+            return View("Popup/Popup", popup);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Popup(PopupModelDto popup)
+        {
+            if (ModelState.IsValid)
+            {
+                if (popup != null)
+                {
+                    // Update Image
+                    var imageString = "";
+                    if (popup.ImageString != null)
+                    {
+                        // Users Folder
+                        var userImagePath = @"\User_Information\Popup\" + popup.Name + @"\";
+                        // Root Path
+                        var webRootPath = _env.WebRootPath;
+                        // Base Path
+                        var basePath = Path.Combine(webRootPath + userImagePath);
+                        // Base Path Exists or create new base path
+                        bool basePathExists = System.IO.Directory.Exists(basePath);
+                        if (!basePathExists) Directory.CreateDirectory(basePath);
+                        // File
+                        var fileName = Path.GetFileNameWithoutExtension(popup.ImageString.FileName + Path.GetExtension(popup.ImageString.FileName));
+                        var filePath = Path.Combine(basePath, fileName);
+                        var fileExists = System.IO.File.Exists(filePath);
+                        if (fileExists) System.IO.File.Delete(filePath);
+                        using (var stream = new FileStream(filePath, FileMode.Create))
+                        {
+                            await popup.ImageString.CopyToAsync(stream);
+                        }
+                        imageString = userImagePath + fileName;
+                        if (string.IsNullOrWhiteSpace(imageString))
+                        {
+                            HttpContext.Session.SetString("Error", "Image is required!");
+                            return RedirectToAction(nameof(Staffs));
+                        }
+                        popup.Link = imageString;
+                    }
+
+
+                    // Update in db
+                    if (await _repo.UpdatePopUpAsyncTask(popup))
+                    {
+                        HttpContext.Session.SetString("Success", "Popup added Successfully.");
+                        return RedirectToAction(nameof(Popup));
+                    }
+                    else
+                    {
+                        HttpContext.Session.SetString("Error", "Problem while updating the data!");
+                        return RedirectToAction(nameof(Staffs));
+                    }
+                }
+                else
+                {
+                    HttpContext.Session.SetString("Error", "Input fields might be empty or invalid!");
+                    return RedirectToAction(nameof(Staffs));
+                }
+            }
+            else
+            {
+                HttpContext.Session.SetString("Error", "Input fields might be empty or invalid!");
+                return RedirectToAction(nameof(Home));
+            }
+        }
+
     }
 }

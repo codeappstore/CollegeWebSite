@@ -1,5 +1,162 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿@model College.Model.DataTransferObject.OtherDto.StaffPagesModelDto
 @{
+    Layout = "~/Views/Shared/_BackendLayout.cshtml";
+    ViewData["Title"] = "Staffs and Facilities -";
+    int serialize = 1;
+}
+@(await Html.PartialAsync("~/Views/Shared/_AlertLayout.cshtml"))
+<div class="row">
+    <div class="col-lg-6 col-md-6 col-sm-12">
+        <div class="card">
+            <div class="card-header">
+                <h5>
+                    Staffs and Facilities
+                    <a asp-controller="WebSite" asp-action="Index" class="btn btn-primary btn-sm text-light" style="float: right;">
+                        <i class="fas fa-arrow-left"></i>  Back to website manager
+                    </a>
+                </h5>
+            </div>
+            <div class="card-body card-block">
+                <form asp-controller="Page" asp-action="Staffs" method="post" enctype="multipart/form-data" asp-antiforgery="true">
+                    <div class="form-group">
+                        <div asp-validation-summary="ModelOnly" class="text-danger">
+                            <span>Please correct the following errors</span>
+                        </div>
+                    </div>
+                    <input type="hidden" asp-for="Page.PageId" />
+
+                    <div class="row">
+
+                        <div class="col-sm-12 col-md-12 col-lg-12">
+                            <div class="form-group">
+                                <div class="input-group-addon">
+                                    <i class="fa fa-laptop"></i>
+                                    &nbsp;&nbsp;
+                                    <label asp-for="Page.PageName"></label>
+                                </div>
+                                <input asp-for="Page.PageName" class="au-input au-input--full" type="text" required />
+                                <span asp-validation-for="Page.PageName" class="text-danger"></span>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-12 col-md-12 col-lg-12">
+                            <div class="form-group">
+                                <div class="input-group-addon">
+                                    <i class="fa fa-comments"></i>
+                                    &nbsp;&nbsp;
+                                    <label asp-for="Page.Description"></label>
+                                </div>
+                                <textarea asp-for="Page.Description" placeholder="Description" class="au-input au-input--full textarea-init" required>@Model.Page.Description</textarea>
+                                <span asp-validation-for="Page.Description" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="col-sm-12 col-md-12 col-lg-12">
+                            <div class="form-group">
+                                <div class="input-group-addon">
+                                    <i class="fa fa-photo"></i>
+                                    &nbsp;&nbsp;
+                                    <label asp-for="Page.ImageString"></label>
+                                </div>
+                                <input asp-for="Page.ImageString" type="file" class="dropify form-control-file" data-max-file-size="5M" data-allowed-file-extensions="jpg jpeg png">
+                                <p for="ImageString">Image (5MB)</p>
+                                <span asp-validation-for="Page.ImageString" class="text-danger"></span>
+                            </div>
+                            @if (Model.Page.BackgroundImage != null)
+                            {
+                                <div class="row">
+                                    <div class="col-sm-12 d-flex justify-content-center ">
+                                        <img asp-append-version="false" src="@Model.Page.BackgroundImage" alt="@Model.Page.BackgroundImage image not found" style="max-height: 200px; width: auto;" />
+                                    </div>
+                                    <div class="col-sm-12">
+                                        <p class="text-center">Current Image</p>
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                    </div>
+
+                    <div class="form-actions form-group">
+                        <button class="btn btn-success btn-sm" type="submit"><i class="fas fa-edit"></i> Update</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-6 col-md-6 col-sm-12">
+        <div class="card">
+            <div class="card-header">
+                <strong>Staffs and Faculties</strong>
+                <a asp-controller="Page" asp-action="StaffsAdd" class="btn btn-primary text-light btn-sm" style="float: right;">
+                    <i class="fas fa-plus"></i> Add
+                </a>
+
+            </div>
+            <div class="card-body card-block">
+
+                @if (Model.Staff.Count > 0)
+                {
+                    foreach (var staffs in Model.Staff)
+                    {
+                        <ul class="list-group">
+                            <li class="list-group-item">
+                                <b>@(serialize++).</b>&nbsp; @staffs.TeacherName
+                                <div class="card-text text-sm-center float-sm-right">
+                                    <a asp-controller="Page" asp-action="StaffsUpdate" asp-route-id="@staffs.TeacherId"> <i class="fas fa-edit text-success"></i> Edit</a> |
+                                    <a href="#" onclick="NotifyAndDelete(@staffs.TeacherId)"><i class="fas fa-trash" style="color: red;"></i> Delete</a>
+                                </div>
+                            </li>
+                        </ul>
+                    }
+                }
+                else
+                {
+                    <div class="text-center"><h4>Dat not found</h4></div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script>
+        function NotifyAndDelete(id) {
+            swal({
+                title: "Are you sure?",
+                text: "You want to delete this feature, You won't be able to revert this data!",
+                icon: 'warning',
+                closeOnEsc: false,
+                closeOnClickOutside: false,
+                buttons: true,
+                dangerMode: true,
+            }).then((willDelete) => {
+                if (willDelete) {
+                    $.ajax({
+                        type: "POST",
+                        url: "/Page/StaffsDelete",
+                        dataType: "json",
+                        headers: {
+                            "RequestVerificationToken": $('input[name = __RequestVerificationToken]').val()
+                        },
+                        data: {
+                            id: id
+                        },
+                        success: function (response) {
+                            swal("Poof all gone! " + response, {
+                                icon: "success",
+                            }).then(function () {
+                                window.location.href = "/Page/Staffs"
+                            });
+                        },
+                        failure: function (response) {
+                            alert(response.responseText);
+                        },
+                        error: function (response) {
+                            alert(response.responseText);
+                        }
+                    });
+                }
+            });
+        }
+    </script>
 }
