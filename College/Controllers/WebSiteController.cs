@@ -138,7 +138,7 @@ namespace College.Controllers
         {
             var combinedModel = new FooterImportantLinkModelDto()
             {
-                FooterUpdateModel = await _repo.FetchFooterHeaderAsyncTask(1),
+                FooterUpdateModel = await _repo.FetchFooterHeaderAsyncTask((int)Enums.Page.Default),
                 ImportantLinksModel = await _repo.FetchImportantLinksListAsyncTask()
             };
             return View("Footer/Footer", combinedModel);
@@ -277,7 +277,7 @@ namespace College.Controllers
         {
             var combinedModel = new StudentSaysStudentsModelDto()
             {
-                SayModel = await _repo.FetchStudentsSayAsyncTask(1),
+                SayModel = await _repo.FetchStudentsSayAsyncTask((int)Enums.Page.Default),
                 StudentsModel = await _repo.FetchStudentsSayingListAsyncTask()
             };
             return View("SayStudents/StudentsSay", combinedModel);

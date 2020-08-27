@@ -38,8 +38,8 @@ namespace College.Controllers
             // Carousel Academics Items different page for create update
 
             var carousel = await _repo.FetchCarouselListAsyncTask();
-            var home = await _repo.FetchPageDataByIdAsyncTask(1);
-            var academic = await _repo.FetchAcademicDataByIdAsyncTask(1);
+            var home = await _repo.FetchPageDataByIdAsyncTask((int)Enums.Page.Default);
+            var academic = await _repo.FetchAcademicDataByIdAsyncTask((int)Enums.Page.Default);
             var academicItem = await _repo.FetchAcademicItemListAsyncTask();
             var combinedModel = new PageCarouselAcademicItemsModelDto()
             {
@@ -205,7 +205,7 @@ namespace College.Controllers
                         if (string.IsNullOrWhiteSpace(imageString) && string.IsNullOrWhiteSpace(academicItem.Image))
                         {
                             HttpContext.Session.SetString("Error", "Image is required!");
-                            return RedirectToAction(nameof(Home));
+                            return RedirectToAction(nameof(AcademicItem));
                         }
                         academicItems.Image = imageString;
                     }
@@ -224,19 +224,19 @@ namespace College.Controllers
                     else
                     {
                         HttpContext.Session.SetString("Error", "Problem while updating the data!");
-                        return RedirectToAction(nameof(Home));
+                        return RedirectToAction(nameof(AcademicItem));
                     }
                 }
                 else
                 {
                     HttpContext.Session.SetString("Error", "Input fields might be empty or invalid!");
-                    return RedirectToAction(nameof(Home));
+                    return RedirectToAction(nameof(AcademicItem));
                 }
             }
             else
             {
                 HttpContext.Session.SetString("Error", "Input fields might be empty or invalid!");
-                return RedirectToAction(nameof(Home));
+                return RedirectToAction(nameof(AcademicItem));
             }
         }
 
@@ -431,13 +431,13 @@ namespace College.Controllers
 
         public async Task<IActionResult> AboutUs()
         {
-            var pages = await _repo.FetchPageDataByIdAsyncTask(2);
+            var pages = await _repo.FetchPageDataByIdAsyncTask((int)Enums.Page.About);
             return View("AboutUs/AboutUs", pages);
         }
 
         public async Task<IActionResult> Background()
         {
-            var pages = await _repo.FetchPageDataByIdAsyncTask(3);
+            var pages = await _repo.FetchPageDataByIdAsyncTask((int)Enums.Page.Background);
             return View("Background/Background", pages);
         }
 
@@ -445,8 +445,8 @@ namespace College.Controllers
         {
             var combinedModel = new AttachmentPageModel()
             {
-                Attachment = await _repo.FetchAttachmentByIdAsyncTask(4),
-                Page = await _repo.FetchPageDataByIdAsyncTask(4)
+                Attachment = await _repo.FetchAttachmentByIdAsyncTask((int)Enums.Page.Forestry),
+                Page = await _repo.FetchPageDataByIdAsyncTask((int)Enums.Page.Forestry)
             };
             return View("Forestry/Forestry", combinedModel);
         }
@@ -455,15 +455,15 @@ namespace College.Controllers
         {
             var combinedModel = new AttachmentPageModel()
             {
-                Attachment = await _repo.FetchAttachmentByIdAsyncTask(5),
-                Page = await _repo.FetchPageDataByIdAsyncTask(5)
+                Attachment = await _repo.FetchAttachmentByIdAsyncTask((int)Enums.Page.Agriculture),
+                Page = await _repo.FetchPageDataByIdAsyncTask((int)Enums.Page.Agriculture)
             };
             return View("Agriculture/Agriculture", combinedModel);
         }
 
         public async Task<IActionResult> Privacy()
         {
-            var pages = await _repo.FetchPageDataByIdAsyncTask(6);
+            var pages = await _repo.FetchPageDataByIdAsyncTask((int)Enums.Page.Privacy);
             return View("Privacy/Privacy", pages);
         }
 
@@ -657,7 +657,7 @@ namespace College.Controllers
         {
             var comboModel = new StaffPagesModelDto()
             {
-                Page = await _repo.FetchPageDataByIdAsyncTask(7),
+                Page = await _repo.FetchPageDataByIdAsyncTask((int)Enums.Page.Staff),
                 Staff = await _repo.FetchTeacherListAsyncTask()
             };
             return View("Staffs/Staffs", comboModel);
@@ -918,7 +918,7 @@ namespace College.Controllers
 
         public async Task<IActionResult> Popup()
         {
-            var popup = await _repo.FetchPopUpByIdAsyncTask(1);
+            var popup = await _repo.FetchPopUpByIdAsyncTask((int)Enums.Page.Default);
             return View("Popup/Popup", popup);
         }
 

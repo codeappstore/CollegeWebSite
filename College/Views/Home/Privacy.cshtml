@@ -1,9 +1,21 @@
-﻿@{
+﻿@using System.Text
+@using System.Net
+@using College.Helpers
+@using College.Model.DataTransferObject.FrontEndOtherDto
+@using College.Model.DataTransferObject.PageDto
+@using Microsoft.AspNetCore.Http
+@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
+@{
     ViewData["Title"] = "Privacy Policy -";
+    string pageName = @ViewContext.RouteData.Values["action"].ToString();
+    string baseUrl = Url.ActionContext.HttpContext.Request.Scheme + "://" + Url.ActionContext.HttpContext.Request.Host;
 }
-
+@{
+    var LayoutModel = HttpContextAccessor.HttpContext.Session.GetComplexData<LayoutModelDto>("_Layout");
+    var PrivacyModel = HttpContextAccessor.HttpContext.Session.GetComplexData<PageModelDto>("_Privacy");
+}
 <!-- START SECTION BREADCRUMB -->
-<div class="breadcrumb_section background_bg overlay_bg_50 page_title_light" data-img-src="/images/blog_bg.jpg">
+<div class="breadcrumb_section background_bg overlay_bg_50 page_title_light" data-img-src="@(baseUrl+PrivacyModel.BackgroundImage.Replace(@"\", "/"))" style="background-image: url('@(baseUrl+PrivacyModel.BackgroundImage.Replace(@"\", "/"))')">
     <div class="container">
         <!-- STRART CONTAINER -->
         <div class="row">
@@ -23,11 +35,7 @@
 <!-- START SECTION BLOG -->
 <div class="section">
     <div class="container">
-        <div class="row">
-            <div class="col-lg-12">
-                Use This Page For Privacy Policy
-            </div>
-        </div>
+        @Html.Raw(PrivacyModel.Description)
     </div>
 </div>
 <!-- END SECTION BLOG -->

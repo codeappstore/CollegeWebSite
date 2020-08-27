@@ -1,8 +1,20 @@
-﻿@{
+﻿@using System.Text
+@using System.Net
+@using College.Helpers
+@using College.Model.DataTransferObject.FrontEndOtherDto
+@using Microsoft.AspNetCore.Http
+@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
+@{
     ViewData["Title"] = "Staffs And Faculties -";
+    string baseUrl = Url.ActionContext.HttpContext.Request.Scheme + "://" + Url.ActionContext.HttpContext.Request.Host;
 }
+@{
+    var LayoutModel = HttpContextAccessor.HttpContext.Session.GetComplexData<LayoutModelDto>("_Layout");
+    var FacultyModel = HttpContextAccessor.HttpContext.Session.GetComplexData<PageTeacherModelDto>("_Faculties");
+}
+
 <!-- START SECTION BREADCRUMB -->
-<div class="breadcrumb_section background_bg overlay_bg_50 page_title_light" data-img-src="/images/teacher_bg.jpg">
+<div class="breadcrumb_section background_bg overlay_bg_50 page_title_light" data-img-src="@(baseUrl+FacultyModel.Page.BackgroundImage.Replace(@"\", "/"))" style="background-image: url('@(baseUrl+FacultyModel.Page.BackgroundImage.Replace(@"\", "/"))')">
     <div class="container">
         <!-- STRART CONTAINER -->
         <div class="row">
@@ -20,162 +32,38 @@
 </div>
 <!-- END SECTION BREADCRUMB -->
 <!-- START SECTION TEAM -->
-<div class="section pb_70">
-    <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-lg-3 col-sm-6 animation" data-animation="fadeInUp" data-animation-delay="0.2s">
-                <div class="team_box team_style2 radius_all_10">
-                    <div class="team_img">
-                        <img src="\images\team_img1.jpg" alt="team_img1">
-                        <ul class="social_icons social_white">
-                            <li><a href="#"><i class="ion-social-facebook"></i></a></li>
-                            <li><a href="#"><i class="ion-social-twitter"></i></a></li>
-                            <li><a href="#"><i class="ion-social-googleplus"></i></a></li>
-                            <li><a href="#"><i class="ion-social-instagram-outline"></i></a></li>
-                        </ul>
-                    </div>
-                    <div class="team_content">
-                        <div class="team_title">
-                            <h5>Anders Stone</h5>
-                            <span>Professor</span>
+@if (FacultyModel.Teacher != null)
+{
+    <div class="section pb_70">
+        <div class="container">
+            <div class="row justify-content-center">
+                @if (FacultyModel.Teacher.Count > 0)
+                {
+                    foreach (var items in FacultyModel.Teacher)
+                    {
+                        <div class="col-lg-3 col-sm-6 animation" data-animation="fadeInUp" data-animation-delay="0.2s">
+                            <div class="team_box team_style2 radius_all_10">
+                                <div class="team_img">
+                                    <img src="@items.Image" alt="@items.TeacherName">
+                                    <ul class="social_icons social_white">
+                                        <li><a href="@items.Facebook"><i class="ion-social-facebook"></i></a></li>
+                                        <li><a href="@items.Twitter"><i class="ion-social-twitter"></i></a></li>
+                                        <li><a href="@items.GooglePlus"><i class="ion-social-googleplus"></i></a></li>
+                                        <li><a href="@items.Instagram"><i class="ion-social-instagram-outline"></i></a></li>
+                                    </ul>
+                                </div>
+                                <div class="team_content">
+                                    <div class="team_title">
+                                        <h5>@items.TeacherName</h5>
+                                        <span>@items.Designation</span>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-3 col-sm-6 animation" data-animation="fadeInUp" data-animation-delay="0.3s">
-                <div class="team_box team_style2 radius_all_10">
-                    <div class="team_img">
-                        <img src="\images\team_img2.jpg" alt="team_img2">
-                        <ul class="social_icons social_white">
-                            <li><a href="#"><i class="ion-social-facebook"></i></a></li>
-                            <li><a href="#"><i class="ion-social-twitter"></i></a></li>
-                            <li><a href="#"><i class="ion-social-googleplus"></i></a></li>
-                            <li><a href="#"><i class="ion-social-instagram-outline"></i></a></li>
-                        </ul>
-                    </div>
-                    <div class="team_content">
-                        <div class="team_title">
-                            <h5>Laura Martin</h5>
-                            <span>Accounting</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-3 col-sm-6 animation" data-animation="fadeInUp" data-animation-delay="0.4s">
-                <div class="team_box team_style2 radius_all_10">
-                    <div class="team_img">
-                        <img src="\images\team_img3.jpg" alt="team_img3">
-                        <ul class="social_icons social_white">
-                            <li><a href="#"><i class="ion-social-facebook"></i></a></li>
-                            <li><a href="#"><i class="ion-social-twitter"></i></a></li>
-                            <li><a href="#"><i class="ion-social-googleplus"></i></a></li>
-                            <li><a href="#"><i class="ion-social-instagram-outline"></i></a></li>
-                        </ul>
-                    </div>
-                    <div class="team_content">
-                        <div class="team_title">
-                            <h5>Adam Smith</h5>
-                            <span>Ceo & Architer</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-3 col-sm-6 animation" data-animation="fadeInUp" data-animation-delay="0.5s">
-                <div class="team_box team_style2 radius_all_10">
-                    <div class="team_img">
-                        <img src="\images\team_img4.jpg" alt="team_img4">
-                        <ul class="social_icons social_white">
-                            <li><a href="#"><i class="ion-social-facebook"></i></a></li>
-                            <li><a href="#"><i class="ion-social-twitter"></i></a></li>
-                            <li><a href="#"><i class="ion-social-googleplus"></i></a></li>
-                            <li><a href="#"><i class="ion-social-instagram-outline"></i></a></li>
-                        </ul>
-                    </div>
-                    <div class="team_content">
-                        <div class="team_title">
-                            <h5>Bruce Flores</h5>
-                            <span>Accounting</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-3 col-sm-6 animation" data-animation="fadeInUp" data-animation-delay="0.2s">
-                <div class="team_box team_style2 radius_all_10">
-                    <div class="team_img">
-                        <img src="\images\team_img5.jpg" alt="team_img5">
-                        <ul class="social_icons social_white">
-                            <li><a href="#"><i class="ion-social-facebook"></i></a></li>
-                            <li><a href="#"><i class="ion-social-twitter"></i></a></li>
-                            <li><a href="#"><i class="ion-social-googleplus"></i></a></li>
-                            <li><a href="#"><i class="ion-social-instagram-outline"></i></a></li>
-                        </ul>
-                    </div>
-                    <div class="team_content">
-                        <div class="team_title">
-                            <h5>Rachael Henry</h5>
-                            <span>English Teacher</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-3 col-sm-6 animation" data-animation="fadeInUp" data-animation-delay="0.3s">
-                <div class="team_box team_style2 radius_all_10">
-                    <div class="team_img">
-                        <img src="\images\team_img6.jpg" alt="team_img6">
-                        <ul class="social_icons social_white">
-                            <li><a href="#"><i class="ion-social-facebook"></i></a></li>
-                            <li><a href="#"><i class="ion-social-twitter"></i></a></li>
-                            <li><a href="#"><i class="ion-social-googleplus"></i></a></li>
-                            <li><a href="#"><i class="ion-social-instagram-outline"></i></a></li>
-                        </ul>
-                    </div>
-                    <div class="team_content">
-                        <div class="team_title">
-                            <h5>Bradford Smith</h5>
-                            <span>English Teacher</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-3 col-sm-6 animation" data-animation="fadeInUp" data-animation-delay="0.4s">
-                <div class="team_box team_style2 radius_all_10">
-                    <div class="team_img">
-                        <img src="\images\team_img7.jpg" alt="team_img7">
-                        <ul class="social_icons social_white">
-                            <li><a href="#"><i class="ion-social-facebook"></i></a></li>
-                            <li><a href="#"><i class="ion-social-twitter"></i></a></li>
-                            <li><a href="#"><i class="ion-social-googleplus"></i></a></li>
-                            <li><a href="#"><i class="ion-social-instagram-outline"></i></a></li>
-                        </ul>
-                    </div>
-                    <div class="team_content">
-                        <div class="team_title">
-                            <h5>Kally Brooks</h5>
-                            <span>Chemistry Teacher</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-3 col-sm-6 animation" data-animation="fadeInUp" data-animation-delay="0.5s">
-                <div class="team_box team_style2 radius_all_10">
-                    <div class="team_img">
-                        <img src="\images\team_img8.jpg" alt="team_img8">
-                        <ul class="social_icons social_white">
-                            <li><a href="#"><i class="ion-social-facebook"></i></a></li>
-                            <li><a href="#"><i class="ion-social-twitter"></i></a></li>
-                            <li><a href="#"><i class="ion-social-googleplus"></i></a></li>
-                            <li><a href="#"><i class="ion-social-instagram-outline"></i></a></li>
-                        </ul>
-                    </div>
-                    <div class="team_content">
-                        <div class="team_title">
-                            <h5>Helena Glick</h5>
-                            <span>Computer Teacher</span>
-                        </div>
-                    </div>
-                </div>
+                    }
+                }
             </div>
         </div>
     </div>
-</div>
+}
 <!-- END SECTION TEAM -->
