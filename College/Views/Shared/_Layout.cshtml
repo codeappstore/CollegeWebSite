@@ -1,6 +1,12 @@
-﻿@{
+﻿@using College.Helpers
+@using College.Model.DataTransferObject.FrontEndOtherDto
+@using Microsoft.AspNetCore.Http
+@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
+@{
     string pageName = @ViewContext.RouteData.Values["action"].ToString();
     string baseUrl = Url.ActionContext.HttpContext.Request.Scheme + "://" + Url.ActionContext.HttpContext.Request.Host;
+}@{
+    var LayoutModel = HttpContextAccessor.HttpContext.Session.GetComplexData<LayoutModelDto>("_Layout");
 }
 <!DOCTYPE html>
 <html lang="en">
@@ -82,16 +88,19 @@
                     <div class="col-md-6">
 
                     </div>
-                    <div class="col-md-6">
-                        <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-end">
-                            <ul class="social_icons social_white">
-                                <li><a href="#"><i class="ion-social-facebook"></i></a></li>
-                                <li><a href="#"><i class="ion-social-twitter"></i></a></li>
-                                <li><a href="#"><i class="ion-social-googleplus"></i></a></li>
-                                <li><a href="#"><i class="ion-social-instagram-outline"></i></a></li>
-                            </ul>
+                    @if (LayoutModel.Footer != null)
+                    {
+                        <div class="col-md-6">
+                            <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-end">
+                                <ul class="social_icons social_white">
+                                    <li><a href="@(string.IsNullOrWhiteSpace(LayoutModel.Footer.FacebookLink)?"#":LayoutModel.Footer.FacebookLink)"><i class="ion-social-facebook"></i></a></li>
+                                    <li><a href="@(string.IsNullOrWhiteSpace(LayoutModel.Footer.FacebookLink)?"#":LayoutModel.Footer.FacebookLink)"><i class="ion-social-twitter"></i></a></li>
+                                    <li><a href="@(string.IsNullOrWhiteSpace(LayoutModel.Footer.FacebookLink)?"#":LayoutModel.Footer.FacebookLink)"><i class="ion-social-googleplus"></i></a></li>
+                                    <li><a href="@(string.IsNullOrWhiteSpace(LayoutModel.Footer.FacebookLink)?"#":LayoutModel.Footer.FacebookLink)"><i class="ion-social-instagram-outline"></i></a></li>
+                                </ul>
+                            </div>
                         </div>
-                    </div>
+                    }
                 </div>
             </div>
         </div>
@@ -133,101 +142,57 @@
     @RenderBody()
 
     <!-- START SECTION TESTIMONIAL -->
-    <div class="section overlay_bg_80 parallax_bg" data-parallax-bg-image="/images/cta_bg.jpg">
-        <div class="container">
-            <div class="row justify-content-center">
-                <div class="col-lg-6 col-md-8 animation" data-animation="fadeInUp" data-animation-delay="0.2s">
-                    <div class="heading_s1 text-center">
-                        <h2 class="text-light">Our Students Say!</h2>
+    @if (LayoutModel.StudentSay != null && LayoutModel.Students != null)
+    {
+        if (LayoutModel.Students.Count > 0)
+        {
+            <div class="section background_bg overlay_bg_50" data-img-src="@((string.IsNullOrWhiteSpace(LayoutModel.StudentSay.Image)?"/images/cta_bg.jpg": baseUrl+LayoutModel.StudentSay.Image.Replace(@"\", "/")))" style="background-image: url('@((string.IsNullOrWhiteSpace(LayoutModel.StudentSay.Image)?"/images/cta_bg.jpg": baseUrl+LayoutModel.StudentSay.Image.Replace(@"\", "/")))');">
+                <!--data-parallax-bg-image="@((string.IsNullOrWhiteSpace(LayoutModel.StudentSay.Image)?"/images/cta_bg.jpg": LayoutModel.StudentSay.Image.Replace(@"\", "/")))"-->
+                <div class="container">
+                    <div class="row justify-content-center">
+                        <div class="col-lg-6 col-md-8 animation" data-animation="fadeInUp" data-animation-delay="0.2s">
+                            <div class="heading_s1 text-center">
+                                <h2 class="text-light">Our Students Say!</h2>
+                            </div>
+                            <p class="text-center text-light">
+                                @(string.IsNullOrWhiteSpace(LayoutModel.StudentSay.Slogan) ? "" : LayoutModel.StudentSay.Slogan)
+                            </p>
+                        </div>
                     </div>
-                    <p class="text-center text-light">
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-                        tempor incididunt ut labore.
-                    </p>
-                </div>
-            </div>
-            <div class="row justify-content-center">
-                <div class="col-12 animation" data-animation="fadeInUp" data-animation-delay="0.3s">
-                    <div class="testimonial_slider testimonial_style1 carousel_slider owl-carousel owl-theme nav_style1"
-                         data-nav="true" data-dots="false" data-margin="20" data-loop="true" data-autoplay="true"
-                         data-responsive='{"0":{"items": "1"}, "767":{"items": "2"}, "1199":{"items": "3"}}'>
-                        <div class="testimonial_box radius_all_10">
-                            <div class="author_info">
-                                <div class="author_img">
-                                    <img src="~/images/testi_user1.jpg" alt="user">
-                                </div>
-                                <div class="author_name">
-                                    <h6>Richard Clark</h6>
-                                    <span>CEO HR Group</span>
-                                </div>
-                            </div>
-                            <div class="testimonial_desc">
-                                <p>
-                                    Sed ut perspiciatis unde omnis iste natus error voluptatem laudantium, quaeillo
-                                    inventore sed veritatis architecto beatae vitae dicta sunt explicabo eiusmod tempor
-                                    labore which pain can some pleasure.
-                                </p>
-                            </div>
-                        </div>
-                        <div class="testimonial_box radius_all_10">
-                            <div class="author_info">
-                                <div class="author_img">
-                                    <img src="~/images/testi_user2.jpg" alt="user">
-                                </div>
-                                <div class="author_name">
-                                    <h6>Daisy Lana</h6>
-                                    <span>Designer</span>
-                                </div>
-                            </div>
-                            <div class="testimonial_desc">
-                                <p>
-                                    Sed ut perspiciatis unde omnis iste natus error voluptatem laudantium, quaeillo
-                                    inventore sed veritatis architecto beatae vitae dicta sunt explicabo eiusmod tempor
-                                    labore which pain can some pleasure.
-                                </p>
-                            </div>
-                        </div>
-                        <div class="testimonial_box radius_all_10">
-                            <div class="author_info">
-                                <div class="author_img">
-                                    <img src="~/images/testi_user3.jpg" alt="user">
-                                </div>
-                                <div class="author_name">
-                                    <h6>Alden Smith</h6>
-                                    <span>Designer</span>
-                                </div>
-                            </div>
-                            <div class="testimonial_desc">
-                                <p>
-                                    Sed ut perspiciatis unde omnis iste natus error voluptatem laudantium, quaeillo
-                                    inventore sed veritatis architecto beatae vitae dicta sunt explicabo eiusmod tempor
-                                    labore which pain can some pleasure.
-                                </p>
-                            </div>
-                        </div>
-                        <div class="testimonial_box radius_all_10">
-                            <div class="author_info">
-                                <div class="author_img">
-                                    <img src="~/images/testi_user4.jpg" alt="user">
-                                </div>
-                                <div class="author_name">
-                                    <h6>John Becker</h6>
-                                    <span>Designer</span>
-                                </div>
-                            </div>
-                            <div class="testimonial_desc">
-                                <p>
-                                    Sed ut perspiciatis unde omnis iste natus error voluptatem laudantium, quaeillo
-                                    inventore sed veritatis architecto beatae vitae dicta sunt explicabo eiusmod tempor
-                                    labore which pain can some pleasure.
-                                </p>
+                    <div class="row justify-content-center">
+                        <div class="col-12 animation" data-animation="fadeInUp" data-animation-delay="0.3s">
+
+                            <div class="testimonial_slider testimonial_style1 carousel_slider owl-carousel owl-theme nav_style1"
+                                 data-nav="true" data-dots="false" data-margin="20" data-loop="true" data-autoplay="true"
+                                 data-responsive='{"0":{"items": "1"}, "767":{"items": "2"}, "1199":{"items": "3"}}'>
+                                @foreach (var item in LayoutModel.Students)
+                                {
+                                    <div class="testimonial_box radius_all_10">
+                                        <div class="author_info">
+                                            <div class="author_img">
+                                                <img src="@(string.IsNullOrWhiteSpace(item.Image) ? "/images/user.png" : item.Image)" alt="@(string.IsNullOrWhiteSpace(item.StudentName) ? "Student" : item.StudentName)">
+                                            </div>
+                                            <div class="author_name">
+                                                <h6>@(string.IsNullOrWhiteSpace(item.StudentName) ? "Student" : item.StudentName)</h6>
+                                                <span>@(string.IsNullOrWhiteSpace(item.StudentDesignation) ? "Student" : item.StudentDesignation)</span>
+                                            </div>
+                                        </div>
+                                        <div class="testimonial_desc">
+                                            <p>
+                                                @(string.IsNullOrWhiteSpace(item.Description) ? "I enjoy learning and exploring with my teachers and friends." : item.Description)
+                                            </p>
+                                        </div>
+                                    </div>
+                                }
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </div>
+
+        }
+    }
+
     <!-- END SECTION TESTIMONIAL -->
     <!-- START SECTION WHY CHOOSE -->
     <div class="section bg_light_blue">
@@ -238,23 +203,23 @@
                         <div class="icon ibc_orange">
                             <i class="fas fa-user-graduate"></i>
                         </div>
-                        <div class="icon_box_content">
-                            <h5>The salient features of <br /> Shahid Bishnu Dhani Polytechnic Institute</h5>
-                            <div class="align-items-center">
-                                <ul class="text-left">
-                                    <li>Situated in the peaceful area away from the noise of the city</li>
-                                    <li>Well ventilated and echo free classrooms with comfortable seating arrangement</li>
-                                    <li>E-library and 24/7 internet facilities</li>
-                                    <li>Highly motivated teachers and professional faculties</li>
-                                    <li>Well-equipped multidisciplinary laboratory</li>
-                                    <li>Availability of enough land for practical activities</li>
-                                    <li>Good coordination with different governmental and non-governmental organizations and agencies</li>
-                                    <li>Inter-college student exchange programme with different forestry and agricultural colleges of Nepal</li>
-                                    <li>Publication of periodic general and research journals</li>
-                                    <li>Provision of project works, work experience programmes, etc. for integrating the theoretical course with real life experience</li>
-                                </ul>
+                        @if (LayoutModel.SalientFeatures != null)
+                        {
+                            <div class="icon_box_content">
+                                <h5>The salient features of <br /> Shahid Bishnu Dhani Polytechnic Institute</h5>
+                                <div class="align-items-center">
+                                    <ul class="text-left">
+                                        @if (LayoutModel.SalientFeatures.Count > 0)
+                                        {
+                                            foreach (var features in LayoutModel.SalientFeatures)
+                                            {
+                                                <li>@features.Feature</li>
+                                            }
+                                        }
+                                    </ul>
+                                </div>
                             </div>
-                        </div>
+                        }
                     </div>
                 </div>
             </div>
@@ -271,17 +236,19 @@
                             <div class="footer_logo">
                                 <a asp-controller="Home" asp-action="Index"><img src="~/Nav_Logo_Light.png" alt="logo"></a>
                             </div>
-                            <p>
-                                If you are going to use a passage of Lorem Ipsum you need to be sure there isn't anything
-                                embarrassing hidden in the middle of text
-                            </p>
-                            <ul class="social_icons rounded_social social_white social_style1">
-                                <li><a href="#"><i class="ion-social-facebook"></i></a></li>
-                                <li><a href="#"><i class="ion-social-twitter"></i></a></li>
-                                <li><a href="#"><i class="ion-social-googleplus"></i></a></li>
-                                <li><a href="#"><i class="ion-social-youtube-outline"></i></a></li>
-                                <li><a href="#"><i class="ion-social-instagram-outline"></i></a></li>
-                            </ul>
+                            @if (LayoutModel.Footer != null)
+                            {
+                                <p>
+                                    @(string.IsNullOrWhiteSpace(LayoutModel.Footer.Slogan)?"":LayoutModel.Footer.Slogan)
+                                </p>
+                                <ul class="social_icons rounded_social social_white social_style1">
+                                    <li><a href="@(string.IsNullOrWhiteSpace(LayoutModel.Footer.FacebookLink)?"#":LayoutModel.Footer.FacebookLink)"><i class="ion-social-facebook"></i></a></li>
+                                    <li><a href="@(string.IsNullOrWhiteSpace(LayoutModel.Footer.FacebookLink)?"#":LayoutModel.Footer.FacebookLink)"><i class="ion-social-twitter"></i></a></li>
+                                    <li><a href="@(string.IsNullOrWhiteSpace(LayoutModel.Footer.FacebookLink)?"#":LayoutModel.Footer.FacebookLink)"><i class="ion-social-googleplus"></i></a></li>
+                                    <li><a href="@(string.IsNullOrWhiteSpace(LayoutModel.Footer.YoutubeLink)?"#":LayoutModel.Footer.YoutubeLink)"><i class="ion-social-youtube-outline"></i></a></li>
+                                    <li><a href="@(string.IsNullOrWhiteSpace(LayoutModel.Footer.FacebookLink)?"#":LayoutModel.Footer.FacebookLink)"><i class="ion-social-instagram-outline"></i></a></li>
+                                </ul>
+                            }
                         </div>
                     </div>
                     <div class="col-xl-2 col-sm-6 col-6">
@@ -307,9 +274,16 @@
                         <div class="widget">
                             <h6 class="widget_title">Important Links</h6>
                             <ul class="widget_links">
-                                <li><a href="http://ctevt.org.np" target="_blank">Ctevt</a></li>
-                                <li><a href="http://barbardiyamun.gov.np" target="_blank">Barbardiyamun</a></li>
-                                <li><a href="https://daobardiya.moha.gov.np" target="_blank">Daobardiya</a></li>
+                                @if (LayoutModel.ImportantLinks != null)
+                                {
+                                    if (LayoutModel.ImportantLinks.Count > 0)
+                                    {
+                                        foreach (var item in LayoutModel.ImportantLinks)
+                                        {
+                                            <li><a href="@(string.IsNullOrWhiteSpace(item.Link)?"#":item.Link)" target="_blank">@(string.IsNullOrWhiteSpace(item.Title)?"Important Link":item.Title)</a></li>
+                                        }
+                                    }
+                                }
                             </ul>
                         </div>
                     </div>
@@ -318,18 +292,21 @@
                         <div class="widget">
                             <h6 class="widget_title">Contact Info</h6>
                             <ul class="contact_info contact_info_light">
-                                <li>
-                                    <i class="ti-location-pin"></i>
-                                    <p>Barbardiya Municipality ward no 6, Jaynagar</p>
-                                </li>
-                                <li>
-                                    <i class="ti-email"></i>
-                                    <a href="mailto:bishnudhani@gmail.com" class="text-light">bishnudhani@gmail.com</a>
-                                </li>
-                                <li>
-                                    <i class="ti-mobile"></i>
-                                    <a href="tel:084404100" class="text-light">084-404100</a>
-                                </li>
+                                @if (LayoutModel.Footer != null)
+                                {
+                                    <li>
+                                        <i class="ti-location-pin"></i>
+                                        <p>@(string.IsNullOrWhiteSpace(LayoutModel.Footer.ContactAddress)? "Barbardiya Municipality ward no 6, Jaynagar" : LayoutModel.Footer.ContactAddress)</p>
+                                    </li>
+                                    <li>
+                                        <i class="ti-email"></i>
+                                        <a href="mailto:@(string.IsNullOrWhiteSpace(LayoutModel.Footer.ContactEmail)? "bishnudhani@gmail.com" : LayoutModel.Footer.ContactEmail)" class="text-light">@(string.IsNullOrWhiteSpace(LayoutModel.Footer.ContactEmail)? "bishnudhani@gmail.com" : LayoutModel.Footer.ContactEmail)</a>
+                                    </li>
+                                    <li>
+                                        <i class="ti-mobile"></i>
+                                        <a href="tel:@(string.IsNullOrWhiteSpace(LayoutModel.Footer.ContactNumber)? "084-404100" : LayoutModel.Footer.ContactNumber)" class="text-light">@(string.IsNullOrWhiteSpace(LayoutModel.Footer.ContactNumber)? "084-404100" : LayoutModel.Footer.ContactNumber)</a>
+                                    </li>
+                                }
                             </ul>
                         </div>
                     </div>

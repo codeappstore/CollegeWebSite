@@ -657,7 +657,7 @@ namespace College.Controllers
         {
             var comboModel = new StaffPagesModelDto()
             {
-                Page = await _repo.FetchPageDataByIdAsyncTask(9),
+                Page = await _repo.FetchPageDataByIdAsyncTask(7),
                 Staff = await _repo.FetchTeacherListAsyncTask()
             };
             return View("Staffs/Staffs", comboModel);
