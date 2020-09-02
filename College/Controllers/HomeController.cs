@@ -43,7 +43,8 @@ namespace College.Controllers
                 Page = await FetchPage(Enums.Page.Home),
                 PopUp = await _front.FetchPopUpByIdAsyncTask((int)Enums.Page.Default),
                 AcademicItems = await _front.FetchAcademicItemListAsyncTask(),
-                Carousel = await _front.FetchCarouselListAsyncTask()
+                Carousel = await _front.FetchCarouselListAsyncTask(),
+                Brochure = await _front.FetchAttachmentByIdAsyncTask((int)Enums.Page.Home)
             };
             await SetLayout();
             HttpContext.Session.SetComplexData("_Index", homeDataSet);
@@ -106,6 +107,14 @@ namespace College.Controllers
             await SetLayout();
             var privacy = await _front.FetchPageDataByIdAsyncTask((int)Enums.Page.Privacy);
             HttpContext.Session.SetComplexData("_Privacy", privacy);
+            return View();
+        }
+
+        public async Task<IActionResult> Mayor()
+        {
+            await SetLayout();
+            var mayor = await _front.FetchPageDataByIdAsyncTask((int)Enums.Page.Mayor);
+            HttpContext.Session.SetComplexData("_Mayor", mayor);
             return View();
         }
 

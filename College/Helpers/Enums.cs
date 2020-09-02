@@ -11,6 +11,7 @@
             Agriculture = 5,
             Privacy = 6,
             Staff = 7,
+            Mayor = 8,
             Default = 1
         }
     }

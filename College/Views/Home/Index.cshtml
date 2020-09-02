@@ -111,7 +111,7 @@
                         <h2>Academics</h2>
                     </div>
                     <p class="text-center">
-                        @(Html.Raw(HomeModel.Academic.Description))
+                    @(Html.Raw(HomeModel.Academic.Description))
                 </div>
             </div>
             <div class="row">
@@ -137,6 +137,24 @@
                     }
                 }
             </div>
+            @if (HomeModel.Brochure != null)
+            {
+                if (!string.IsNullOrWhiteSpace(HomeModel.Brochure.Link))
+                {
+                    <div class="row">
+                        <div class="embed-responsive embed-responsive-16by9">
+                            <object class="embed-responsive-item" data="@HomeModel.Brochure.Link" type="application/pdf" internalinstanceid="9" title="@HomeModel.Brochure.FileName">
+                                <p>
+                                    Your browser isn't supporting embedded pdf files. You can download the file
+                                    <a href="@HomeModel.Brochure.Link">here</a>.
+                                </p>
+                            </object>
+                        </div>
+                        <br />
+                        <a href="@HomeModel.Brochure.Link" target="_blank"><i class="fas fa-file-pdf text-danger"></i> Download @HomeModel.Brochure.FileName </a>
+                    </div>
+                }
+            }
         </div>
     </div>
 }

@@ -37,16 +37,13 @@ namespace College.Controllers
 
             // Carousel Academics Items different page for create update
 
-            var carousel = await _repo.FetchCarouselListAsyncTask();
-            var home = await _repo.FetchPageDataByIdAsyncTask((int)Enums.Page.Default);
-            var academic = await _repo.FetchAcademicDataByIdAsyncTask((int)Enums.Page.Default);
-            var academicItem = await _repo.FetchAcademicItemListAsyncTask();
             var combinedModel = new PageCarouselAcademicItemsModelDto()
             {
-                Carousel = carousel,
-                AcademicItems = academicItem,
-                Academic = academic,
-                Page = home
+                Carousel = await _repo.FetchCarouselListAsyncTask(),
+                AcademicItems = await _repo.FetchAcademicItemListAsyncTask(),
+                Academic = await _repo.FetchAcademicDataByIdAsyncTask((int)Enums.Page.Default),
+                Page = await _repo.FetchPageDataByIdAsyncTask((int)Enums.Page.Default),
+                Brochure = await _repo.FetchAttachmentByIdAsyncTask((int)Enums.Page.Home)
             };
             return View("Home/Home", combinedModel);
         }
@@ -435,6 +432,12 @@ namespace College.Controllers
             return View("AboutUs/AboutUs", pages);
         }
 
+        public async Task<IActionResult> Mayor()
+        {
+            var pages = await _repo.FetchPageDataByIdAsyncTask((int)Enums.Page.Mayor);
+            return View("Mayor/Mayor", pages);
+        }
+
         public async Task<IActionResult> Background()
         {
             var pages = await _repo.FetchPageDataByIdAsyncTask((int)Enums.Page.Background);
@@ -582,6 +585,66 @@ namespace College.Controllers
                 return RedirectToAction("Index", "WebSite");
             }
         }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> UpdateAttachment(PageCarouselAcademicItemsModelDto combinedModel)
+        {
+            if (ModelState.IsValid)
+            {
+                if (combinedModel.Brochure != null)
+                {
+                    var fileString = "";
+                    var fileDetails = await _repo.FetchAttachmentByIdAsyncTask(combinedModel.Brochure.PageId);
+                    if (combinedModel.Brochure.FileString == null)
+                        combinedModel.Brochure.Link = fileDetails.Link;
+                    else
+                    {
+                        var userFilePath = @"\User_Information\Pages\" + combinedModel.Brochure.FileName + @"\";
+                        // Base Path
+                        var basePath = Path.Combine(_env.WebRootPath + userFilePath);
+                        // Base Path Exists or create new base path
+                        if (!System.IO.Directory.Exists(basePath)) Directory.CreateDirectory(basePath);
+                        // File
+                        var fileName = Path.GetFileNameWithoutExtension(combinedModel.Brochure.FileString.FileName + Path.GetExtension(combinedModel.Brochure.FileString.FileName));
+                        var filePath = Path.Combine(basePath, fileName);
+                        var fileExists = System.IO.File.Exists(filePath);
+                        if (fileExists) System.IO.File.Delete(filePath);
+                        await using (var stream = new FileStream(filePath, FileMode.Create))
+                        {
+                            await combinedModel.Brochure.FileString.CopyToAsync(stream);
+                        }
+                        fileString = userFilePath + fileName;
+                        if (string.IsNullOrWhiteSpace(fileString) && string.IsNullOrWhiteSpace(fileDetails.Link))
+                        {
+                            HttpContext.Session.SetString("Error", "File is required!");
+                            return RedirectToAction("Home", "Page");
+                        }
+                        combinedModel.Brochure.Link = fileString;
+
+                    }
+
+                    // Update in db
+                    if (await _repo.UpdateAttachmentAsyncTask(combinedModel.Brochure))
+                        HttpContext.Session.SetString("Success", combinedModel.Brochure.FileName + " updated Successfully.");
+                    else
+                        HttpContext.Session.SetString("Error", "Problem while updating the data!");
+                }
+                else
+                {
+                    HttpContext.Session.SetString("Error", "Input fields might be empty or invalid!");
+                    return RedirectToAction("Home", "Page");
+                }
+            }
+            else
+            {
+                HttpContext.Session.SetString("Error", "Input fields might be empty or invalid!");
+                return RedirectToAction("Home", "Page");
+            }
+
+            return null;
+        }
+
 
         [HttpPost]
         [ValidateAntiForgeryToken]
