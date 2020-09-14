@@ -93,10 +93,10 @@
                         <div class="col-md-6">
                             <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-end">
                                 <ul class="social_icons social_white">
-                                    <li><a href="@(string.IsNullOrWhiteSpace(LayoutModel.Footer.FacebookLink)?"#":LayoutModel.Footer.FacebookLink)"><i class="ion-social-facebook"></i></a></li>
-                                    <li><a href="@(string.IsNullOrWhiteSpace(LayoutModel.Footer.FacebookLink)?"#":LayoutModel.Footer.FacebookLink)"><i class="ion-social-twitter"></i></a></li>
-                                    <li><a href="@(string.IsNullOrWhiteSpace(LayoutModel.Footer.FacebookLink)?"#":LayoutModel.Footer.FacebookLink)"><i class="ion-social-googleplus"></i></a></li>
-                                    <li><a href="@(string.IsNullOrWhiteSpace(LayoutModel.Footer.FacebookLink)?"#":LayoutModel.Footer.FacebookLink)"><i class="ion-social-instagram-outline"></i></a></li>
+                                    <li><a href="@(string.IsNullOrWhiteSpace(LayoutModel.Footer.FacebookLink)?"#":LayoutModel.Footer.FacebookLink)" target="_blank"><i class="ion-social-facebook"></i></a></li>
+                                    <li><a href="@(string.IsNullOrWhiteSpace(LayoutModel.Footer.FacebookLink)?"#":LayoutModel.Footer.FacebookLink)" target="_blank"><i class="ion-social-twitter"></i></a></li>
+                                    <li><a href="@(string.IsNullOrWhiteSpace(LayoutModel.Footer.FacebookLink)?"#":LayoutModel.Footer.FacebookLink)" target="_blank"><i class="ion-social-googleplus"></i></a></li>
+                                    <li><a href="@(string.IsNullOrWhiteSpace(LayoutModel.Footer.FacebookLink)?"#":LayoutModel.Footer.FacebookLink)" target="_blank"><i class="ion-social-instagram-outline"></i></a></li>
                                 </ul>
                             </div>
                         </div>
@@ -120,6 +120,8 @@
                         <li><a class="nav-link nav_item  @(pageName=="About"?"active":"")" asp-area="" asp-controller="Home" asp-action="About">ABOUT US</a></li>
                         <li><a class="nav-link nav_item  @(pageName=="Background"?"active":"")" asp-area="" asp-controller="Home" asp-action="Background">BACKGROUND</a></li>
                         <li><a class="nav-link nav_item  @(pageName=="Mayor"?"active":"")" asp-area="" asp-controller="Home" asp-action="Mayor">Mayor's Saying</a></li>
+                        <li><a class="nav-link nav_item  @(pageName=="Downloads"?"active":"")" asp-area="" asp-controller="Home" asp-action="Downloads">Downloads</a></li>
+                        <li><a class="nav-link nav_item  @(pageName=="Gallery"?"active":"")" asp-area="" asp-controller="Home" asp-action="Gallery">Gallery</a></li>
                         <li><a class="nav-link nav_item  @(pageName=="Faculties"?"active":"")" asp-area="" asp-controller="Home" asp-action="Faculties">Staff and Faculties</a></li>
                         <li class="dropdown">
                             <a class="dropdown-toggle nav-link @(pageName=="Forestry"||pageName=="Agriculture"?"active":"")" data-toggle="dropdown"
@@ -243,11 +245,11 @@
                                     @(string.IsNullOrWhiteSpace(LayoutModel.Footer.Slogan)?"":LayoutModel.Footer.Slogan)
                                 </p>
                                 <ul class="social_icons rounded_social social_white social_style1">
-                                    <li><a href="@(string.IsNullOrWhiteSpace(LayoutModel.Footer.FacebookLink)?"#":LayoutModel.Footer.FacebookLink)"><i class="ion-social-facebook"></i></a></li>
-                                    <li><a href="@(string.IsNullOrWhiteSpace(LayoutModel.Footer.FacebookLink)?"#":LayoutModel.Footer.FacebookLink)"><i class="ion-social-twitter"></i></a></li>
-                                    <li><a href="@(string.IsNullOrWhiteSpace(LayoutModel.Footer.FacebookLink)?"#":LayoutModel.Footer.FacebookLink)"><i class="ion-social-googleplus"></i></a></li>
-                                    <li><a href="@(string.IsNullOrWhiteSpace(LayoutModel.Footer.YoutubeLink)?"#":LayoutModel.Footer.YoutubeLink)"><i class="ion-social-youtube-outline"></i></a></li>
-                                    <li><a href="@(string.IsNullOrWhiteSpace(LayoutModel.Footer.FacebookLink)?"#":LayoutModel.Footer.FacebookLink)"><i class="ion-social-instagram-outline"></i></a></li>
+                                    <li><a href="@(string.IsNullOrWhiteSpace(LayoutModel.Footer.FacebookLink)?"#":LayoutModel.Footer.FacebookLink)" target="_blank"><i class="ion-social-facebook"></i></a></li>
+                                    <li><a href="@(string.IsNullOrWhiteSpace(LayoutModel.Footer.TweeterLink)?"#":LayoutModel.Footer.TweeterLink)" target="_blank"><i class="ion-social-twitter"></i></a></li>
+                                    <li><a href="@(string.IsNullOrWhiteSpace(LayoutModel.Footer.GooglePlusLink)?"#":LayoutModel.Footer.GooglePlusLink)" target="_blank"><i class="ion-social-googleplus"></i></a></li>
+                                    <li><a href="@(string.IsNullOrWhiteSpace(LayoutModel.Footer.YoutubeLink)?"#":LayoutModel.Footer.YoutubeLink)" target="_blank"><i class="ion-social-youtube-outline"></i></a></li>
+                                    <li><a href="@(string.IsNullOrWhiteSpace(LayoutModel.Footer.InstaGramLink)?"#":LayoutModel.Footer.InstaGramLink)" target="_blank"><i class="ion-social-instagram-outline"></i></a></li>
                                 </ul>
                             }
                         </div>
@@ -260,6 +262,8 @@
                                 <li><a asp-area="" asp-controller="Home" asp-action="About">About Us</a></li>
                                 <li><a asp-area="" asp-controller="Home" asp-action="Background">Background</a></li>
                                 <li><a asp-area="" asp-controller="Home" asp-action="Mayor">Mayor's Saying</a></li>
+                                <li><a asp-area="" asp-controller="Home" asp-action="Downloads">Downloads</a></li>
+                                <li><a asp-area="" asp-controller="Home" asp-action="Gallery">Gallery</a></li>
                                 <li><a asp-area="" asp-controller="Home" asp-action="Faculties">Staff and Faculties</a></li>
                                 <li>
                                     <h6 class="widget_title">Academics</h6>

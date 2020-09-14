@@ -11,10 +11,12 @@ namespace College.Controllers
     {
         private readonly IFrontEndRepo _front;
         private readonly ILayoutRepo _layout;
-        public HomeController(IFrontEndRepo _front, ILayoutRepo _layout)
+        private readonly IDownloadsRepo _downloads;
+        public HomeController(IFrontEndRepo _front, ILayoutRepo _layout, IDownloadsRepo downloads)
         {
             this._front = _front;
             this._layout = _layout;
+            _downloads = downloads;
         }
 
         private async Task SetLayout()
@@ -78,6 +80,7 @@ namespace College.Controllers
             HttpContext.Session.SetComplexData("_Forestry", combinedModel);
             return View();
         }
+
         public async Task<IActionResult> Agriculture()
         {
             await SetLayout();
@@ -118,5 +121,29 @@ namespace College.Controllers
             return View();
         }
 
+        public async Task<IActionResult> Downloads()
+        {
+            await SetLayout();
+            var downloadDataSet = await _downloads.FetchAllDownloadsAsyncTask();
+            var downloads = await _front.FetchPageDataByIdAsyncTask((int)Enums.Page.Downloads);
+            HttpContext.Session.SetComplexData("_Downloads", downloads);
+            return View(downloadDataSet);
+        }
+
+        public async Task<IActionResult> Gallery()
+        {
+            await SetLayout();
+            var gallery = await _front.FetchPageDataByIdAsyncTask((int)Enums.Page.Gallery);
+            HttpContext.Session.SetComplexData("_Gallery", gallery);
+            return View();
+        }
+
+        public async Task<IActionResult> IndividualGallery(int id)
+        {
+            await SetLayout();
+            var gallery = await _front.FetchPageDataByIdAsyncTask((int)Enums.Page.Gallery);
+            HttpContext.Session.SetComplexData("_Gallery", gallery);
+            return View();
+        }
     }
 }

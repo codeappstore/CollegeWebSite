@@ -85,6 +85,18 @@ namespace College
 
             #endregion
 
+            #region Downloads
+
+            services.AddScoped<IDownloadsRepo, DownloadsRepo>();
+
+            #endregion
+
+            #region Gallery
+
+            services.AddScoped<IGalleryRepo, GalleryRepo>();
+
+            #endregion
+
             #endregion
 
             services.AddProgressiveWebApp();

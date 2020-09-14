@@ -2,6 +2,8 @@
 using College.Helpers;
 using College.Model.DataTransferObject.AcademicItemsDto;
 using College.Model.DataTransferObject.CarouselDto;
+using College.Model.DataTransferObject.DownloadsDto;
+using College.Model.DataTransferObject.GalleryDto;
 using College.Model.DataTransferObject.OtherDto;
 using College.Model.DataTransferObject.PageDto;
 using College.Model.DataTransferObject.PopupDto;
@@ -11,6 +13,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.IO;
 using System.Threading.Tasks;
+using GalleryModelDto = College.Model.DataTransferObject.GalleryDto.GalleryModelDto;
 
 namespace College.Controllers
 {
@@ -19,10 +22,14 @@ namespace College.Controllers
     {
         private readonly IFrontEndRepo _repo;
         private readonly IWebHostEnvironment _env;
-        public PageController(IFrontEndRepo _repo, IWebHostEnvironment _env)
+        private readonly IDownloadsRepo _downloads;
+        private readonly IGalleryRepo _gallery;
+        public PageController(IFrontEndRepo repo, IWebHostEnvironment env, IDownloadsRepo downloads, IGalleryRepo gallery)
         {
-            this._repo = _repo;
-            this._env = _env;
+            _repo = repo;
+            _env = env;
+            _downloads = downloads;
+            _gallery = gallery;
         }
         // GET: PageController
         public async Task<IActionResult> Home()
@@ -479,7 +486,6 @@ namespace College.Controllers
                 if (combinedModel.Page != null)
                 {
                     // Update Image
-                    var imageString = "";
                     var pageDetails = await _repo.FetchPageDataByIdAsyncTask(combinedModel.Page.PageId);
                     if (combinedModel.Page.ImageString != null)
                     {
@@ -501,7 +507,7 @@ namespace College.Controllers
                         {
                             await combinedModel.Page.ImageString.CopyToAsync(stream);
                         }
-                        imageString = userImagePath + fileName;
+                        var imageString = userImagePath + fileName;
                         if (string.IsNullOrWhiteSpace(imageString) && string.IsNullOrWhiteSpace(pageDetails.BackgroundImage))
                         {
                             HttpContext.Session.SetString("Error", "Image is required!");
@@ -516,7 +522,6 @@ namespace College.Controllers
 
                     if (combinedModel.Attachment != null)
                     {
-                        var fileString = "";
                         var fileDetails = await _repo.FetchAttachmentByIdAsyncTask(combinedModel.Page.PageId);
                         if (combinedModel.Attachment.FileString != null)
                         {
@@ -537,7 +542,7 @@ namespace College.Controllers
                             {
                                 await combinedModel.Attachment.FileString.CopyToAsync(stream);
                             }
-                            fileString = userFilePath + fileName;
+                            var fileString = userFilePath + fileName;
                             if (string.IsNullOrWhiteSpace(fileString) && string.IsNullOrWhiteSpace(fileDetails.FileName))
                             {
                                 HttpContext.Session.SetString("Error", "File is required!");
@@ -594,7 +599,6 @@ namespace College.Controllers
             {
                 if (combinedModel.Brochure != null)
                 {
-                    var fileString = "";
                     var fileDetails = await _repo.FetchAttachmentByIdAsyncTask(combinedModel.Brochure.PageId);
                     if (combinedModel.Brochure.FileString == null)
                         combinedModel.Brochure.Link = fileDetails.Link;
@@ -614,7 +618,7 @@ namespace College.Controllers
                         {
                             await combinedModel.Brochure.FileString.CopyToAsync(stream);
                         }
-                        fileString = userFilePath + fileName;
+                        var fileString = userFilePath + fileName;
                         if (string.IsNullOrWhiteSpace(fileString) && string.IsNullOrWhiteSpace(fileDetails.Link))
                         {
                             HttpContext.Session.SetString("Error", "File is required!");
@@ -655,7 +659,6 @@ namespace College.Controllers
                 if (page != null)
                 {
                     // Update Image
-                    var imageString = "";
                     var pageDetails = await _repo.FetchPageDataByIdAsyncTask(page.PageId);
                     if (page.ImageString != null)
                     {
@@ -677,7 +680,7 @@ namespace College.Controllers
                         {
                             await page.ImageString.CopyToAsync(stream);
                         }
-                        imageString = userImagePath + fileName;
+                        var imageString = userImagePath + fileName;
                         if (string.IsNullOrWhiteSpace(imageString) && string.IsNullOrWhiteSpace(pageDetails.BackgroundImage))
                         {
                             HttpContext.Session.SetString("Error", "Image is required!");
@@ -1050,5 +1053,610 @@ namespace College.Controllers
             }
         }
 
+        public async Task<IActionResult> Downloads()
+        {
+            var combinedModel = new DownloadsPageModelDto()
+            {
+                Page = await _repo.FetchPageDataByIdAsyncTask((int)Enums.Page.Downloads),
+                Downloads = await _downloads.FetchAllDownloadsAsyncTask()
+
+            };
+            return View("Downloads/Downloads", combinedModel);
+        }
+
+        public IActionResult DownloadsAdd()
+        {
+            var model = new DownloadModelDto();
+            return View("Downloads/DownloadsAdd", model);
+        }
+
+        public async Task<IActionResult> DownloadsUpdate(int id)
+        {
+            var model = await _downloads.FetchDownloadAsyncTask(id);
+            return View("Downloads/DownloadsUpdate", model);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DownloadsAdd(DownloadModelDto download)
+        {
+            if (ModelState.IsValid)
+            {
+                if (download != null)
+                {
+                    if (download.FileString != null)
+                    {
+                        // Users Folder
+                        var userImagePath = @"\User_Information\Downloads\";
+                        // Root Path
+                        var webRootPath = _env.WebRootPath;
+                        // Base Path
+                        var basePath = Path.Combine(webRootPath + userImagePath);
+                        // Base Path Exists or create new base path
+                        bool basePathExists = System.IO.Directory.Exists(basePath);
+                        if (!basePathExists) Directory.CreateDirectory(basePath);
+                        // File
+                        var extension = Path.GetExtension(download.FileString.FileName);
+                        var size = (download.FileString.Length / 1024f) + " KB";
+                        var fileName = Path.GetFileNameWithoutExtension(download.FileString.FileName + Path.GetExtension(download.FileString.FileName));
+                        var filePath = Path.Combine(basePath, fileName);
+                        var fileExists = System.IO.File.Exists(filePath);
+                        if (fileExists) System.IO.File.Delete(filePath);
+                        await using (var stream = new FileStream(filePath, FileMode.Create))
+                        {
+                            await download.FileString.CopyToAsync(stream);
+                        }
+                        var imageString = userImagePath + fileName;
+                        download.FileLink = imageString;
+                        download.Size = size;
+                        download.Extension = extension;
+                        if (string.IsNullOrWhiteSpace(imageString))
+                        {
+                            HttpContext.Session.SetString("Error", "Image is required!");
+                            return RedirectToAction(nameof(DownloadsAdd));
+                        }
+                    }
+
+                    // Add in db
+                    if (await _downloads.CreateDownloadAsyncTask(download))
+                    {
+                        HttpContext.Session.SetString("Success", "Download item added Successfully.");
+                        return RedirectToAction(nameof(Downloads));
+                    }
+                    else
+                    {
+                        HttpContext.Session.SetString("Error", "Problem while adding the data!");
+                        return RedirectToAction(nameof(Downloads));
+                    }
+                }
+                else
+                {
+                    HttpContext.Session.SetString("Error", "Input fields might be empty or invalid!");
+                    return RedirectToAction(nameof(DownloadsAdd));
+                }
+            }
+            else
+            {
+                HttpContext.Session.SetString("Error", "Input fields might be empty or invalid!");
+                return RedirectToAction(nameof(DownloadsAdd));
+            }
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DownloadsUpdate(DownloadModelDto download)
+        {
+            if (ModelState.IsValid)
+            {
+                if (download != null)
+                {
+                    var fileItem = await _downloads.FetchDownloadAsyncTask(download.FileId);
+                    if (download.FileString != null)
+                    {
+                        // Users Folder
+                        var userImagePath = @"\User_Information\Downloads\";
+                        // Root Path
+                        var webRootPath = _env.WebRootPath;
+                        // Base Path
+                        var basePath = Path.Combine(webRootPath + userImagePath);
+                        // Base Path Exists or create new base path
+                        bool basePathExists = System.IO.Directory.Exists(basePath);
+                        if (!basePathExists) Directory.CreateDirectory(basePath);
+                        // File
+                        var extension = Path.GetExtension(download.FileString.FileName);
+                        var size = (download.FileString.Length / 1024f) + " KB";
+
+                        var fileName = Path.GetFileNameWithoutExtension(download.FileString.FileName + Path.GetExtension(download.FileString.FileName));
+                        var filePath = Path.Combine(basePath, fileName);
+                        var fileExists = System.IO.File.Exists(filePath);
+                        if (fileExists) System.IO.File.Delete(filePath);
+                        await using (var stream = new FileStream(filePath, FileMode.Create))
+                        {
+                            await download.FileString.CopyToAsync(stream);
+                        }
+                        var imageString = userImagePath + fileName;
+                        download.FileLink = imageString;
+                        download.Size = size;
+                        download.Extension = extension;
+                        if (string.IsNullOrWhiteSpace(imageString))
+                        {
+                            HttpContext.Session.SetString("Error", "Image is required!");
+                            return RedirectToAction(nameof(DownloadsUpdate));
+                        }
+
+                        var deletePath = fileItem.FileLink;
+                        var deleteBasePath = Path.Combine(webRootPath + deletePath);
+                        if (System.IO.File.Exists(deleteBasePath))
+                        {
+                            System.IO.File.Delete(deleteBasePath);
+                        }
+
+                    }
+                    else
+                    {
+                        download.FileLink = fileItem.FileLink;
+                        download.Size = fileItem.Size;
+                        download.Extension = fileItem.Extension;
+                    }
+
+                    // Add in db
+                    if (await _downloads.UpdateDownloadAsyncTask(download))
+                    {
+                        HttpContext.Session.SetString("Success", "Download item updated Successfully.");
+                        return RedirectToAction(nameof(Downloads));
+                    }
+                    else
+                    {
+                        HttpContext.Session.SetString("Error", "Problem while updating the data!");
+                        return RedirectToAction(nameof(DownloadsUpdate));
+                    }
+                }
+                else
+                {
+                    HttpContext.Session.SetString("Error", "Input fields might be empty or invalid!");
+                    return RedirectToAction(nameof(DownloadsUpdate));
+                }
+            }
+            else
+            {
+                HttpContext.Session.SetString("Error", "Input fields might be empty or invalid!");
+                return RedirectToAction(nameof(DownloadsUpdate));
+            }
+        }
+
+
+        [HttpPost]
+        public async Task<IActionResult> DownloadsDelete(int id)
+        {
+            var dataSet = await _downloads.FetchDownloadAsyncTask(id);
+            // Delete User image folder
+
+            // Root Path
+            var webRootPath = _env.WebRootPath;
+
+            var deletePath = dataSet.FileLink;
+            var deleteBasePath = Path.Combine(webRootPath + deletePath);
+            if (System.IO.File.Exists(deleteBasePath))
+            {
+                System.IO.File.Delete(deleteBasePath);
+            }
+
+            // Delete user
+            if (await _downloads.DeleteDownloadAsyncTask(id))
+            {
+                return Json("Success, File deleted successfully");
+            }
+            else
+            {
+                return Json("Error Problem Deleting User");
+            }
+        }
+
+        public async Task<IActionResult> Gallery()
+        {
+            var combinedModel = new PageGalleryModelDto()
+            {
+                Page = await _repo.FetchPageDataByIdAsyncTask((int)Enums.Page.Gallery),
+                Gallery = await _gallery.FetchAllGalleryAsyncTask()
+            };
+            return View("Gallery/Gallery", combinedModel);
+        }
+
+
+        public IActionResult GalleryAdd()
+        {
+            var model = new GalleryModelDto();
+            return View("Gallery/GalleryAdd", model);
+        }
+
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> GalleryAdd(GalleryModelDto gallery)
+        {
+            if (ModelState.IsValid)
+            {
+                if (gallery != null)
+                {
+                    if (gallery.FileString != null)
+                    {
+                        // Users Folder
+                        var userImagePath = @"\User_Information\Gallery\" + gallery.Title + @"\";
+                        // Root Path
+                        var webRootPath = _env.WebRootPath;
+                        // Base Path
+                        var basePath = Path.Combine(webRootPath + userImagePath);
+                        // Base Path Exists or create new base path
+                        bool basePathExists = System.IO.Directory.Exists(basePath);
+                        if (!basePathExists) Directory.CreateDirectory(basePath);
+                        // File
+                        var fileName = Path.GetFileNameWithoutExtension(gallery.FileString.FileName + Path.GetExtension(gallery.FileString.FileName));
+                        var filePath = Path.Combine(basePath, fileName);
+                        var fileExists = System.IO.File.Exists(filePath);
+                        if (fileExists) System.IO.File.Delete(filePath);
+                        await using (var stream = new FileStream(filePath, FileMode.Create))
+                        {
+                            await gallery.FileString.CopyToAsync(stream);
+                        }
+                        var imageString = userImagePath + fileName;
+                        gallery.Thumbnail = imageString;
+                        if (string.IsNullOrWhiteSpace(imageString))
+                        {
+                            HttpContext.Session.SetString("Error", "Image is required!");
+                            return RedirectToAction(nameof(Gallery));
+                        }
+                    }
+
+                    // Add in db
+                    if (await _gallery.CreateGalleryAsyncTask(gallery))
+                    {
+                        HttpContext.Session.SetString("Success", "Gallery item added Successfully.");
+                        return RedirectToAction(nameof(Gallery));
+                    }
+                    else
+                    {
+                        HttpContext.Session.SetString("Error", "Problem while adding the data!");
+                        return RedirectToAction(nameof(GalleryAdd));
+                    }
+                }
+                else
+                {
+                    HttpContext.Session.SetString("Error", "Input fields might be empty or invalid!");
+                    return RedirectToAction(nameof(GalleryAdd));
+                }
+            }
+            else
+            {
+                HttpContext.Session.SetString("Error", "Input fields might be empty or invalid!");
+                return RedirectToAction(nameof(GalleryAdd));
+            }
+        }
+
+
+        public async Task<IActionResult> GalleryUpdate(int id)
+        {
+            var combinedModel = new GalleryImageModelDto()
+            {
+                Gallery = await _gallery.FetchGalleryAsyncTask(id),
+                Images = await _gallery.FetchAllImageByGalleryIdAsyncTask(id)
+            };
+
+            HttpContext.Session.SetInt32("_GalleryID", id);
+            return View("Gallery/GalleryUpdate", combinedModel);
+        }
+
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> GalleryUpdate(GalleryModelDto gallery)
+        {
+            if (ModelState.IsValid)
+            {
+                if (gallery != null)
+                {
+                    var fileItem = await _gallery.FetchGalleryAsyncTask(gallery.GalleryId);
+                    if (gallery.FileString != null)
+                    {
+                        // Users Folder
+                        var userImagePath = @"\User_Information\Gallery\" + gallery.Title + @"\";
+                        // Root Path
+                        var webRootPath = _env.WebRootPath;
+                        // Base Path
+                        var basePath = Path.Combine(webRootPath + userImagePath);
+                        // Base Path Exists or create new base path
+                        bool basePathExists = System.IO.Directory.Exists(basePath);
+                        if (!basePathExists) Directory.CreateDirectory(basePath);
+                        // File
+
+                        var fileName = Path.GetFileNameWithoutExtension(gallery.FileString.FileName + Path.GetExtension(gallery.FileString.FileName));
+                        var filePath = Path.Combine(basePath, fileName);
+                        var fileExists = System.IO.File.Exists(filePath);
+                        if (fileExists) System.IO.File.Delete(filePath);
+                        await using (var stream = new FileStream(filePath, FileMode.Create))
+                        {
+                            await gallery.FileString.CopyToAsync(stream);
+                        }
+                        var imageString = userImagePath + fileName;
+                        gallery.Thumbnail = imageString;
+                        if (string.IsNullOrWhiteSpace(imageString))
+                        {
+                            HttpContext.Session.SetString("Error", "Image is required!");
+                            return RedirectToAction(nameof(GalleryUpdate), new { id = gallery.GalleryId });
+                        }
+
+                        var deletePath = fileItem.Thumbnail;
+                        var deleteBasePath = Path.Combine(webRootPath + deletePath);
+                        if (System.IO.File.Exists(deleteBasePath))
+                        {
+                            System.IO.File.Delete(deleteBasePath);
+                        }
+
+                    }
+                    else
+                    {
+                        gallery.Thumbnail = fileItem.Thumbnail;
+                    }
+
+                    // Add in db
+                    if (await _gallery.UpdateGalleryAsyncTask(gallery))
+                    {
+                        HttpContext.Session.SetString("Success", "Gallery updated Successfully.");
+                        return RedirectToAction(nameof(Gallery));
+                    }
+                    else
+                    {
+                        HttpContext.Session.SetString("Error", "Problem while updating the data!");
+                        return RedirectToAction(nameof(GalleryUpdate), new { id = gallery.GalleryId });
+                    }
+                }
+                else
+                {
+                    HttpContext.Session.SetString("Error", "Input fields might be empty or invalid!");
+                    return RedirectToAction(nameof(GalleryUpdate), new { id = gallery.GalleryId });
+                }
+            }
+            else
+            {
+                HttpContext.Session.SetString("Error", "Input fields might be empty or invalid!");
+                return RedirectToAction(nameof(GalleryUpdate), new { id = gallery.GalleryId });
+            }
+        }
+
+
+        [HttpPost]
+        public async Task<IActionResult> GalleryDelete(int id)
+        {
+            var dataSet = await _gallery.FetchGalleryAsyncTask(id);
+            // Delete Gallery image folder
+
+            var deletePath = @"\User_Information\Gallery\" + dataSet.Title + @"\";
+
+            var webRootPath = _env.WebRootPath;
+            // Base Path
+            var basePath = Path.Combine(webRootPath + deletePath);
+
+
+            var images = await _gallery.FetchAllImageByGalleryIdAsyncTask(id);
+
+            if (images.Count > 0)
+            {
+                foreach (var item in images)
+                {
+                    var imageBasePath = Path.Combine(webRootPath + item.ImageLink);
+                    if (System.IO.File.Exists(imageBasePath))
+                    {
+                        System.IO.File.Delete(imageBasePath);
+                    }
+                }
+            }
+
+
+            // Base Path Exists or create new base path
+            bool basePathExists = System.IO.Directory.Exists(basePath);
+            if (basePathExists) Directory.Delete(basePath, true);
+
+            // Delete user
+            if (await _gallery.DeleteGalleryAsyncTask(id))
+            {
+                return Json("Success, File deleted successfully");
+            }
+            else
+            {
+                return Json("Error Problem Deleting User");
+            }
+        }
+
+
+        public IActionResult ImageAdd()
+        {
+            var images = new ImageModelDto();
+            return View("Gallery/ImageAdd", images);
+        }
+
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> ImageAdd(ImageModelDto image)
+        {
+            if (ModelState.IsValid)
+            {
+                if (image != null)
+                {
+                    if (image.FileString != null)
+                    {
+                        // Users Folder
+                        var userImagePath = @"\User_Information\Gallery\Images\";
+                        // Root Path
+                        var webRootPath = _env.WebRootPath;
+                        // Base Path
+                        var basePath = Path.Combine(webRootPath + userImagePath);
+                        // Base Path Exists or create new base path
+                        bool basePathExists = System.IO.Directory.Exists(basePath);
+                        if (!basePathExists) Directory.CreateDirectory(basePath);
+                        // File
+                        var extension = Path.GetExtension(image.FileString.FileName);
+                        var size = (image.FileString.Length / 1024f) + " KB";
+                        var fileName = Path.GetFileNameWithoutExtension(image.FileString.FileName + Path.GetExtension(image.FileString.FileName));
+                        var filePath = Path.Combine(basePath, fileName);
+                        var fileExists = System.IO.File.Exists(filePath);
+                        if (fileExists) System.IO.File.Delete(filePath);
+                        await using (var stream = new FileStream(filePath, FileMode.Create))
+                        {
+                            await image.FileString.CopyToAsync(stream);
+                        }
+                        var imageString = userImagePath + fileName;
+                        image.ImageLink = imageString;
+                        image.Size = size;
+                        image.Extension = extension;
+                        if (string.IsNullOrWhiteSpace(imageString))
+                        {
+                            HttpContext.Session.SetString("Error", "Image is required!");
+                            return RedirectToAction(nameof(ImageAdd));
+                        }
+                    }
+
+                    // Add in db
+                    if (await _gallery.CreateImageAsyncTask(image))
+                    {
+                        HttpContext.Session.SetString("Success", "Image item added Successfully.");
+                        return RedirectToAction(nameof(GalleryUpdate), new { id = image.GalleryId });
+                    }
+                    else
+                    {
+                        HttpContext.Session.SetString("Error", "Problem while adding the data!");
+                        return RedirectToAction(nameof(GalleryUpdate), new { id = image.GalleryId });
+                    }
+                }
+                else
+                {
+                    HttpContext.Session.SetString("Error", "Input fields might be empty or invalid!");
+                    return RedirectToAction(nameof(ImageAdd));
+                }
+            }
+            else
+            {
+                HttpContext.Session.SetString("Error", "Input fields might be empty or invalid!");
+                return RedirectToAction(nameof(ImageAdd));
+            }
+        }
+
+
+        public async Task<IActionResult> ImageUpdate(int id)
+        {
+            var combinedModel = await _gallery.FetchImageAsyncTask(id);
+            return View("Gallery/ImageUpdate", combinedModel);
+        }
+
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> ImageUpdate(ImageModelDto image)
+        {
+            if (ModelState.IsValid)
+            {
+                if (image != null)
+                {
+                    var fileItem = await _gallery.FetchImageAsyncTask(image.ImageId);
+                    if (image.FileString != null)
+                    {
+                        // Users Folder
+                        var userImagePath = @"\User_Information\Gallery\Images\";
+                        // Root Path
+                        var webRootPath = _env.WebRootPath;
+                        // Base Path
+                        var basePath = Path.Combine(webRootPath + userImagePath);
+                        // Base Path Exists or create new base path
+                        bool basePathExists = System.IO.Directory.Exists(basePath);
+                        if (!basePathExists) Directory.CreateDirectory(basePath);
+                        // File
+
+                        // File
+                        var extension = Path.GetExtension(image.FileString.FileName);
+                        var size = (image.FileString.Length / 1024f) + " KB";
+
+                        var fileName = Path.GetFileNameWithoutExtension(image.FileString.FileName + Path.GetExtension(image.FileString.FileName));
+                        var filePath = Path.Combine(basePath, fileName);
+                        var fileExists = System.IO.File.Exists(filePath);
+                        if (fileExists) System.IO.File.Delete(filePath);
+                        await using (var stream = new FileStream(filePath, FileMode.Create))
+                        {
+                            await image.FileString.CopyToAsync(stream);
+                        }
+                        var imageString = userImagePath + fileName;
+                        image.ImageLink = imageString;
+                        image.Extension = extension;
+                        image.Size = size;
+                        if (string.IsNullOrWhiteSpace(imageString))
+                        {
+                            HttpContext.Session.SetString("Error", "Image is required!");
+                            return RedirectToAction(nameof(ImageAdd));
+                        }
+
+                        var deletePath = fileItem.ImageLink;
+                        var deleteBasePath = Path.Combine(webRootPath + deletePath);
+                        if (System.IO.File.Exists(deleteBasePath))
+                        {
+                            System.IO.File.Delete(deleteBasePath);
+                        }
+                    }
+                    else
+                    {
+                        image.ImageLink = fileItem.ImageLink;
+                        image.Size = fileItem.Size;
+                        image.Extension = fileItem.Extension;
+                    }
+
+                    // Add in db
+                    if (await _gallery.UpdateImageAsyncTask(image))
+                    {
+                        HttpContext.Session.SetString("Success", "Image updated Successfully.");
+                        return RedirectToAction(nameof(GalleryUpdate), new { id = image.GalleryId });
+                    }
+                    else
+                    {
+                        HttpContext.Session.SetString("Error", "Problem while updating the data!");
+                        return RedirectToAction(nameof(GalleryUpdate), new { id = image.GalleryId });
+                    }
+                }
+                else
+                {
+                    HttpContext.Session.SetString("Error", "Input fields might be empty or invalid!");
+                    return RedirectToAction(nameof(ImageAdd));
+                }
+            }
+            else
+            {
+                HttpContext.Session.SetString("Error", "Input fields might be empty or invalid!");
+                return RedirectToAction(nameof(ImageAdd));
+            }
+        }
+
+
+        [HttpPost]
+        public async Task<IActionResult> ImageDelete(int id)
+        {
+            var dataSet = await _gallery.FetchImageAsyncTask(id);
+            // Delete User image folder
+
+            // Root Path
+            var webRootPath = _env.WebRootPath;
+
+            var deletePath = dataSet.ImageLink;
+            var deleteBasePath = Path.Combine(webRootPath + deletePath);
+            if (System.IO.File.Exists(deleteBasePath))
+            {
+                System.IO.File.Delete(deleteBasePath);
+            }
+
+            // Delete user
+            if (await _gallery.DeleteImageAsyncTask(id))
+            {
+                return Json("Success, File deleted successfully");
+            }
+            else
+            {
+                return Json("Error Problem Deleting User");
+            }
+        }
     }
 }

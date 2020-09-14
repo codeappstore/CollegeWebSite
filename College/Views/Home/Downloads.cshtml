@@ -1,0 +1,65 @@
+﻿@model IList<College.Model.DataTransferObject.DownloadsDto.DownloadModelDto>
+@using System.Text
+@using System.Net
+@using College.Helpers
+@using College.Model.DataTransferObject.FrontEndOtherDto
+@using College.Model.DataTransferObject.PageDto
+@using Microsoft.AspNetCore.Http
+@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
+@{
+    ViewData["Title"] = "Downloads -";
+    string pageName = @ViewContext.RouteData.Values["action"].ToString();
+    string baseUrl = Url.ActionContext.HttpContext.Request.Scheme + "://" + Url.ActionContext.HttpContext.Request.Host;
+}
+@{
+    var LayoutModel = HttpContextAccessor.HttpContext.Session.GetComplexData<LayoutModelDto>("_Layout");
+    var DownloadsModel = HttpContextAccessor.HttpContext.Session.GetComplexData<PageModelDto>("_Downloads");
+}
+<!-- START SECTION BREADCRUMB -->
+<div class="breadcrumb_section background_bg overlay_bg_40 page_title_light" data-img-src="@(baseUrl+DownloadsModel.BackgroundImage.Replace(@"\", "/"))" style="background-image: url('@(baseUrl+DownloadsModel.BackgroundImage.Replace(@"\", "/"))')">
+    <div class="container">
+        <!-- STRART CONTAINER -->
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="page-title">
+                    <h1>Downloads</h1>
+                </div>
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a asp-action="Index" asp-controller="Home">Home</a></li>
+                    <li class="breadcrumb-item active">Downloads</li>
+                </ol>
+            </div>
+        </div>
+    </div><!-- END CONTAINER-->
+</div>
+<!-- END SECTION BREADCRUMB -->
+<!-- START SECTION BLOG -->
+<div class="section">
+    <div class="container">
+        <div class="row">
+            <div class="col-12 text-center">
+                <h4>@(string.IsNullOrWhiteSpace(DownloadsModel.Description) ?"":DownloadsModel.Description)</h4>
+            </div>
+        </div>
+        @if (Model.Count > 0)
+        {
+            <div class="row justify-content-center">
+                @foreach (var item in Model)
+                {
+                    <div class="col-sm-6 col-md-4 col-lg-3 p-1">
+                        <a href="@(baseUrl+item.FileLink.Replace(@"\", "/"))" target="_blank" class="btn bg-danger text-light"> <i class="fas fa-download"></i> @item.Title</a>
+                    </div>
+                }
+            </div>
+        }
+        else
+        {
+            <div class="row">
+                <div class="col-12 text-center">
+                    <h3 class="text-danger bold">Files Not Found</h3>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+<!-- END SECTION BLOG -->

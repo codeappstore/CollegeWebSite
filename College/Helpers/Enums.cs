@@ -12,6 +12,8 @@
             Privacy = 6,
             Staff = 7,
             Mayor = 8,
+            Downloads = 9,
+            Gallery = 10,
             Default = 1
         }
     }
