@@ -1,4 +1,5 @@
-﻿@using System.Text
+﻿@model IList<College.Model.DataTransferObject.GalleryDto.GalleryModelDto>
+@using System.Text
 @using System.Net
 @using College.Helpers
 @using College.Model.DataTransferObject.FrontEndOtherDto
@@ -15,7 +16,7 @@
     var GalleryModel = HttpContextAccessor.HttpContext.Session.GetComplexData<PageModelDto>("_Gallery");
 }
 <!-- START SECTION BREADCRUMB -->
-<div class="breadcrumb_section background_bg overlay_bg_50 page_title_light">
+<div class="breadcrumb_section background_bg overlay_bg_50 page_title_light" data-img-src="@(baseUrl+GalleryModel.BackgroundImage.Replace(@"\", "/"))" style="background-image: url('@(baseUrl+GalleryModel.BackgroundImage.Replace(@"\", "/"))')">
     <div class="container">
         <!-- STRART CONTAINER -->
         <div class="row">
@@ -35,82 +36,45 @@
 <!-- START SECTION BLOG -->
 <div class="section pb_70">
     <div class="container">
-        <div class="row">
-            <div class="col-md-12">
-                <ul class="grid_container gutter_medium grid_col3">
-                    <li class="grid_item brands border-danger border-2">
-                        <h3 class="text-center text-primary">Andray madona</h3>
-                        <div class="image_gallery_item">
-                            <a href="codeappstore.com">
-                                <div class="gallery_img">
-                                    <img src="~/images/course_img.jpg" alt="image">
-                                </div>
-                                <div class="gallary_hover_box">
-                                    <i class="fa fa-folder"></i>
-                                </div>
-                            </a>
-                            <p class="text-right text-success">Romani Malodra</p>
-                        </div>
-                    </li>
-                    <li class="grid_item brands border-danger border-2">
-                        <h3 class="text-center text-primary">Andray madona</h3>
-                        <div class="image_gallery_item">
-                            <a href="codeappstore.com">
-                                <div class="gallery_img">
-                                    <img src="~/images/course_img.jpg" alt="image">
-                                </div>
-                                <div class="gallary_hover_box">
-                                    <i class="fa fa-folder"></i>
-                                </div>
-                            </a>
-                            <p class="text-right text-success">Romani Malodra</p>
-                        </div>
-                    </li>
-                    <li class="grid_item brands border-danger border-2">
-                        <h3 class="text-center text-primary">Andray madona</h3>
-                        <div class="image_gallery_item">
-                            <a href="codeappstore.com">
-                                <div class="gallery_img">
-                                    <img src="~/images/course_img.jpg" alt="image">
-                                </div>
-                                <div class="gallary_hover_box">
-                                    <i class="fa fa-folder"></i>
-                                </div>
-                            </a>
-                            <p class="text-right text-success">Romani Malodra</p>
-                        </div>
-                    </li>
-                    <li class="grid_item brands border-danger border-2">
-                        <h3 class="text-center text-primary">Andray madona</h3>
-                        <div class="image_gallery_item">
-                            <a href="codeappstore.com">
-                                <div class="gallery_img">
-                                    <img src="~/images/course_img.jpg" alt="image">
-                                </div>
-                                <div class="gallary_hover_box">
-                                    <i class="fa fa-folder"></i>
-                                </div>
-                            </a>
-                            <p class="text-right text-success">Romani Malodra</p>
-                        </div>
-                    </li>
-                    <li class="grid_item brands border-danger border-2">
-                        <h3 class="text-center text-primary">Andray madona</h3>
-                        <div class="image_gallery_item">
-                            <a href="codeappstore.com">
-                                <div class="gallery_img">
-                                    <img src="~/images/course_img.jpg" alt="image">
-                                </div>
-                                <div class="gallary_hover_box">
-                                    <i class="fa fa-folder"></i>
-                                </div>
-                            </a>
-                            <p class="text-right text-success">Romani Malodra</p>
-                        </div>
-                    </li>
-                </ul>
+        <div class="row p-2">
+            <div class="col-12 text-center">
+                <h4>@(string.IsNullOrWhiteSpace(GalleryModel.Description) ?"": GalleryModel.Description)</h4>
             </div>
         </div>
+        @if (Model.Count > 0)
+        {
+            <div class="row mt-2">
+                <div class="col-md-12">
+                    <ul class="grid_container gutter_medium grid_col3">
+                        @foreach (var item in Model)
+                        {
+                            <li class="grid_item brands border-danger border-2">
+                                <h3 class="text-center text-primary">@(string.IsNullOrWhiteSpace(item.Title)?"Gallery": item.Title)</h3>
+                                <div class="image_gallery_item">
+                                    <a asp-controller="Home" asp-action="IndividualGallery" asp-route-id="@item.GalleryId">
+                                        <div class="gallery_img">
+                                            <img src="@(baseUrl+item.Thumbnail.Replace(@"\", "/"))" alt="@(string.IsNullOrWhiteSpace(item.Title)?"Gallery": item.Title)">
+                                        </div>
+                                        <div class="gallary_hover_box">
+                                            <i class="fa fa-folder"></i>
+                                        </div>
+                                    </a>
+                                    <p class="text-right text-success">By : @(string.IsNullOrWhiteSpace(item.Photographer)?"Admin": item.Photographer)</p>
+                                </div>
+                            </li>
+                        }
+                    </ul>
+                </div>
+            </div>
+        }
+        else
+        {
+            <div class="row">
+                <div class="col-12 text-center">
+                    <h3 class="text-danger bold">Gallery Not Found</h3>
+                </div>
+            </div>
+        }
     </div>
 </div>
 <!-- END SECTION BLOG -->

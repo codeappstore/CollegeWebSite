@@ -14,6 +14,8 @@
             Mayor = 8,
             Downloads = 9,
             Gallery = 10,
+            Prospectus = 11,
+            Notice = 12,
             Default = 1
         }
     }

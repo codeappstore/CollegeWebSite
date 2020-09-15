@@ -1,4 +1,5 @@
 ﻿@using College.Helpers
+@using College.Model.DataTransferObject.AppSettingsDto
 @using College.Model.DataTransferObject.AuthDto
 @using Microsoft.AspNetCore.Http
 @inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
@@ -8,6 +9,7 @@
 }
 @{
     var UserInfo = HttpContextAccessor.HttpContext.Session.GetComplexData<AuthBasicDetailsModelDto>("_Details");
+    var License = HttpContextAccessor.HttpContext.Session.GetString("_License");
 }
 <!DOCTYPE html>
 <html lang="en">
@@ -294,7 +296,8 @@
                             <div class="col-md-12">
                                 <div class="copyright">
                                     <p>&copy; @DateTime.Now.Year All Rights Reserved by Shahid Bishnu Dhani Memorial Polytechnic Institute</p>
-                                    <p>Queries for <a href="mailto:dibesh@codeappstore.com" target="_blank">Support Team</a></p>
+                                    <p>Queries for <a href="https://codeappstore.com" target="_blank">Support Team</a></p>
+                                    <p>License @License</p>
                                 </div>
                             </div>
                         </div>

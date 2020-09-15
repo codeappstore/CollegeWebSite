@@ -1,4 +1,5 @@
-﻿using College.Access.IRepository;
+﻿using CodeAppStore.License.LicenseRepo;
+using College.Access.IRepository;
 using College.Helpers;
 using College.Model.DataTransferObject.AuthDto;
 using College.Model.DataTransferObject.AuthExtraDto;
@@ -16,12 +17,13 @@ namespace College.Controllers
     {
         private readonly IWebHostEnvironment _env;
         private readonly IAuthRepo _auth;
+        private readonly ILicense _license = new License();
         public ControlPanelController(IAuthRepo _auth, IWebHostEnvironment env)
         {
             this._auth = _auth;
             _env = env;
         }
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
             var countMode = new CountModelDto()
             {
@@ -30,6 +32,10 @@ namespace College.Controllers
                 Manager = _auth.ManagerCount(),
                 Users = _auth.UserCount()
             };
+            var authLicense = await _auth.FetchSettings();
+            var license = _license.CheckLicenseVerification(authLicense.License, authLicense.Certificate, authLicense.ClientCode,
+                authLicense.ProjectCode);
+            HttpContext.Session.SetString("_License", license.Expiry);
             return View(countMode);
         }
 

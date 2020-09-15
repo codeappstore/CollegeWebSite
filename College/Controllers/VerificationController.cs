@@ -40,11 +40,11 @@ namespace College.Controllers
                 // Html Title 
                 Title = "Email Verification",
                 // Html Fav Icon
-                FavIconLink = " http://bishnudhani.edu.np/wwwroot/favicon_io_Dark/favicon.ico",
+                FavIconLink = " http://bishnudhani.edu.np/favicon_io_Dark/favicon.ico",
                 // Html Apple touch Icon
-                AppleTouchIconLink = "http://bishnudhani.edu.np/wwwroot/favicon_io_Dark/apple-touch-icon.png",
+                AppleTouchIconLink = "http://bishnudhani.edu.np/favicon_io_Dark/apple-touch-icon.png",
                 // Company Logo
-                LogoImageLink = "http://bishnudhani.edu.np/wwwroot/favicon_io_Dark/android-chrome-512x512.png",
+                LogoImageLink = "http://bishnudhani.edu.np/favicon_io_Dark/android-chrome-512x512.png",
                 // Email Purpose
                 Purpose = "Email Verification",
                 // Email User Name

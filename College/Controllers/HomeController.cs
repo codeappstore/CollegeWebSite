@@ -12,11 +12,13 @@ namespace College.Controllers
         private readonly IFrontEndRepo _front;
         private readonly ILayoutRepo _layout;
         private readonly IDownloadsRepo _downloads;
-        public HomeController(IFrontEndRepo _front, ILayoutRepo _layout, IDownloadsRepo downloads)
+        private readonly IGalleryRepo _gallery;
+        public HomeController(IFrontEndRepo _front, ILayoutRepo _layout, IDownloadsRepo downloads, IGalleryRepo gallery)
         {
             this._front = _front;
             this._layout = _layout;
             _downloads = downloads;
+            _gallery = gallery;
         }
 
         private async Task SetLayout()
@@ -46,7 +48,6 @@ namespace College.Controllers
                 PopUp = await _front.FetchPopUpByIdAsyncTask((int)Enums.Page.Default),
                 AcademicItems = await _front.FetchAcademicItemListAsyncTask(),
                 Carousel = await _front.FetchCarouselListAsyncTask(),
-                Brochure = await _front.FetchAttachmentByIdAsyncTask((int)Enums.Page.Home)
             };
             await SetLayout();
             HttpContext.Session.SetComplexData("_Index", homeDataSet);
@@ -56,8 +57,10 @@ namespace College.Controllers
         public async Task<IActionResult> About()
         {
             await SetLayout();
+            var brochure = await _front.FetchAttachmentByIdAsyncTask((int)Enums.Page.Home);
             var about = await _front.FetchPageDataByIdAsyncTask((int)Enums.Page.About);
             HttpContext.Session.SetComplexData("_About", about);
+            HttpContext.Session.SetComplexData("_Brochure", brochure);
             return View();
         }
 
@@ -78,6 +81,30 @@ namespace College.Controllers
                 Attachment = await _front.FetchAttachmentByIdAsyncTask((int)Enums.Page.Forestry)
             };
             HttpContext.Session.SetComplexData("_Forestry", combinedModel);
+            return View();
+        }
+
+        public async Task<IActionResult> Prospectus()
+        {
+            await SetLayout();
+            var combinedModel = new PageAttachmentModelDto()
+            {
+                Page = await _front.FetchPageDataByIdAsyncTask((int)Enums.Page.Prospectus),
+                Attachment = await _front.FetchAttachmentByIdAsyncTask((int)Enums.Page.Prospectus)
+            };
+            HttpContext.Session.SetComplexData("_Prospectus", combinedModel);
+            return View();
+        }
+
+        public async Task<IActionResult> Notice()
+        {
+            await SetLayout();
+            var combinedModel = new PageAttachmentModelDto()
+            {
+                Page = await _front.FetchPageDataByIdAsyncTask((int)Enums.Page.Notice),
+                Attachment = await _front.FetchAttachmentByIdAsyncTask((int)Enums.Page.Notice)
+            };
+            HttpContext.Session.SetComplexData("_Notice", combinedModel);
             return View();
         }
 
@@ -133,17 +160,19 @@ namespace College.Controllers
         public async Task<IActionResult> Gallery()
         {
             await SetLayout();
+            var galleryDataSet = await _gallery.FetchAllGalleryAsyncTask();
             var gallery = await _front.FetchPageDataByIdAsyncTask((int)Enums.Page.Gallery);
             HttpContext.Session.SetComplexData("_Gallery", gallery);
-            return View();
+            return View(galleryDataSet);
         }
 
         public async Task<IActionResult> IndividualGallery(int id)
         {
             await SetLayout();
+            var individualGallery = await _gallery.FetchAllImageByGalleryIdAsyncTask(id);
             var gallery = await _front.FetchPageDataByIdAsyncTask((int)Enums.Page.Gallery);
             HttpContext.Session.SetComplexData("_Gallery", gallery);
-            return View();
+            return View(individualGallery);
         }
     }
 }

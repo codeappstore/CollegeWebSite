@@ -1,6 +1,7 @@
 ﻿@using System.Text
 @using System.Net
 @using College.Helpers
+@using College.Model.DataTransferObject.AttachmentDto
 @using College.Model.DataTransferObject.FrontEndOtherDto
 @using College.Model.DataTransferObject.PageDto
 @using Microsoft.AspNetCore.Http
@@ -13,6 +14,7 @@
 @{
     var LayoutModel = HttpContextAccessor.HttpContext.Session.GetComplexData<LayoutModelDto>("_Layout");
     var AboutModel = HttpContextAccessor.HttpContext.Session.GetComplexData<PageModelDto>("_About");
+    var BrochureModel = HttpContextAccessor.HttpContext.Session.GetComplexData<AttachmentModelDto>("_Brochure");
 }
 <!-- START SECTION BREADCRUMB -->
 <div class="breadcrumb_section background_bg overlay_bg_50 page_title_light" data-img-src="@(baseUrl+AboutModel.BackgroundImage.Replace(@"\", "/"))" style="background-image: url('@(baseUrl+AboutModel.BackgroundImage.Replace(@"\", "/"))')">
@@ -36,6 +38,24 @@
 <div class="section small_pb">
     <div class="container">
         @Html.Raw(AboutModel.Description)
+        @if (BrochureModel != null)
+        {
+            if (!string.IsNullOrWhiteSpace(BrochureModel.Link))
+            {
+                <div class="row">
+                    <div class="embed-responsive embed-responsive-16by9">
+                        <object class="embed-responsive-item" data="@BrochureModel.Link" type="application/pdf" internalinstanceid="9" title="@BrochureModel.FileName">
+                            <p>
+                                Your browser isn't supporting embedded pdf files. You can download the file
+                                <a href="@BrochureModel.Link">here</a>.
+                            </p>
+                        </object>
+                    </div>
+                    <br />
+                    <a href="@BrochureModel.Link" target="_blank"><i class="fas fa-file-pdf text-danger"></i> Download @BrochureModel.FileName </a>
+                </div>
+            }
+        }
     </div>
 </div>
 <!-- END SECTION ABOUT -->

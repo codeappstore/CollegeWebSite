@@ -1,0 +1,59 @@
+﻿@using System.Text
+@using System.Net
+@using College.Helpers
+@using College.Model.DataTransferObject.FrontEndOtherDto
+@using Microsoft.AspNetCore.Http
+@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
+@{
+    ViewData["Title"] = "Prospectus -";
+    string pageName = @ViewContext.RouteData.Values["action"].ToString();
+    string baseUrl = Url.ActionContext.HttpContext.Request.Scheme + "://" + Url.ActionContext.HttpContext.Request.Host;
+}
+@{
+    var LayoutModel = HttpContextAccessor.HttpContext.Session.GetComplexData<LayoutModelDto>("_Layout");
+    var ProspectusModel = HttpContextAccessor.HttpContext.Session.GetComplexData<PageAttachmentModelDto>("_Prospectus");
+}
+
+<!-- START SECTION BREADCRUMB -->
+<div class="breadcrumb_section background_bg overlay_bg_50 page_title_light" data-img-src="@(string.IsNullOrWhiteSpace(ProspectusModel.Page.BackgroundImage)?"":baseUrl+ProspectusModel.Page.BackgroundImage.Replace(@"\", "/"))" style="background-image: url('@(string.IsNullOrWhiteSpace(ProspectusModel.Page.BackgroundImage)?"":baseUrl+ProspectusModel.Page.BackgroundImage.Replace(@"\", "/"))')">
+    <div class="container">
+        <!-- STRART CONTAINER -->
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="page-title">
+                    <h1>Prospectus</h1>
+                </div>
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a asp-action="Index" asp-controller="Home">Home</a></li>
+                    <li class="breadcrumb-item"><a asp-action="About" asp-controller="Home">About Us</a></li>
+                    <li class="breadcrumb-item active">Prospectus</li>
+                </ol>
+            </div>
+        </div>
+    </div><!-- END CONTAINER-->
+</div>
+<!-- END SECTION BREADCRUMB -->
+<!-- START SECTION EVENT DETAIL -->
+<div class="section">
+    <div class="container">
+        <div class="row">
+            @Html.Raw(ProspectusModel.Page.Description)
+        </div>
+        @if (!string.IsNullOrWhiteSpace(ProspectusModel.Attachment.Link))
+        {
+            <div class="row">
+                <div class="embed-responsive embed-responsive-16by9">
+                    <object class="embed-responsive-item" data="@ProspectusModel.Attachment.Link" type="application/pdf" internalinstanceid="9" title="@ProspectusModel.Attachment.FileName">
+                        <p>
+                            Your browser isn't supporting embedded pdf files. You can download the file
+                            <a href="@ProspectusModel.Attachment.Link">here</a>.
+                        </p>
+                    </object>
+                </div>
+                <br />
+                <a href="@ProspectusModel.Attachment.Link" target="_blank"><i class="fas fa-file-pdf text-danger"></i> Download @ProspectusModel.Attachment.FileName </a>
+            </div>
+        }
+    </div>
+</div>
+<!-- END SECTION EVENT DETAIL -->

@@ -120,11 +120,11 @@ namespace College.Controllers
                                     // Html Title 
                                     Title = "First time password reset",
                                     // Html Fav Icon
-                                    FavIconLink = " http://bishnudhani.edu.np/wwwroot/favicon_io_Dark/favicon.ico",
+                                    FavIconLink = " http://bishnudhani.edu.np/favicon_io_Dark/favicon.ico",
                                     // Html Apple touch Icon
-                                    AppleTouchIconLink = "http://bishnudhani.edu.np/wwwroot/favicon_io_Dark/apple-touch-icon.png",
+                                    AppleTouchIconLink = "http://bishnudhani.edu.np/favicon_io_Dark/apple-touch-icon.png",
                                     // Company Logo
-                                    LogoImageLink = "http://bishnudhani.edu.np/wwwroot/favicon_io_Dark/android-chrome-512x512.png",
+                                    LogoImageLink = "http://bishnudhani.edu.np/favicon_io_Dark/android-chrome-512x512.png",
                                     // Email Purpose
                                     Purpose = "First time password reset",
                                     // Email User Name

@@ -1,0 +1,73 @@
+﻿@using Microsoft.AspNetCore.Components.Forms
+@model College.Model.DataTransferObject.AppSettingsDto.AppSettingsModelDto
+@using Microsoft.AspNetCore.Http
+@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
+@{
+    Layout = "~/Views/Shared/_AuthLayout.cshtml";
+    ViewData["Title"] = "Setup -";
+    string baseUrl = Url.ActionContext.HttpContext.Request.Scheme + "://" + Url.ActionContext.HttpContext.Request.Host;
+    var license = HttpContextAccessor.HttpContext.Session.GetInt32("_SuccessSet");
+    if (license != null && license == 1)
+    {
+        var url = baseUrl + "/Login".Replace(@"\", "/");
+        HttpContextAccessor.HttpContext.Response.Redirect(url);
+    }
+}
+<div class="page-wrapper">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="page-content--bge5">
+                <div class="container container-fluid">
+                    <div class="login-wrap">
+                        @(await Html.PartialAsync("~/Views/Shared/_AlertLayout.cshtml"))
+                        <div class="login-content">
+                            <div class="login-logo">
+                                <a href="https://codeappstore.com/">
+                                    <img src="https://codeappstore.com/icons/favicon_Dark/android-chrome-512x512.png" style="width: 50%; height: auto;" />
+                                </a>
+                            </div>
+                            <div class="text-center">
+                                <h3>Support Team</h3>
+                                <p>
+                                    Email : dibeshrsubedi@gmail.com, dibesh@codeappstore.com
+                                    BCC : cullaapar@gmail.com, apaar@codeappstore.com
+                                </p>
+                                <p>
+                                    Contact : 9861315234, 9823113741
+                                </p>
+                            </div>
+                            <div class="login-form m-t-50">
+                                <form asp-controller="Login" asp-action="Setup" method="post" asp-antiforgery="true">
+
+                                    <div asp-validation-summary="ModelOnly" class="text-danger">
+                                        <span>Please correct the following errors</span>
+                                    </div>
+                                    <div class="form-group">
+                                        <label asp-for="Email"></label>
+                                        <input asp-for="Email" class="au-input au-input--full" type="email" required />
+                                        <span asp-validation-for="Email" class="text-danger"></span>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label asp-for="OrganizationName"></label>
+                                        <input asp-for="OrganizationName" class="au-input au-input--full" type="text" required minlength="8" />
+                                        <span asp-validation-for="OrganizationName" class="text-danger"></span>
+                                    </div>
+
+                                    <button class="au-btn au-btn--block au-btn--green m-b-20" type="submit">Proceed</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script>
+        setTimeout("location.reload(true);", @license+30*1000);
+    </script>
+}

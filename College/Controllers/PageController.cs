@@ -3,6 +3,7 @@ using College.Helpers;
 using College.Model.DataTransferObject.AcademicItemsDto;
 using College.Model.DataTransferObject.CarouselDto;
 using College.Model.DataTransferObject.DownloadsDto;
+using College.Model.DataTransferObject.FrontEndOtherDto;
 using College.Model.DataTransferObject.GalleryDto;
 using College.Model.DataTransferObject.OtherDto;
 using College.Model.DataTransferObject.PageDto;
@@ -53,6 +54,27 @@ namespace College.Controllers
                 Brochure = await _repo.FetchAttachmentByIdAsyncTask((int)Enums.Page.Home)
             };
             return View("Home/Home", combinedModel);
+        }
+
+        // GET: PageController
+        public async Task<IActionResult> Prospectus()
+        {
+            var combinedModel = new PageAttachmentModelDto()
+            {
+                Page = await _repo.FetchPageDataByIdAsyncTask((int)Enums.Page.Prospectus),
+                Attachment = await _repo.FetchAttachmentByIdAsyncTask((int)Enums.Page.Prospectus)
+            };
+            return View("Home/Prospectus", combinedModel);
+        }
+
+        public async Task<IActionResult> Notice()
+        {
+            var combinedModel = new PageAttachmentModelDto()
+            {
+                Page = await _repo.FetchPageDataByIdAsyncTask((int)Enums.Page.Notice),
+                Attachment = await _repo.FetchAttachmentByIdAsyncTask((int)Enums.Page.Notice)
+            };
+            return View("Home/Notice", combinedModel);
         }
 
         [HttpPost]
