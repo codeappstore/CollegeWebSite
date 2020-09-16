@@ -1,13 +1,11 @@
-﻿@using System.Text
-@using System.Net
-@using College.Helpers
+﻿@using College.Helpers
 @using College.Model.DataTransferObject.FrontEndOtherDto
 @using Microsoft.AspNetCore.Http
-@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
+@inject IHttpContextAccessor HttpContextAccessor
 @{
     ViewData["Title"] = "Home -";
-    string pageName = @ViewContext.RouteData.Values["action"].ToString();
-    string baseUrl = Url.ActionContext.HttpContext.Request.Scheme + "://" + Url.ActionContext.HttpContext.Request.Host;
+    var pageName = ViewContext.RouteData.Values["action"].ToString();
+    var baseUrl = Url.ActionContext.HttpContext.Request.Scheme + "://" + Url.ActionContext.HttpContext.Request.Host;
 }
 @{
     var LayoutModel = HttpContextAccessor.HttpContext.Session.GetComplexData<LayoutModelDto>("_Layout");
@@ -38,7 +36,7 @@
                 {
                     foreach (var item in HomeModel.Carousel)
                     {
-                        <div class="carousel-item @(item.CarouselId==1?"active":"")  background_bg overlay_bg_60" data-img-src="@(baseUrl+item.Image.Replace(@"\", "/"))" style="background-image: url('@(baseUrl+item.Image.Replace(@"\", "/"))');">
+                        <div class="carousel-item @(item.CarouselId == 1 ? "active" : "")  background_bg overlay_bg_60" data-img-src="@(baseUrl + item.Image.Replace(@"\", "/"))" style="background-image: url('@(baseUrl + item.Image.Replace(@"\", "/"))');">
                             <div class="banner_slide_content">
                                 <div class="container">
                                     <!-- STRART CONTAINER -->
@@ -75,7 +73,6 @@
 <!-- END SECTION BANNER -->
 @if (HomeModel.Page != null)
 {
-
     <!-- START SECTION ABOUT -->
     <div class="section background_bg bg_blue fixed_bg" data-img-src="/images/pattern_bg1.png" id="MoveHere">
         <div class="container">
@@ -98,7 +95,6 @@
         </div>
     </div>
     <!-- END SECTION ABOUT -->
-
 }
 <!-- START SECTION COURSES-->
 @if (HomeModel.AcademicItems != null && HomeModel.Academic != null)
@@ -123,10 +119,14 @@
                             <div class="courses_box radius_all_10 box_shadow1 animation" data-animation="fadeInUp"
                                  data-animation-delay="0.3s">
                                 <div class="courses_img">
-                                    <a href="@item.Link"><img src="@item.Image" alt="@item.Title"></a>
+                                    <a href="@item.Link">
+                                        <img src="@item.Image" alt="@item.Title">
+                                    </a>
                                 </div>
                                 <div class="courses_info">
-                                    <h5 class="courses_title"><a href="@item.Link">@item.Title</a></h5>
+                                    <h5 class="courses_title">
+                                        <a href="@item.Link">@item.Title</a>
+                                    </h5>
                                     <p class="text-dark">
                                         @Html.Raw(item.Description)
                                     </p>

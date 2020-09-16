@@ -1,12 +1,10 @@
-﻿@using System.Text
-@using System.Net
-@using College.Helpers
+﻿@using College.Helpers
 @using College.Model.DataTransferObject.FrontEndOtherDto
 @using Microsoft.AspNetCore.Http
-@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
+@inject IHttpContextAccessor HttpContextAccessor
 @{
     ViewData["Title"] = "Staffs And Faculties -";
-    string baseUrl = Url.ActionContext.HttpContext.Request.Scheme + "://" + Url.ActionContext.HttpContext.Request.Host;
+    var baseUrl = Url.ActionContext.HttpContext.Request.Scheme + "://" + Url.ActionContext.HttpContext.Request.Host;
 }
 @{
     var LayoutModel = HttpContextAccessor.HttpContext.Session.GetComplexData<LayoutModelDto>("_Layout");
@@ -14,7 +12,7 @@
 }
 
 <!-- START SECTION BREADCRUMB -->
-<div class="breadcrumb_section background_bg overlay_bg_50 page_title_light" data-img-src="@(baseUrl+FacultyModel.Page.BackgroundImage.Replace(@"\", "/"))" style="background-image: url('@(baseUrl+FacultyModel.Page.BackgroundImage.Replace(@"\", "/"))')">
+<div class="breadcrumb_section background_bg overlay_bg_50 page_title_light" data-img-src="@(baseUrl + FacultyModel.Page.BackgroundImage.Replace(@"\", "/"))" style="background-image: url('@(baseUrl + FacultyModel.Page.BackgroundImage.Replace(@"\", "/"))')">
     <div class="container">
         <!-- STRART CONTAINER -->
         <div class="row">
@@ -23,7 +21,9 @@
                     <h1>Staff and Faculties</h1>
                 </div>
                 <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a asp-action="Index" asp-controller="Home">Home</a></li>
+                    <li class="breadcrumb-item">
+                        <a asp-action="Index" asp-controller="Home">Home</a>
+                    </li>
                     <li class="breadcrumb-item active">Staff And Faculties</li>
                 </ol>
             </div>
@@ -46,10 +46,26 @@
                                 <div class="team_img">
                                     <img src="@items.Image" alt="@items.TeacherName">
                                     <ul class="social_icons social_white">
-                                        <li><a href="@items.Facebook"><i class="ion-social-facebook"></i></a></li>
-                                        <li><a href="@items.Twitter"><i class="ion-social-twitter"></i></a></li>
-                                        <li><a href="@items.GooglePlus"><i class="ion-social-googleplus"></i></a></li>
-                                        <li><a href="@items.Instagram"><i class="ion-social-instagram-outline"></i></a></li>
+                                        <li>
+                                            <a href="@items.Facebook">
+                                                <i class="ion-social-facebook"></i>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="@items.Twitter">
+                                                <i class="ion-social-twitter"></i>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="@items.GooglePlus">
+                                                <i class="ion-social-googleplus"></i>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="@items.Instagram">
+                                                <i class="ion-social-instagram-outline"></i>
+                                            </a>
+                                        </li>
                                     </ul>
                                 </div>
                                 <div class="team_content">
@@ -64,7 +80,9 @@
                 }
                 else
                 {
-                    <div class="text-center"><h4>Data not found</h4></div>
+                    <div class="text-center">
+                        <h4>Data not found</h4>
+                    </div>
                 }
             </div>
         </div>

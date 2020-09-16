@@ -1,11 +1,11 @@
 ﻿@model College.Model.DataTransferObject.GalleryDto.GalleryImageModelDto
 @using Microsoft.AspNetCore.Http
-@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
+@inject IHttpContextAccessor HttpContextAccessor
 @{
     Layout = "~/Views/Shared/_BackendLayout.cshtml";
     ViewData["Title"] = "Update Gallery -";
     var images = 1;
-    string baseUrl = Url.ActionContext.HttpContext.Request.Scheme + "://" + Url.ActionContext.HttpContext.Request.Host;
+    var baseUrl = Url.ActionContext.HttpContext.Request.Scheme + "://" + Url.ActionContext.HttpContext.Request.Host;
     var galleryID = HttpContextAccessor.HttpContext.Session.GetInt32("_GalleryID");
 }
 @(await Html.PartialAsync("~/Views/Shared/_AlertLayout.cshtml"))
@@ -16,7 +16,7 @@
                 <h5>
                     Update Gallery File
                     <a asp-controller="Page" asp-action="Gallery" class="btn btn-primary btn-sm text-light" style="float: right;">
-                        <i class="fas fa-arrow-left"></i>  Back to gallery
+                        <i class="fas fa-arrow-left"></i> Back to gallery
                     </a>
                 </h5>
             </div>
@@ -28,20 +28,20 @@
                         </div>
                     </div>
 
-                    <input type="hidden" asp-for="Gallery.GalleryId" />
+                    <input type="hidden" asp-for="Gallery.GalleryId"/>
 
                     <div class="row">
                         <div class="col-sm-12 col-md-12 col-lg-12">
                             <div class="form-group">
                                 <label asp-for="Gallery.Title"></label>
-                                <input asp-for="Gallery.Title" class="au-input au-input--full" type="text" required />
+                                <input asp-for="Gallery.Title" class="au-input au-input--full" type="text" required/>
                                 <span asp-validation-for="Gallery.Title" class="text-danger"></span>
                             </div>
                         </div>
                         <div class="col-sm-12 col-md-12 col-lg-12">
                             <div class="form-group">
                                 <label asp-for="Gallery.Photographer"></label>
-                                <input asp-for="Gallery.Photographer" class="au-input au-input--full" required type="text" />
+                                <input asp-for="Gallery.Photographer" class="au-input au-input--full" required type="text"/>
                                 <span asp-validation-for="Gallery.Photographer" class="text-danger"></span>
                             </div>
                         </div>
@@ -56,7 +56,7 @@
                             {
                                 <div class="row">
                                     <div class="col-sm-12 d-flex justify-content-center ">
-                                        <img asp-append-version="false" src="@Model.Gallery.Thumbnail" alt="@Model.Gallery.Thumbnail image not found" style="max-height: 200px; width: auto;" />
+                                        <img asp-append-version="false" src="@Model.Gallery.Thumbnail" alt="@Model.Gallery.Thumbnail image not found" style="max-height: 200px; width: auto;"/>
                                     </div>
                                     <div class="col-sm-12">
                                         <p class="text-center">Current Thumbnail Image</p>
@@ -82,7 +82,7 @@
                     <h5>
                         Images
                         <a asp-controller="Page" asp-action="ImageAdd" class="btn btn-primary btn-sm text-light" style="float: right;">
-                            <i class="fas fa-plus"></i>  Add
+                            <i class="fas fa-plus"></i> Add
                         </a>
                     </h5>
                 </div>
@@ -94,10 +94,13 @@
                     {
                         <ul class="list-group">
                             <li class="list-group-item">
-                                <b>@(images++).</b>&nbsp; <a href="@(baseUrl+items.ImageLink.Replace(@"\", "/"))" target="_blank" class="gallery_img"><img src="@(baseUrl+items.ImageLink.Replace(@"\", "/"))" class="img img-thumbnail" style="max-height: 100px; width: auto;" /></a>
+                                <b>@(images++).</b>&nbsp;
+                                <a href="@(baseUrl + items.ImageLink.Replace(@"\", "/"))" target="_blank" class="gallery_img">
+                                    <img src="@(baseUrl + items.ImageLink.Replace(@"\", "/"))" class="img img-thumbnail" style="max-height: 100px; width: auto;"/>
+                                </a>
                                 <div class="card-text text-sm-center float-sm-right">
                                     <a asp-controller="Page" asp-action="ImageUpdate" asp-route-id="@items.ImageId"> <i class="fas fa-edit text-success"></i> Edit</a> |
-                                    <a href="#" onclick="NotifyAndDeleteImage(@items.ImageId,@galleryID)"><i class="fas fa-trash" style="color: red;"></i> Delete</a>
+                                    <a href="#" onclick="NotifyAndDeleteImage(@items.ImageId, @galleryID)"><i class="fas fa-trash" style="color: red;"></i> Delete</a>
                                 </div>
                             </li>
                         </ul>
@@ -105,7 +108,9 @@
                 }
                 else
                 {
-                    <div class="text-center"><h4>Dat not found</h4></div>
+                    <div class="text-center">
+                        <h4>Dat not found</h4>
+                    </div>
                 }
 
             </div>
@@ -114,7 +119,7 @@
 </div>
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
     <script>
         function NotifyAndDeleteImage(id, ownId) {
             swal({
@@ -137,18 +142,18 @@
                         data: {
                             id: id
                         },
-                        success: function (response) {
+                        success: function(response) {
                             swal("Poof all gone! " + response,
                                 {
                                     icon: "success",
-                                }).then(function () {
-                                    window.location.href = "/Page/GalleryUpdate/" + ownId;
-                                });
+                                }).then(function() {
+                                window.location.href = "/Page/GalleryUpdate/" + ownId;
+                            });
                         },
-                        failure: function (response) {
+                        failure: function(response) {
                             alert(response.responseText);
                         },
-                        error: function (response) {
+                        error: function(response) {
                             alert(response.responseText);
                         }
                     });

@@ -1,5 +1,4 @@
 ﻿@model College.Model.DataTransferObject.AuthExtraDto.CountModelDto
-@using College.Model.Models
 @{
     Layout = "~/Views/Shared/_BackendLayout.cshtml";
     ViewData["Title"] = "Dashboard  -";
@@ -16,8 +15,12 @@
                             <i class="zmdi zmdi-accounts"></i>
                         </div>
                         <div class="text p-b-20">
-                            <h3 class="text-light"><label asp-for="Users"></label></h3>
-                            <span><b>@Model.Users</b></span>
+                            <h3 class="text-light">
+                                <label asp-for="Users"></label>
+                            </h3>
+                            <span>
+                                <b>@Model.Users</b>
+                            </span>
                         </div>
                     </div>
                 </div>
@@ -31,8 +34,12 @@
                             <i class="zmdi zmdi-account-circle"></i>
                         </div>
                         <div class="text p-b-20">
-                            <h3 class="text-light"><label asp-for="Administrator"></label></h3>
-                            <span><b>@Model.Administrator</b></span>
+                            <h3 class="text-light">
+                                <label asp-for="Administrator"></label>
+                            </h3>
+                            <span>
+                                <b>@Model.Administrator</b>
+                            </span>
                         </div>
                     </div>
                 </div>
@@ -46,8 +53,12 @@
                             <i class="zmdi zmdi-face"></i>
                         </div>
                         <div class="text p-b-20">
-                            <h3 class="text-light"><label asp-for="Developer"></label></h3>
-                            <span><b>@Model.Developer</b></span>
+                            <h3 class="text-light">
+                                <label asp-for="Developer"></label>
+                            </h3>
+                            <span>
+                                <b>@Model.Developer</b>
+                            </span>
                         </div>
                     </div>
                 </div>
@@ -61,8 +72,12 @@
                             <i class="zmdi zmdi-account-box"></i>
                         </div>
                         <div class="text p-b-20">
-                            <h3 class="text-light"><label asp-for="Manager"></label></h3>
-                            <span><b>@Model.Manager</b></span>
+                            <h3 class="text-light">
+                                <label asp-for="Manager"></label>
+                            </h3>
+                            <span>
+                                <b>@Model.Manager</b>
+                            </span>
                         </div>
                     </div>
                 </div>

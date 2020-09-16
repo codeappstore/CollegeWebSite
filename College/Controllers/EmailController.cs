@@ -1,4 +1,5 @@
-﻿using College.Access.IRepository;
+﻿using CodeAppStore.License.EncodeDecodeRepo;
+using College.Access.IRepository;
 using College.Database.Helper;
 using College.Helpers;
 using College.Model.DataTransferObject.EmailDto;
@@ -17,22 +18,24 @@ namespace College.Controllers
 {
     public class EmailController : Controller
     {
-        private readonly IWebHostEnvironment _hostingEnvironment;
         private readonly IEmailRepo _email;
+        private readonly IWebHostEnvironment _hostingEnvironment;
+        private readonly IEncodeDecode _encode = new EncodeDecode();
         public EmailController(IWebHostEnvironment hostingEnvironment, IEmailRepo _email)
         {
-            this._hostingEnvironment = hostingEnvironment;
+            _hostingEnvironment = hostingEnvironment;
             this._email = _email;
         }
 
         private string EmailNormalBody(NormalEmailModelDto email)
         {
-            string body = string.Empty;
+            var body = string.Empty;
             var folderPath = _hostingEnvironment.ContentRootPath + "\\Email\\normal_index.html";
-            using (StreamReader reader = new StreamReader(folderPath))
+            using (var reader = new StreamReader(folderPath))
             {
                 body = reader.ReadToEnd();
             }
+
             body = body.Replace("{Title}", email.Title);
             body = body.Replace("{FavIconLink}", email.FavIconLink);
             body = body.Replace("{AppleTouchIconLink}", email.AppleTouchIconLink);
@@ -58,12 +61,13 @@ namespace College.Controllers
 
         private string EmailButtonBody(ButtonedEmailModelDto email)
         {
-            string body = string.Empty;
+            var body = string.Empty;
             var folderPath = _hostingEnvironment.ContentRootPath + "\\Email\\button_index.html";
-            using (StreamReader reader = new StreamReader(folderPath))
+            using (var reader = new StreamReader(folderPath))
             {
                 body = reader.ReadToEnd();
             }
+
             body = body.Replace("{Title}", email.Title);
             body = body.Replace("{FavIconLink}", email.FavIconLink);
             body = body.Replace("{AppleTouchIconLink}", email.AppleTouchIconLink);
@@ -90,14 +94,14 @@ namespace College.Controllers
             return body;
         }
 
-        public async Task<bool> SendEmail(NormalEmailModelDto normal, ButtonedEmailModelDto buttoned, EmailUpdateModelDto emailModel)
+        public async Task<bool> SendEmail(NormalEmailModelDto normal, ButtonedEmailModelDto buttoned,
+            EmailUpdateModelDto emailModel)
         {
             if (emailModel == null)
                 return false;
             var messages = new MimeMessage();
             var fromServer = new MailboxAddress(emailModel.From, emailModel.Email);
             messages.From.Add(fromServer);
-            var builder = new RandomStringBuilder();
             if (normal != null && buttoned == null)
             {
                 var toClient = new MailboxAddress("User", normal.To);
@@ -118,11 +122,12 @@ namespace College.Controllers
                     Text = EmailButtonBody(buttoned)
                 };
             }
+
             var client = new SmtpClient();
             var mailServer = emailModel.MailServer;
             var port = emailModel.SmtpPort;
             var from = emailModel.Email;
-            var password = builder.Decrypt(emailModel.Password);
+            var password = _encode.Decrypt(emailModel.Password);
             await client.ConnectAsync(mailServer, port, true);
             await client.AuthenticateAsync(from, password);
             try
@@ -154,27 +159,20 @@ namespace College.Controllers
             if (ModelState.IsValid)
             {
                 var oldModel = await _email.FetchEmailByFilter(emailUpdateModel.EmailId);
-                if (emailUpdateModel.Password == null)
-                {
-                    emailUpdateModel.Password = oldModel.Password;
-                }
+                if (emailUpdateModel.Password == null) emailUpdateModel.Password = oldModel.Password;
 
                 if (await _email.UpdateExistingEmailAsyncTask(emailUpdateModel))
                 {
                     HttpContext.Session.SetString("Success", "Email Information Updated Successfully ");
                     return RedirectToAction(nameof(Manager));
                 }
-                else
-                {
-                    HttpContext.Session.SetString("Error", "Problem connecting To server!");
-                    return RedirectToAction(nameof(Manager));
-                }
-            }
-            else
-            {
-                HttpContext.Session.SetString("Error", "Input fields might be empty or invalid!");
+
+                HttpContext.Session.SetString("Error", "Problem connecting To server!");
                 return RedirectToAction(nameof(Manager));
             }
+
+            HttpContext.Session.SetString("Error", "Input fields might be empty or invalid!");
+            return RedirectToAction(nameof(Manager));
         }
 
         [AuthOverride]
@@ -193,80 +191,53 @@ namespace College.Controllers
             {
                 if (senderModel != null)
                 {
-                    string companyName = "SBDM Polytechnic Institute";
+                    var companyName = "SBDM Polytechnic Institute";
                     var emailConfigDbDetails = await _email.FetchEmailByFilter(1);
-                    var normalEmailObject = new NormalEmailModelDto()
+                    var normalEmailObject = new NormalEmailModelDto
                     {
-                        // Html Title 
                         Title = senderModel.Purpose,
-                        // Html Fav Icon
                         FavIconLink = " http://bishnudhani.edu.np/favicon_io_Dark/favicon.ico",
-                        // Html Apple touch Icon
                         AppleTouchIconLink = "http://bishnudhani.edu.np/favicon_io_Dark/apple-touch-icon.png",
-                        // Company Logo
                         LogoImageLink = "http://bishnudhani.edu.np/favicon_io_Dark/android-chrome-512x512.png",
-                        // Email Purpose
                         Purpose = senderModel.Purpose,
-                        // Email User Name
                         UserName = "User",
-                        // Email Message
                         Message = builder.StripHtml(senderModel.Message),
-                        // Sincerely Company
                         Company = companyName,
-                        // Copyright Year
                         CopyRightYear = DateTime.UtcNow.Year.ToString(),
-                        //Footer Company Name Before Copyright
                         FooterCompany = companyName,
-                        // Know More Link
                         CompanyLink = "http://bishnudhani.edu.np",
-                        // Know More About Company Name
                         CompanyLinkText = companyName,
-                        // Unverified Warning
                         Warning = "If you are not associated with this organization please ignore this email!",
-                        // Company Slogan Or description
-                        Description = "Shahid Bishnu Dhani Memorial is a newly established educational institution which primarily attempts to contribute to the development of the country through the production of skilled and semi-skilled human resources. ",
-                        // Home Button and Link
+                        Description =
+                            "Shahid Bishnu Dhani Memorial is a newly established educational institution which primarily attempts to contribute to the development of the country through the production of skilled and semi-skilled human resources. ",
                         HomeText = "Home",
                         HomeLink = "http://bishnudhani.edu.np",
-
-                        // Contact Button and Link
                         ContactText = "Forestry",
                         ContactLink = "http://bishnudhani.edu.np/Home/Forestry",
-
-                        // Service Button and Link
                         ServiceText = "Agriculture",
                         ServiceLink = "http://bishnudhani.edu.np/Home/Agriculture",
-
-                        //Email Sender receiver configuration
                         DisplayName = emailConfigDbDetails.From,
                         To = senderModel.To,
-                        Subject = "Dear User, " + senderModel.Purpose + ". Shahid Bishnu Dhani Memorial Polytechnic Institute"
+                        Subject = "Dear User, " + senderModel.Purpose +
+                                  ". Shahid Bishnu Dhani Memorial Polytechnic Institute"
                     };
-
                     if (await SendEmail(normalEmailObject, null, emailConfigDbDetails))
                     {
                         HttpContext.Session.SetString("Success",
                             "Email has been sent to " + senderModel.To);
                         return RedirectToAction(nameof(Sender));
                     }
-                    else
-                    {
-                        HttpContext.Session.SetString("Error", "Problem Connecting to server, Please Try Again later!");
-                        return RedirectToAction(nameof(Sender));
-                    }
-                }
-                else
-                {
-                    HttpContext.Session.SetString("Error", "Input fields might be empty or invalid!");
+
+                    HttpContext.Session.SetString("Error", "Problem Connecting to server, Please Try Again later!");
                     return RedirectToAction(nameof(Sender));
                 }
-            }
-            else
-            {
+
                 HttpContext.Session.SetString("Error", "Input fields might be empty or invalid!");
                 return RedirectToAction(nameof(Sender));
             }
-        }
 
+            HttpContext.Session.SetString("Error", "Input fields might be empty or invalid!");
+            return RedirectToAction(nameof(Sender));
+        }
     }
 }

@@ -1,9 +1,7 @@
-﻿using College.Access.IRepository;
-using College.Model.DataTransferObject.AuthDto;
+﻿using College.Model.DataTransferObject.AuthDto;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
-using Microsoft.Extensions.DependencyInjection;
 using System;
 
 namespace College.Helpers
@@ -14,14 +12,11 @@ namespace College.Helpers
         public void OnAuthorization(AuthorizationFilterContext context)
         {
             var detailsToken = context.HttpContext.Session.GetComplexData<AuthBasicDetailsModelDto>("_Details");
-            var access = context.HttpContext.RequestServices.GetRequiredService<IAccessRepo>();
             if (detailsToken != null)
             {
                 context.HttpContext.Session.SetComplexData("_Remember", new string("True"));
-
                 if (detailsToken.RoleId == 3)
                 {
-                    // Validate request
                 }
             }
             else
@@ -34,10 +29,5 @@ namespace College.Helpers
             }
         }
 
-        /*  public async Task OnAuthorizationAsync(AuthorizationFilterContext context)
-          {
-
-          }
-        */
     }
 }

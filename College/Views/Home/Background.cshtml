@@ -1,21 +1,19 @@
-﻿@using System.Text
-@using System.Net
-@using College.Helpers
+﻿@using College.Helpers
 @using College.Model.DataTransferObject.FrontEndOtherDto
 @using College.Model.DataTransferObject.PageDto
 @using Microsoft.AspNetCore.Http
-@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
+@inject IHttpContextAccessor HttpContextAccessor
 @{
     ViewData["Title"] = "Background -";
-    string pageName = @ViewContext.RouteData.Values["action"].ToString();
-    string baseUrl = Url.ActionContext.HttpContext.Request.Scheme + "://" + Url.ActionContext.HttpContext.Request.Host;
+    var pageName = ViewContext.RouteData.Values["action"].ToString();
+    var baseUrl = Url.ActionContext.HttpContext.Request.Scheme + "://" + Url.ActionContext.HttpContext.Request.Host;
 }
 @{
     var LayoutModel = HttpContextAccessor.HttpContext.Session.GetComplexData<LayoutModelDto>("_Layout");
     var BackgroundModel = HttpContextAccessor.HttpContext.Session.GetComplexData<PageModelDto>("_Background");
 }
 <!-- START SECTION BREADCRUMB -->
-<div class="breadcrumb_section background_bg overlay_bg_50 page_title_light" data-img-src="@(baseUrl+BackgroundModel.BackgroundImage.Replace(@"\", "/"))" style="background-image: url('@(baseUrl+BackgroundModel.BackgroundImage.Replace(@"\", "/"))')">
+<div class="breadcrumb_section background_bg overlay_bg_50 page_title_light" data-img-src="@(baseUrl + BackgroundModel.BackgroundImage.Replace(@"\", "/"))" style="background-image: url('@(baseUrl + BackgroundModel.BackgroundImage.Replace(@"\", "/"))')">
     <div class="container">
         <!-- STRART CONTAINER -->
         <div class="row">
@@ -24,8 +22,12 @@
                     <h1>Background</h1>
                 </div>
                 <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a asp-action="Index" asp-controller="Home">Home</a></li>
-                    <li class="breadcrumb-item active"><a asp-action="About" asp-controller="Home">About Us</a></li>
+                    <li class="breadcrumb-item">
+                        <a asp-action="Index" asp-controller="Home">Home</a>
+                    </li>
+                    <li class="breadcrumb-item active">
+                        <a asp-action="About" asp-controller="Home">About Us</a>
+                    </li>
                     <li class="breadcrumb-item active">Background</li>
                 </ol>
             </div>

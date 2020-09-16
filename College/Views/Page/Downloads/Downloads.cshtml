@@ -4,7 +4,7 @@
     ViewData["Title"] = "Downloads -";
     var downloads = 1;
 
-    string baseUrl = Url.ActionContext.HttpContext.Request.Scheme + "://" + Url.ActionContext.HttpContext.Request.Host;
+    var baseUrl = Url.ActionContext.HttpContext.Request.Scheme + "://" + Url.ActionContext.HttpContext.Request.Host;
 
 }
 @(await Html.PartialAsync("~/Views/Shared/_AlertLayout.cshtml"))
@@ -15,7 +15,7 @@
                 <h5>
                     Downloads Page
                     <a asp-controller="WebSite" asp-action="Index" class="btn btn-primary btn-sm text-light" style="float: right;">
-                        <i class="fas fa-arrow-left"></i>  Back to website manager
+                        <i class="fas fa-arrow-left"></i> Back to website manager
                     </a>
                 </h5>
             </div>
@@ -26,7 +26,7 @@
                             <span>Please correct the following errors</span>
                         </div>
                     </div>
-                    <input type="hidden" asp-for="Page.PageId" />
+                    <input type="hidden" asp-for="Page.PageId"/>
 
                     <div class="row">
 
@@ -37,7 +37,7 @@
                                     &nbsp;&nbsp;
                                     <label asp-for="Page.PageName"></label>
                                 </div>
-                                <input asp-for="Page.PageName" class="au-input au-input--full" type="text" required />
+                                <input asp-for="Page.PageName" class="au-input au-input--full" type="text" required/>
                                 <span asp-validation-for="Page.PageName" class="text-danger"></span>
                             </div>
                         </div>
@@ -49,7 +49,7 @@
                                     &nbsp;&nbsp;
                                     <label asp-for="Page.Description"></label>
                                 </div>
-                                <textarea asp-for="Page.Description" class="au-input au-input--full" required>@(string.IsNullOrWhiteSpace(Model.Page.Description)?"": Model.Page.Description)</textarea>
+                                <textarea asp-for="Page.Description" class="au-input au-input--full" required>@(string.IsNullOrWhiteSpace(Model.Page.Description) ? "" : Model.Page.Description)</textarea>
                                 <span asp-validation-for="Page.Description" class="text-danger"></span>
                             </div>
                         </div>
@@ -68,7 +68,7 @@
                             {
                                 <div class="row">
                                     <div class="col-sm-12 d-flex justify-content-center ">
-                                        <img asp-append-version="false" src="@Model.Page.BackgroundImage" alt="@Model.Page.BackgroundImage image not found" style="max-height: 200px; width: auto;" />
+                                        <img asp-append-version="false" src="@Model.Page.BackgroundImage" alt="@Model.Page.BackgroundImage image not found" style="max-height: 200px; width: auto;"/>
                                     </div>
                                     <div class="col-sm-12">
                                         <p class="text-center">Current Image</p>
@@ -105,7 +105,7 @@
                                     <li class="list-group-item">
                                         <b>@(downloads++).</b>&nbsp; <i class="fas fa-file text-danger"></i> @items.Title
                                         <div class="card-text text-sm-center float-sm-right">
-                                            <a href="@(baseUrl+items.FileLink.Replace(@"\", "/"))" target="_blank"> <i class="fas fa-download text-primary"></i> Download</a> |
+                                            <a href="@(baseUrl + items.FileLink.Replace(@"\", "/"))" target="_blank"> <i class="fas fa-download text-primary"></i> Download</a> |
                                             <a asp-controller="Page" asp-action="DownloadsUpdate" asp-route-id="@items.FileId"> <i class="fas fa-edit text-success"></i> Edit</a> |
                                             <a href="#" onclick="NotifyAndDelete(@items.FileId)"><i class="fas fa-trash" style="color: red;"></i> Delete</a>
                                         </div>
@@ -115,7 +115,9 @@
                         }
                         else
                         {
-                            <div class="text-center"><h4>Dat not found</h4></div>
+                            <div class="text-center">
+                                <h4>Dat not found</h4>
+                            </div>
                         }
                     </div>
                 </div>
@@ -123,8 +125,9 @@
         </div>
     </div>
 </div>
+
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
     <script>
         function NotifyAndDelete(id) {
             swal({
@@ -147,17 +150,18 @@
                         data: {
                             id: id
                         },
-                        success: function (response) {
-                            swal("Poof all gone! " + response, {
-                                icon: "success",
-                            }).then(function () {
+                        success: function(response) {
+                            swal("Poof all gone! " + response,
+                                {
+                                    icon: "success",
+                                }).then(function() {
                                 window.location.href = "/Page/Downloads";
                             });
                         },
-                        failure: function (response) {
+                        failure: function(response) {
                             alert(response.responseText);
                         },
-                        error: function (response) {
+                        error: function(response) {
                             alert(response.responseText);
                         }
                     });

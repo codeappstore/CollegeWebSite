@@ -1,8 +1,9 @@
 ﻿@using Microsoft.AspNetCore.Http
 @model College.Model.DataTransferObject.OtherDto.FooterStudentSlogan
-@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
-@{ string pageName = @ViewContext.RouteData.Values["action"].ToString();
-    string baseUrl = HttpContextAccessor.HttpContext.Request.Scheme + "://" + Url.ActionContext.HttpContext.Request.Host;
+@inject IHttpContextAccessor HttpContextAccessor
+@{
+    var pageName = ViewContext.RouteData.Values["action"].ToString();
+    var baseUrl = HttpContextAccessor.HttpContext.Request.Scheme + "://" + Url.ActionContext.HttpContext.Request.Host;
 }
 @{
     Layout = "~/Views/Shared/_BackendLayout.cshtml";

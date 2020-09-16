@@ -16,13 +16,15 @@ namespace College.Controllers
     [AuthOverride]
     public class WebSiteController : Controller
     {
-        private readonly ILayoutRepo _repo;
         private readonly IWebHostEnvironment _env;
+        private readonly ILayoutRepo _repo;
+
         public WebSiteController(ILayoutRepo _repo, IWebHostEnvironment _env)
         {
             this._repo = _repo;
             this._env = _env;
         }
+
         public async Task<IActionResult> Index()
         {
             var data = await _repo.FetchFooterStudentSlogan();
@@ -56,23 +58,17 @@ namespace College.Controllers
                         HttpContext.Session.SetString("Success", "Feature Created Successfully.");
                         return RedirectToAction(nameof(Features));
                     }
-                    else
-                    {
-                        HttpContext.Session.SetString("Error", "Problem while adding the data!");
-                        return RedirectToAction(nameof(Features));
-                    }
-                }
-                else
-                {
-                    HttpContext.Session.SetString("Error", "Input fields might be empty or invalid!");
+
+                    HttpContext.Session.SetString("Error", "Problem while adding the data!");
                     return RedirectToAction(nameof(Features));
                 }
-            }
-            else
-            {
+
                 HttpContext.Session.SetString("Error", "Input fields might be empty or invalid!");
                 return RedirectToAction(nameof(Features));
             }
+
+            HttpContext.Session.SetString("Error", "Input fields might be empty or invalid!");
+            return RedirectToAction(nameof(Features));
         }
 
         public async Task<IActionResult> FeaturesUpdate(int id)
@@ -94,40 +90,27 @@ namespace College.Controllers
                         HttpContext.Session.SetString("Success", "Feature Updated Successfully.");
                         return RedirectToAction(nameof(Features));
                     }
-                    else
-                    {
-                        HttpContext.Session.SetString("Error", "Problem while updating the data!");
-                        return RedirectToAction(nameof(Features));
-                    }
-                }
-                else
-                {
-                    HttpContext.Session.SetString("Error", "Input fields might be empty or invalid!");
+
+                    HttpContext.Session.SetString("Error", "Problem while updating the data!");
                     return RedirectToAction(nameof(Features));
                 }
-            }
-            else
-            {
+
                 HttpContext.Session.SetString("Error", "Input fields might be empty or invalid!");
                 return RedirectToAction(nameof(Features));
             }
+
+            HttpContext.Session.SetString("Error", "Input fields might be empty or invalid!");
+            return RedirectToAction(nameof(Features));
         }
 
         [HttpPost]
         public async Task<IActionResult> FeaturesDelete(int id)
         {
-
             var dataSet = await _repo.FetchSalientFeaturesByIdAsyncTask(id);
 
-            // Delete user
             if (await _repo.DeleteSalientFeaturesAsyncTask(dataSet.SalientFeatureId))
-            {
                 return Json("Success, Salient Feature deleted successfully");
-            }
-            else
-            {
-                return Json("Error Problem Deleting User");
-            }
+            return Json("Error Problem Deleting User");
         }
 
         #endregion
@@ -136,7 +119,7 @@ namespace College.Controllers
 
         public async Task<IActionResult> Footer()
         {
-            var combinedModel = new FooterImportantLinkModelDto()
+            var combinedModel = new FooterImportantLinkModelDto
             {
                 FooterUpdateModel = await _repo.FetchFooterHeaderAsyncTask((int)Enums.Page.Default),
                 ImportantLinksModel = await _repo.FetchImportantLinksListAsyncTask()
@@ -157,23 +140,17 @@ namespace College.Controllers
                         HttpContext.Session.SetString("Success", "Footer details Updated Successfully.");
                         return RedirectToAction(nameof(Index));
                     }
-                    else
-                    {
-                        HttpContext.Session.SetString("Error", "Problem while updating the data!");
-                        return RedirectToAction(nameof(Footer));
-                    }
-                }
-                else
-                {
-                    HttpContext.Session.SetString("Error", "Input fields might be empty or invalid!");
+
+                    HttpContext.Session.SetString("Error", "Problem while updating the data!");
                     return RedirectToAction(nameof(Footer));
                 }
-            }
-            else
-            {
+
                 HttpContext.Session.SetString("Error", "Input fields might be empty or invalid!");
                 return RedirectToAction(nameof(Footer));
             }
+
+            HttpContext.Session.SetString("Error", "Input fields might be empty or invalid!");
+            return RedirectToAction(nameof(Footer));
         }
 
         public IActionResult LinkItemCreate()
@@ -195,23 +172,17 @@ namespace College.Controllers
                         HttpContext.Session.SetString("Success", "Link Created Successfully.");
                         return RedirectToAction(nameof(Footer));
                     }
-                    else
-                    {
-                        HttpContext.Session.SetString("Error", "Problem while adding the data!");
-                        return RedirectToAction(nameof(Footer));
-                    }
-                }
-                else
-                {
-                    HttpContext.Session.SetString("Error", "Input fields might be empty or invalid!");
+
+                    HttpContext.Session.SetString("Error", "Problem while adding the data!");
                     return RedirectToAction(nameof(Footer));
                 }
-            }
-            else
-            {
+
                 HttpContext.Session.SetString("Error", "Input fields might be empty or invalid!");
                 return RedirectToAction(nameof(Footer));
             }
+
+            HttpContext.Session.SetString("Error", "Input fields might be empty or invalid!");
+            return RedirectToAction(nameof(Footer));
         }
 
         public async Task<IActionResult> LinkItemUpdate(int id)
@@ -233,40 +204,26 @@ namespace College.Controllers
                         HttpContext.Session.SetString("Success", "Link Updated Successfully.");
                         return RedirectToAction(nameof(Footer));
                     }
-                    else
-                    {
-                        HttpContext.Session.SetString("Error", "Problem while updating the data!");
-                        return RedirectToAction(nameof(Footer));
-                    }
-                }
-                else
-                {
-                    HttpContext.Session.SetString("Error", "Input fields might be empty or invalid!");
+
+                    HttpContext.Session.SetString("Error", "Problem while updating the data!");
                     return RedirectToAction(nameof(Footer));
                 }
-            }
-            else
-            {
+
                 HttpContext.Session.SetString("Error", "Input fields might be empty or invalid!");
                 return RedirectToAction(nameof(Footer));
             }
+
+            HttpContext.Session.SetString("Error", "Input fields might be empty or invalid!");
+            return RedirectToAction(nameof(Footer));
         }
 
         [HttpPost]
         public async Task<IActionResult> LinkItemDelete(int id)
         {
-
             var dataSet = await _repo.FetchSalientFeaturesByIdAsyncTask(id);
-
-            // Delete user
             if (await _repo.DeleteImportantLinkAsyncTask(dataSet.SalientFeatureId))
-            {
                 return Json("Success, Link deleted successfully");
-            }
-            else
-            {
-                return Json("Error Problem Deleting User");
-            }
+            return Json("Error Problem Deleting User");
         }
 
         #endregion
@@ -275,7 +232,7 @@ namespace College.Controllers
 
         public async Task<IActionResult> StudentsSay()
         {
-            var combinedModel = new StudentSaysStudentsModelDto()
+            var combinedModel = new StudentSaysStudentsModelDto
             {
                 SayModel = await _repo.FetchStudentsSayAsyncTask((int)Enums.Page.Default),
                 StudentsModel = await _repo.FetchStudentsSayingListAsyncTask()
@@ -291,22 +248,17 @@ namespace College.Controllers
             {
                 if (combinedModel.SayModel != null)
                 {
-                    // Update Image
-                    var imageString = "";
                     var userDetails = await _repo.FetchStudentsSayAsyncTask(combinedModel.SayModel.StudentSayId);
                     if (combinedModel.SayModel.BackgroundImage != null)
                     {
-                        // Users Folder
                         var userImagePath = @"\User_Information\Pages\Students Say\Images\";
-                        // Root Path
                         var webRootPath = _env.WebRootPath;
-                        // Base Path
                         var basePath = Path.Combine(webRootPath + userImagePath);
-                        // Base Path Exists or create new base path
-                        bool basePathExists = System.IO.Directory.Exists(basePath);
+                        var basePathExists = Directory.Exists(basePath);
                         if (!basePathExists) Directory.CreateDirectory(basePath);
-                        // File
-                        var fileName = Path.GetFileNameWithoutExtension(combinedModel.SayModel.BackgroundImage.FileName + Path.GetExtension(combinedModel.SayModel.BackgroundImage.FileName));
+                        var fileName = Path.GetFileNameWithoutExtension(
+                            combinedModel.SayModel.BackgroundImage.FileName +
+                            Path.GetExtension(combinedModel.SayModel.BackgroundImage.FileName));
                         var filePath = Path.Combine(basePath, fileName);
                         var fileExists = System.IO.File.Exists(filePath);
                         if (fileExists) System.IO.File.Delete(filePath);
@@ -314,43 +266,36 @@ namespace College.Controllers
                         {
                             await combinedModel.SayModel.BackgroundImage.CopyToAsync(stream);
                         }
-                        imageString = userImagePath + fileName;
+
+                        var imageString = userImagePath + fileName;
                         if (string.IsNullOrWhiteSpace(imageString) && string.IsNullOrWhiteSpace(userDetails.Image))
                         {
                             HttpContext.Session.SetString("Error", "Image is required!");
                             return RedirectToAction(nameof(StudentsSay));
                         }
+
                         combinedModel.SayModel.Image = imageString;
                     }
                     else
                     {
                         combinedModel.SayModel.Image = userDetails.Image;
                     }
-
-
-                    // Update in db
                     if (await _repo.UpdateStudentSayAsyncTask(combinedModel.SayModel))
                     {
                         HttpContext.Session.SetString("Success", "Student's Say Updated Successfully.");
                         return RedirectToAction(nameof(StudentsSay));
                     }
-                    else
-                    {
-                        HttpContext.Session.SetString("Error", "Problem while updating the data!");
-                        return RedirectToAction(nameof(StudentsSay));
-                    }
-                }
-                else
-                {
-                    HttpContext.Session.SetString("Error", "Input fields might be empty or invalid!");
+
+                    HttpContext.Session.SetString("Error", "Problem while updating the data!");
                     return RedirectToAction(nameof(StudentsSay));
                 }
-            }
-            else
-            {
+
                 HttpContext.Session.SetString("Error", "Input fields might be empty or invalid!");
                 return RedirectToAction(nameof(StudentsSay));
             }
+
+            HttpContext.Session.SetString("Error", "Input fields might be empty or invalid!");
+            return RedirectToAction(nameof(StudentsSay));
         }
 
         public IActionResult StudentSayCreate()
@@ -367,22 +312,16 @@ namespace College.Controllers
             {
                 if (studentSay != null)
                 {
-                    // Update image 
-                    // Update Image
                     var imageString = "";
                     if (studentSay.ImageString != null)
                     {
-                        // Users Folder
                         var userImagePath = @"\User_Information\Pages\Students Say\Images\";
-                        // Root Path
                         var webRootPath = _env.WebRootPath;
-                        // Base Path
                         var basePath = Path.Combine(webRootPath + userImagePath);
-                        // Base Path Exists or create new base path
-                        bool basePathExists = System.IO.Directory.Exists(basePath);
+                        var basePathExists = Directory.Exists(basePath);
                         if (!basePathExists) Directory.CreateDirectory(basePath);
-                        // File
-                        var fileName = Path.GetFileNameWithoutExtension(studentSay.ImageString.FileName + Path.GetExtension(studentSay.ImageString.FileName));
+                        var fileName = Path.GetFileNameWithoutExtension(
+                            studentSay.ImageString.FileName + Path.GetExtension(studentSay.ImageString.FileName));
                         var filePath = Path.Combine(basePath, fileName);
                         var fileExists = System.IO.File.Exists(filePath);
                         if (fileExists) System.IO.File.Delete(filePath);
@@ -390,8 +329,10 @@ namespace College.Controllers
                         {
                             await studentSay.ImageString.CopyToAsync(stream);
                         }
+
                         imageString = userImagePath + fileName;
                     }
+
                     if (string.IsNullOrWhiteSpace(imageString))
                     {
                         HttpContext.Session.SetString("Error", "Image is required!");
@@ -399,30 +340,22 @@ namespace College.Controllers
                     }
 
                     studentSay.Image = imageString;
-
-                    // Update db
                     if (await _repo.CreateStudentsSayingAsyncTask(studentSay))
                     {
                         HttpContext.Session.SetString("Success", "Student saying created Successfully.");
                         return RedirectToAction(nameof(StudentsSay));
                     }
-                    else
-                    {
-                        HttpContext.Session.SetString("Error", "Problem while adding the data!");
-                        return RedirectToAction(nameof(StudentsSay));
-                    }
-                }
-                else
-                {
-                    HttpContext.Session.SetString("Error", "Input fields might be empty or invalid!");
+
+                    HttpContext.Session.SetString("Error", "Problem while adding the data!");
                     return RedirectToAction(nameof(StudentsSay));
                 }
-            }
-            else
-            {
+
                 HttpContext.Session.SetString("Error", "Input fields might be empty or invalid!");
                 return RedirectToAction(nameof(StudentsSay));
             }
+
+            HttpContext.Session.SetString("Error", "Input fields might be empty or invalid!");
+            return RedirectToAction(nameof(StudentsSay));
         }
 
         public async Task<IActionResult> StudentSayUpdate(int id)
@@ -439,22 +372,16 @@ namespace College.Controllers
             {
                 if (sayStudents != null)
                 {
-                    // Update image 
-                    var imageString = "";
                     var userDetails = await _repo.FetchStudentsSayingByIdAsyncTask(sayStudents.StudentSayId);
                     if (sayStudents.ImageString != null)
                     {
-                        // Users Folder
                         var userImagePath = @"\User_Information\Pages\Students Say\Images\";
-                        // Root Path
                         var webRootPath = _env.WebRootPath;
-                        // Base Path
                         var basePath = Path.Combine(webRootPath + userImagePath);
-                        // Base Path Exists or create new base path
-                        bool basePathExists = System.IO.Directory.Exists(basePath);
+                        var basePathExists = Directory.Exists(basePath);
                         if (!basePathExists) Directory.CreateDirectory(basePath);
-                        // File
-                        var fileName = Path.GetFileNameWithoutExtension(sayStudents.ImageString.FileName + Path.GetExtension(sayStudents.ImageString.FileName));
+                        var fileName = Path.GetFileNameWithoutExtension(
+                            sayStudents.ImageString.FileName + Path.GetExtension(sayStudents.ImageString.FileName));
                         var filePath = Path.Combine(basePath, fileName);
                         var fileExists = System.IO.File.Exists(filePath);
                         if (fileExists) System.IO.File.Delete(filePath);
@@ -462,71 +389,51 @@ namespace College.Controllers
                         {
                             await sayStudents.ImageString.CopyToAsync(stream);
                         }
-                        imageString = userImagePath + fileName;
+
+                        var imageString = userImagePath + fileName;
                         if (string.IsNullOrWhiteSpace(imageString) && string.IsNullOrWhiteSpace(userDetails.Image))
                         {
                             HttpContext.Session.SetString("Error", "Image is required!");
                             return RedirectToAction(nameof(StudentsSay));
                         }
+
                         sayStudents.Image = imageString;
                     }
                     else
                     {
                         sayStudents.Image = userDetails.Image;
                     }
-
-                    // Update database
                     if (await _repo.UpdateStudentsSayingAsyncTask(sayStudents))
                     {
                         HttpContext.Session.SetString("Success", "Students saying updated Successfully.");
                         return RedirectToAction(nameof(StudentsSay));
                     }
-                    else
-                    {
-                        HttpContext.Session.SetString("Error", "Problem while updating the data!");
-                        return RedirectToAction(nameof(StudentsSay));
-                    }
-                }
-                else
-                {
-                    HttpContext.Session.SetString("Error", "Input fields might be empty or invalid!");
+
+                    HttpContext.Session.SetString("Error", "Problem while updating the data!");
                     return RedirectToAction(nameof(StudentsSay));
                 }
-            }
-            else
-            {
+
                 HttpContext.Session.SetString("Error", "Input fields might be empty or invalid!");
                 return RedirectToAction(nameof(StudentsSay));
             }
+
+            HttpContext.Session.SetString("Error", "Input fields might be empty or invalid!");
+            return RedirectToAction(nameof(StudentsSay));
         }
 
         [HttpPost]
         public async Task<IActionResult> StudentSayDelete(int id)
         {
-
             var dataSet = await _repo.FetchStudentsSayingByIdAsyncTask(id);
 
             var userImagePath = dataSet.Image;
-            // Base Path
-
-            // Delete User image folder
-            // Root Path
             var webRootPath = _env.WebRootPath;
-            // Base Path
             var basePath = Path.Combine(webRootPath + userImagePath);
-            // Base Path Exists or create new base path
-            bool basePathExists = System.IO.Directory.Exists(basePath);
+            var basePathExists = Directory.Exists(basePath);
             if (basePathExists) System.IO.File.Delete(basePath);
-
-            // Delete user
             if (await _repo.DeleteStudentsSayingAsyncTask(dataSet.StudentSayId))
-            {
                 return Json("Success, Students saying successfully");
-            }
-            else
-            {
-                return Json("Error Problem Deleting User");
-            }
+            return Json("Error Problem Deleting User");
         }
 
         #endregion

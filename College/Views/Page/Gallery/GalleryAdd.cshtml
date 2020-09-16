@@ -10,7 +10,7 @@
             <h5>
                 Add Gallery File
                 <a asp-controller="Page" asp-action="Gallery" class="btn btn-primary btn-sm text-light" style="float: right;">
-                    <i class="fas fa-arrow-left"></i>  Back to gallery
+                    <i class="fas fa-arrow-left"></i> Back to gallery
                 </a>
             </h5>
         </div>
@@ -26,14 +26,14 @@
                     <div class="col-sm-6 col-md-6 col-lg-6">
                         <div class="form-group">
                             <label asp-for="Title"></label>
-                            <input asp-for="Title" class="au-input au-input--full" type="text" required />
+                            <input asp-for="Title" class="au-input au-input--full" type="text" required/>
                             <span asp-validation-for="Title" class="text-danger"></span>
                         </div>
                     </div>
                     <div class="col-sm-6 col-md-6 col-lg-6">
                         <div class="form-group">
                             <label asp-for="Photographer"></label>
-                            <input asp-for="Photographer" class="au-input au-input--full" required type="text" />
+                            <input asp-for="Photographer" class="au-input au-input--full" required type="text"/>
                             <span asp-validation-for="Photographer" class="text-danger"></span>
                         </div>
                     </div>
@@ -57,5 +57,5 @@
 </div>
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
 }

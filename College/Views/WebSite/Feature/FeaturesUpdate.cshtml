@@ -10,7 +10,7 @@
             <h5>
                 Update Feature
                 <a asp-controller="WebSite" asp-action="Features" class="btn btn-primary btn-sm text-light" style="float: right;">
-                    <i class="fas fa-arrow-left"></i>  Back to features list
+                    <i class="fas fa-arrow-left"></i> Back to features list
                 </a>
             </h5>
         </div>
@@ -21,12 +21,12 @@
                         <span>Please correct the following errors</span>
                     </div>
                 </div>
-                <input type="hidden" asp-for="SalientFeatureId" />
+                <input type="hidden" asp-for="SalientFeatureId"/>
                 <div class="row">
                     <div class="col-sm-12 col-md-12 col-lg-12">
                         <div class="form-group">
                             <label asp-for="Feature"></label>
-                            <input asp-for="Feature" class="au-input au-input--full" type="text" required />
+                            <input asp-for="Feature" class="au-input au-input--full" type="text" required/>
                             <span asp-validation-for="Feature" class="text-danger"></span>
                         </div>
                     </div>
@@ -41,5 +41,5 @@
 </div>
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
 }

@@ -10,7 +10,7 @@
             <h5>
                 Create New Link
                 <a asp-controller="WebSite" asp-action="Footer" class="btn btn-primary btn-sm text-light" style="float: right;">
-                    <i class="fas fa-arrow-left"></i>  Back to footer
+                    <i class="fas fa-arrow-left"></i> Back to footer
                 </a>
             </h5>
         </div>
@@ -26,7 +26,7 @@
                     <div class="col-sm-12 col-md-12 col-lg-12">
                         <div class="form-group">
                             <label asp-for="Title"></label>
-                            <input asp-for="Title" class="au-input au-input--full" type="text" required />
+                            <input asp-for="Title" class="au-input au-input--full" type="text" required/>
                             <span asp-validation-for="Title" class="text-danger"></span>
                         </div>
                     </div>
@@ -36,7 +36,7 @@
                     <div class="col-sm-12 col-md-12 col-lg-12">
                         <div class="form-group">
                             <label asp-for="Link"></label>
-                            <input asp-for="Link" class="au-input au-input--full" type="url" required />
+                            <input asp-for="Link" class="au-input au-input--full" type="url" required/>
                             <span asp-validation-for="Link" class="text-danger"></span>
                         </div>
                     </div>
@@ -52,5 +52,5 @@
 </div>
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
 }

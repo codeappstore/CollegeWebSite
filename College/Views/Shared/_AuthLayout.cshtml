@@ -1,13 +1,13 @@
 ﻿@{
-    string pageName = @ViewContext.RouteData.Values["action"].ToString();
-    string baseUrl = Url.ActionContext.HttpContext.Request.Scheme + "://" + Url.ActionContext.HttpContext.Request.Host;
+    var pageName = ViewContext.RouteData.Values["action"].ToString();
+    var baseUrl = Url.ActionContext.HttpContext.Request.Scheme + "://" + Url.ActionContext.HttpContext.Request.Host;
 }
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <!-- Meta -->
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta content="CodeAppStore" name="author">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -17,13 +17,13 @@
     <!-- Open Graph -->
     <meta property="og:title" content="Shahid Bishnu Dhani Memorial Polytechnic Institute">
     <meta property="og:description" content="Shahid Bishnu Dhani Memorial Polytechnic Institute | Shahid Bishnu Dhani Memorial Polytechnic Institute is a newly established educational institution which primarily attempts to contribute to the development of the country through the production of skilled and semi-skilled human resources. ">
-    <meta property="og:image" content="@(baseUrl+"/Polytechnic Institute_Dark.png")">
+    <meta property="og:image" content="@(baseUrl + "/Polytechnic Institute_Dark.png")">
     <meta property="og:url" content="@baseUrl">
     <meta name="twitter:card" content="Shahid Bishnu Dhani Memorial Polytechnic Institute | Shahid Bishnu Dhani Memorial Polytechnic Institute is a newly established educational institution which primarily attempts to contribute to the development of the country through the production of skilled and semi-skilled human resources. ">
 
 
     <!-- SITE TITLE -->
-    <title>@ViewData["Title"]  Shahid Bishnu Dhani Memorial Polytechnic Institute</title>
+    <title>@ViewData["Title"] Shahid Bishnu Dhani Memorial Polytechnic Institute</title>
 
     <!-- Favicon Icon -->
     <link rel="shortcut icon" type="image/x-icon" href="~/favicon.ico">
@@ -54,46 +54,47 @@
 
 </head>
 <body class="animsition">
-    @RenderBody()
-    <div class="copyright">
-        <p>© @DateTime.Now.Year All Rights Reserved by Shahid Bishnu Dhani Memorial Polytechnic Institute</p>
-        <p>Queries for <a href="mailto:dibesh@codeappstore.com">Support Team</a></p>
-    </div>
-    <!-- Jquery JS-->
-    <script src="~/assets/vendor/jquery-3.2.1.min.js"></script>
-    <!-- Bootstrap JS-->
-    <script src="~/assets/vendor/bootstrap-4.1/popper.min.js"></script>
-    <script src="~/assets/vendor/bootstrap-4.1/bootstrap.min.js"></script>
-    <!-- Vendor JS       -->
-    <script src="~/assets/vendor/slick/slick.min.js">
-    </script>
-    <script src="~/assets/vendor/wow/wow.min.js"></script>
-    <script src="~/assets/vendor/animsition/animsition.min.js"></script>
-    <script src="~/assets/vendor/bootstrap-progressbar/bootstrap-progressbar.min.js">
-    </script>
-    <script src="~/assets/vendor/counter-up/jquery.waypoints.min.js"></script>
-    <script src="~/assets/vendor/counter-up/jquery.counterup.min.js">
-    </script>
-    <script src="~/assets/vendor/circle-progress/circle-progress.min.js"></script>
-    <script src="~/assets/vendor/perfect-scrollbar/perfect-scrollbar.js"></script>
-    <script src="~/assets/vendor/chartjs/Chart.bundle.min.js"></script>
-    <script src="~/assets/vendor/select2/select2.min.js">
-    </script>
+@RenderBody()
+<div class="copyright">
+    <p>© @DateTime.Now.Year All Rights Reserved by Shahid Bishnu Dhani Memorial Polytechnic Institute</p>
+    <p>Queries for <a href="mailto:dibesh@codeappstore.com">Support Team</a></p>
+</div>
+<!-- Jquery JS-->
+<script src="~/assets/vendor/jquery-3.2.1.min.js"></script>
+<!-- Bootstrap JS-->
+<script src="~/assets/vendor/bootstrap-4.1/popper.min.js"></script>
+<script src="~/assets/vendor/bootstrap-4.1/bootstrap.min.js"></script>
+<!-- Vendor JS       -->
+<script src="~/assets/vendor/slick/slick.min.js">
+</script>
+<script src="~/assets/vendor/wow/wow.min.js"></script>
+<script src="~/assets/vendor/animsition/animsition.min.js"></script>
+<script src="~/assets/vendor/bootstrap-progressbar/bootstrap-progressbar.min.js">
+</script>
+<script src="~/assets/vendor/counter-up/jquery.waypoints.min.js"></script>
+<script src="~/assets/vendor/counter-up/jquery.counterup.min.js">
+</script>
+<script src="~/assets/vendor/circle-progress/circle-progress.min.js"></script>
+<script src="~/assets/vendor/perfect-scrollbar/perfect-scrollbar.js"></script>
+<script src="~/assets/vendor/chartjs/Chart.bundle.min.js"></script>
+<script src="~/assets/vendor/select2/select2.min.js">
+</script>
 
-    <!-- Main JS-->
-    <script src="~/assets/js/main.js"></script>
-    <script src="~/js/site.js" asp-append-version="true"></script>
+<!-- Main JS-->
+<script src="~/assets/js/main.js"></script>
+<script src="~/js/site.js" asp-append-version="true"></script>
 
-    <!--Validation Dependencies-->
-    <!-- <script src="~/validation/jquery.validate.min.js"></script>
-    <script src="~/validation/jquery.validate.unobtrusive.min.js"></script> -->
+<!--Validation Dependencies-->
+<!-- <script src="~/validation/jquery.validate.min.js"></script>
+<script src="~/validation/jquery.validate.unobtrusive.min.js"></script> -->
 
 
-    <script>
-        setTimeout(() => {
+<script>
+    setTimeout(() => {
             $('.flash').slideUp();
-        }, 5000);
-    </script>
-    @RenderSection("Scripts", required: false)
+        },
+        5000);
+</script>
+@RenderSection("Scripts", false)
 </body>
 </html>

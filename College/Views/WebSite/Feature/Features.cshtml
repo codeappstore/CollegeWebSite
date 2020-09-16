@@ -2,7 +2,7 @@
 @{
     Layout = "~/Views/Shared/_BackendLayout.cshtml";
     ViewData["Title"] = "Salient Features List -";
-    int serialize = 1;
+    var serialize = 1;
 }
 @(await Html.PartialAsync("~/Views/Shared/_AlertLayout.cshtml"))
 
@@ -35,7 +35,9 @@
             }
             else
             {
-                <div class="text-center"><h4>Dat not found</h4></div>
+                <div class="text-center">
+                    <h4>Dat not found</h4>
+                </div>
             }
         </div>
     </div>
@@ -65,17 +67,18 @@
                         data: {
                             id: id
                         },
-                        success: function (response) {
-                            swal("Poof all gone! " + response, {
-                                icon: "success",
-                            }).then(function () {
-                                window.location.href = "/WebSite/Features"
+                        success: function(response) {
+                            swal("Poof all gone! " + response,
+                                {
+                                    icon: "success",
+                                }).then(function() {
+                                window.location.href = "/WebSite/Features";
                             });
                         },
-                        failure: function (response) {
+                        failure: function(response) {
                             alert(response.responseText);
                         },
-                        error: function (response) {
+                        error: function(response) {
                             alert(response.responseText);
                         }
                     });

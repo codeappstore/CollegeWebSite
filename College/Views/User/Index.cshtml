@@ -1,14 +1,12 @@
-﻿@using System.Collections
+﻿@inject IHttpContextAccessor HttpContextAccessor
 @using College.Helpers
 @using College.Model.DataTransferObject.AuthDto
-@using Microsoft.AspNetCore.Components.Forms
-@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
 @using Microsoft.AspNetCore.Http
 @model IList<College.Model.DataTransferObject.AuthDto.AuthorDisplayModelDto>
 @{
     Layout = "~/Views/Shared/_BackendLayout.cshtml";
     ViewData["Title"] = "Users List -";
-    string baseUrl = HttpContextAccessor.HttpContext.Request.Scheme + @":\\" + Url.ActionContext.HttpContext.Request.Host;
+    var baseUrl = HttpContextAccessor.HttpContext.Request.Scheme + @":\\" + Url.ActionContext.HttpContext.Request.Host;
     var UserInfo = HttpContextAccessor.HttpContext.Session.GetComplexData<AuthBasicDetailsModelDto>("_Details");
 }
 @(await Html.PartialAsync("~/Views/Shared/_AlertLayout.cshtml"))
@@ -36,24 +34,26 @@
                                 <div class="card-header">
                                     <i class="fa fa-user text-success"></i>
                                     <strong class="card-title pl-2">@UserItem.FullName's Profile</strong>
-                                    <strong class="card-title float-right text-primary">@(UserItem.RoleId==1?"Admin":UserItem.RoleId==2?"Developer":"Manager")</strong>
+                                    <strong class="card-title float-right text-primary">@(UserItem.RoleId == 1 ? "Admin" : UserItem.RoleId == 2 ? "Developer" : "Manager")</strong>
                                 </div>
                                 <div class="card-body">
                                     <div class="mx-auto d-block">
                                         <div class="img-thumbnail d-flex justify-content-center">
-                                            <a href="@(UserItem.Image == null ? "/images/user.png" : UserItem.Image)"> <img class="img-fluid" src="@(UserItem.Image == null ? "/images/user.png" : UserItem.Image)" alt="Not Found" style="max-height: 200px; width: auto;" /></a>
+                                            <a href="@(UserItem.Image == null ? "/images/user.png" : UserItem.Image)">
+                                                <img class="img-fluid" src="@(UserItem.Image == null ? "/images/user.png" : UserItem.Image)" alt="Not Found" style="max-height: 200px; width: auto;"/>
+                                            </a>
                                         </div>
                                         <h5 class="text-sm-center mt-2 mb-1">
-                                            <i class="fa fa-user"></i>  @UserItem.FullName
+                                            <i class="fa fa-user"></i> @UserItem.FullName
                                         </h5>
                                         <h5 class="text-sm-center mt-2 mb-1">
-                                            <i class="fa fa-envelope"></i>  <a href="mailto:@(UserItem.Email)">@UserItem.Email</a>
+                                            <i class="fa fa-envelope"></i> <a href="mailto:@(UserItem.Email)">@UserItem.Email</a>
                                         </h5>
                                         <div class="location text-sm-center">
-                                            <i class="fa fa-map-marker"></i>  @(string.IsNullOrWhiteSpace(UserItem.Address)?"N/a":UserItem.Address)
+                                            <i class="fa fa-map-marker"></i> @(string.IsNullOrWhiteSpace(UserItem.Address) ? "N/a" : UserItem.Address)
                                         </div>
                                         <div class="location text-sm-center">
-                                            <i class="fa fa-tablet"></i>  @(string.IsNullOrWhiteSpace(UserItem.PhoneNumber)?"N/a":UserItem.PhoneNumber)
+                                            <i class="fa fa-tablet"></i> @(string.IsNullOrWhiteSpace(UserItem.PhoneNumber) ? "N/a" : UserItem.PhoneNumber)
                                         </div>
                                     </div>
                                     <hr>
@@ -69,7 +69,9 @@
             }
             else
             {
-                <div class="text-center"><h4>Dat not found</h4></div>
+                <div class="text-center">
+                    <h4>Dat not found</h4>
+                </div>
             }
         </div>
     </div>
@@ -100,17 +102,18 @@
                             UserID: id,
                             FullName: user
                         },
-                        success: function (response) {
-                            swal("Poof all gone! " + response, {
-                                icon: "success",
-                            }).then(function () {
-                                window.location.href = "/User/Index"
+                        success: function(response) {
+                            swal("Poof all gone! " + response,
+                                {
+                                    icon: "success",
+                                }).then(function() {
+                                window.location.href = "/User/Index";
                             });
                         },
-                        failure: function (response) {
+                        failure: function(response) {
                             alert(response.responseText);
                         },
-                        error: function (response) {
+                        error: function(response) {
                             alert(response.responseText);
                         }
                     });

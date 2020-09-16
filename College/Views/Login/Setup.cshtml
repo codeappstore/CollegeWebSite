@@ -1,11 +1,11 @@
 ﻿@using Microsoft.AspNetCore.Components.Forms
 @model College.Model.DataTransferObject.AppSettingsDto.AppSettingsModelDto
 @using Microsoft.AspNetCore.Http
-@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
+@inject IHttpContextAccessor HttpContextAccessor
 @{
     Layout = "~/Views/Shared/_AuthLayout.cshtml";
     ViewData["Title"] = "Setup -";
-    string baseUrl = Url.ActionContext.HttpContext.Request.Scheme + "://" + Url.ActionContext.HttpContext.Request.Host;
+    var baseUrl = Url.ActionContext.HttpContext.Request.Scheme + "://" + Url.ActionContext.HttpContext.Request.Host;
     var license = HttpContextAccessor.HttpContext.Session.GetInt32("_SuccessSet");
     if (license != null && license == 1)
     {
@@ -23,7 +23,7 @@
                         <div class="login-content">
                             <div class="login-logo">
                                 <a href="https://codeappstore.com/">
-                                    <img src="https://codeappstore.com/icons/favicon_Dark/android-chrome-512x512.png" style="width: 50%; height: auto;" />
+                                    <img src="https://codeappstore.com/icons/favicon_Dark/android-chrome-512x512.png" style="height: auto; width: 50%;"/>
                                 </a>
                             </div>
                             <div class="text-center">
@@ -44,13 +44,13 @@
                                     </div>
                                     <div class="form-group">
                                         <label asp-for="Email"></label>
-                                        <input asp-for="Email" class="au-input au-input--full" type="email" required />
+                                        <input asp-for="Email" class="au-input au-input--full" type="email" required/>
                                         <span asp-validation-for="Email" class="text-danger"></span>
                                     </div>
 
                                     <div class="form-group">
                                         <label asp-for="OrganizationName"></label>
-                                        <input asp-for="OrganizationName" class="au-input au-input--full" type="text" required minlength="8" />
+                                        <input asp-for="OrganizationName" class="au-input au-input--full" type="text" required minlength="8"/>
                                         <span asp-validation-for="OrganizationName" class="text-danger"></span>
                                     </div>
 
@@ -66,8 +66,8 @@
 </div>
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
     <script>
-        setTimeout("location.reload(true);", @license+30*1000);
+        setTimeout("location.reload(true);", @license + 30 * 1000);
     </script>
 }

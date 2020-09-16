@@ -1,15 +1,13 @@
-﻿@using System.Text
-@using System.Net
-@using College.Helpers
+﻿@using College.Helpers
 @using College.Model.DataTransferObject.AttachmentDto
 @using College.Model.DataTransferObject.FrontEndOtherDto
 @using College.Model.DataTransferObject.PageDto
 @using Microsoft.AspNetCore.Http
-@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
+@inject IHttpContextAccessor HttpContextAccessor
 @{
     ViewData["Title"] = "About Us -";
-    string pageName = @ViewContext.RouteData.Values["action"].ToString();
-    string baseUrl = Url.ActionContext.HttpContext.Request.Scheme + "://" + Url.ActionContext.HttpContext.Request.Host;
+    var pageName = ViewContext.RouteData.Values["action"].ToString();
+    var baseUrl = Url.ActionContext.HttpContext.Request.Scheme + "://" + Url.ActionContext.HttpContext.Request.Host;
 }
 @{
     var LayoutModel = HttpContextAccessor.HttpContext.Session.GetComplexData<LayoutModelDto>("_Layout");
@@ -17,7 +15,7 @@
     var BrochureModel = HttpContextAccessor.HttpContext.Session.GetComplexData<AttachmentModelDto>("_Brochure");
 }
 <!-- START SECTION BREADCRUMB -->
-<div class="breadcrumb_section background_bg overlay_bg_50 page_title_light" data-img-src="@(baseUrl+AboutModel.BackgroundImage.Replace(@"\", "/"))" style="background-image: url('@(baseUrl+AboutModel.BackgroundImage.Replace(@"\", "/"))')">
+<div class="breadcrumb_section background_bg overlay_bg_50 page_title_light" data-img-src="@(baseUrl + AboutModel.BackgroundImage.Replace(@"\", "/"))" style="background-image: url('@(baseUrl + AboutModel.BackgroundImage.Replace(@"\", "/"))')">
     <div class="container">
         <!-- STRART CONTAINER -->
         <div class="row">
@@ -26,7 +24,9 @@
                     <h1>About Us</h1>
                 </div>
                 <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a asp-action="Index" asp-controller="Home">Home</a></li>
+                    <li class="breadcrumb-item">
+                        <a asp-action="Index" asp-controller="Home">Home</a>
+                    </li>
                     <li class="breadcrumb-item active">About Us</li>
                 </ol>
             </div>
@@ -51,7 +51,7 @@
                             </p>
                         </object>
                     </div>
-                    <br />
+                    <br/>
                     <a href="@BrochureModel.Link" target="_blank"><i class="fas fa-file-pdf text-danger"></i> Download @BrochureModel.FileName </a>
                 </div>
             }

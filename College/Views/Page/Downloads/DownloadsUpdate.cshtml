@@ -10,7 +10,7 @@
             <h5>
                 Update Download File
                 <a asp-controller="Page" asp-action="Downloads" class="btn btn-primary btn-sm text-light" style="float: right;">
-                    <i class="fas fa-arrow-left"></i>  Back to downloads
+                    <i class="fas fa-arrow-left"></i> Back to downloads
                 </a>
             </h5>
         </div>
@@ -22,14 +22,14 @@
                     </div>
                 </div>
 
-                <input type="hidden" asp-for="FileId" />
+                <input type="hidden" asp-for="FileId"/>
 
 
                 <div class="row">
                     <div class="col-sm-6 col-md-6 col-lg-6">
                         <div class="form-group">
                             <label asp-for="Title"></label>
-                            <input asp-for="Title" class="au-input au-input--full" type="text" required />
+                            <input asp-for="Title" class="au-input au-input--full" type="text" required/>
                             <span asp-validation-for="Title" class="text-danger"></span>
                         </div>
                     </div>
@@ -44,13 +44,14 @@
                         {
                             <div class="row">
                                 <div class="col-sm-12 d-flex justify-content-center ">
-                                    <button class="btn btn-danger"> <i class="fas fa-file"></i><a class="text-light" href="@(Model.FileLink)" target="_blank">&nbsp;&nbsp;  @Model.Title</a></button>
+                                    <button class="btn btn-danger">
+                                        <i class="fas fa-file"></i><a class="text-light" href="@(Model.FileLink)" target="_blank">&nbsp;&nbsp; @Model.Title</a>
+                                    </button>
                                 </div>
                                 <div class="col-sm-12">
                                     <p class="text-center">Current File has @Model.Extension extension</p>
                                 </div>
                             </div>
-
                         }
                     </div>
                 </div>
@@ -64,5 +65,5 @@
 </div>
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
 }

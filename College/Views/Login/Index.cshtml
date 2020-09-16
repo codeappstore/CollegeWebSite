@@ -14,7 +14,7 @@
                         <div class="login-content">
                             <div class="login-logo">
                                 <a href="#">
-                                    <img src="~/Polytechnic Institute_Dark.png" style="width: 50%; height: auto;" />
+                                    <img src="~/Polytechnic Institute_Dark.png" style="height: auto; width: 50%;"/>
                                 </a>
                             </div>
                             <div class="login-form m-t-50">
@@ -25,19 +25,19 @@
                                     </div>
                                     <div class="form-group">
                                         <label asp-for="Email"></label>
-                                        <input asp-for="Email" class="au-input au-input--full" type="email" required />
+                                        <input asp-for="Email" class="au-input au-input--full" type="email" required/>
                                         <span asp-validation-for="Email" class="text-danger"></span>
                                     </div>
 
                                     <div class="form-group">
                                         <label asp-for="Password">Password</label>
-                                        <input asp-for="Password" class="au-input au-input--full" type="password" required minlength="8" />
+                                        <input asp-for="Password" class="au-input au-input--full" type="password" required minlength="8"/>
                                         <span asp-validation-for="Password" class="text-danger"></span>
                                     </div>
 
                                     <div class="login-checkbox">
                                         <label>
-                                            <input type="checkbox" asp-for="RememberMe" /> Remember Me
+                                            <input type="checkbox" asp-for="RememberMe"/> Remember Me
                                         </label>
                                         <label>
                                             <a asp-controller="Reset" asp-action="ForgetPassword">Forget Password ?</a>
@@ -55,5 +55,5 @@
 </div>
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
 }

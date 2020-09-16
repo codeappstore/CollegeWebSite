@@ -1,22 +1,20 @@
-﻿@model IList<College.Model.DataTransferObject.GalleryDto.GalleryModelDto>
-@using System.Text
-@using System.Net
-@using College.Helpers
+﻿@using College.Helpers
 @using College.Model.DataTransferObject.FrontEndOtherDto
 @using College.Model.DataTransferObject.PageDto
 @using Microsoft.AspNetCore.Http
-@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
+@model IList<College.Model.DataTransferObject.GalleryDto.GalleryModelDto>
+@inject IHttpContextAccessor HttpContextAccessor
 @{
     ViewData["Title"] = "Gallery -";
-    string pageName = @ViewContext.RouteData.Values["action"].ToString();
-    string baseUrl = Url.ActionContext.HttpContext.Request.Scheme + "://" + Url.ActionContext.HttpContext.Request.Host;
+    var pageName = ViewContext.RouteData.Values["action"].ToString();
+    var baseUrl = Url.ActionContext.HttpContext.Request.Scheme + "://" + Url.ActionContext.HttpContext.Request.Host;
 }
 @{
     var LayoutModel = HttpContextAccessor.HttpContext.Session.GetComplexData<LayoutModelDto>("_Layout");
     var GalleryModel = HttpContextAccessor.HttpContext.Session.GetComplexData<PageModelDto>("_Gallery");
 }
 <!-- START SECTION BREADCRUMB -->
-<div class="breadcrumb_section background_bg overlay_bg_50 page_title_light" data-img-src="@(baseUrl+GalleryModel.BackgroundImage.Replace(@"\", "/"))" style="background-image: url('@(baseUrl+GalleryModel.BackgroundImage.Replace(@"\", "/"))')">
+<div class="breadcrumb_section background_bg overlay_bg_50 page_title_light" data-img-src="@(baseUrl + GalleryModel.BackgroundImage.Replace(@"\", "/"))" style="background-image: url('@(baseUrl + GalleryModel.BackgroundImage.Replace(@"\", "/"))')">
     <div class="container">
         <!-- STRART CONTAINER -->
         <div class="row">
@@ -25,7 +23,9 @@
                     <h1>Gallery</h1>
                 </div>
                 <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a asp-action="Index" asp-controller="Home">Home</a></li>
+                    <li class="breadcrumb-item">
+                        <a asp-action="Index" asp-controller="Home">Home</a>
+                    </li>
                     <li class="breadcrumb-item active">Gallery</li>
                 </ol>
             </div>
@@ -38,7 +38,7 @@
     <div class="container">
         <div class="row p-2">
             <div class="col-12 text-center">
-                <h4>@(string.IsNullOrWhiteSpace(GalleryModel.Description) ?"": GalleryModel.Description)</h4>
+                <h4>@(string.IsNullOrWhiteSpace(GalleryModel.Description) ? "" : GalleryModel.Description)</h4>
             </div>
         </div>
         @if (Model.Count > 0)
@@ -49,17 +49,17 @@
                         @foreach (var item in Model)
                         {
                             <li class="grid_item brands border-danger border-2">
-                                <h3 class="text-center text-primary">@(string.IsNullOrWhiteSpace(item.Title)?"Gallery": item.Title)</h3>
+                                <h3 class="text-center text-primary">@(string.IsNullOrWhiteSpace(item.Title) ? "Gallery" : item.Title)</h3>
                                 <div class="image_gallery_item">
                                     <a asp-controller="Home" asp-action="IndividualGallery" asp-route-id="@item.GalleryId">
                                         <div class="gallery_img">
-                                            <img src="@(baseUrl+item.Thumbnail.Replace(@"\", "/"))" alt="@(string.IsNullOrWhiteSpace(item.Title)?"Gallery": item.Title)">
+                                            <img src="@(baseUrl + item.Thumbnail.Replace(@"\", "/"))" alt="@(string.IsNullOrWhiteSpace(item.Title) ? "Gallery" : item.Title)">
                                         </div>
                                         <div class="gallary_hover_box">
                                             <i class="fa fa-folder"></i>
                                         </div>
                                     </a>
-                                    <p class="text-right text-success">By : @(string.IsNullOrWhiteSpace(item.Photographer)?"Admin": item.Photographer)</p>
+                                    <p class="text-right text-success">By : @(string.IsNullOrWhiteSpace(item.Photographer) ? "Admin" : item.Photographer)</p>
                                 </div>
                             </li>
                         }

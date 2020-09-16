@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="CodeAppStore.License" Version="1.0.5" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\College.Database\College.Database.csproj" />
+    <ProjectReference Include="..\College.Model\College.Model.csproj" />
+  </ItemGroup>
+
+</Project>

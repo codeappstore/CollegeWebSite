@@ -7,7 +7,9 @@
 @(await Html.PartialAsync("~/Views/Shared/_AlertLayout.cshtml"))
 <div class="col-lg-6 col-md-12 col-sm-12">
     <div class="card">
-        <div class="card-header"><h5>Email Configuration</h5></div>
+        <div class="card-header">
+            <h5>Email Configuration</h5>
+        </div>
         <div class="card-body card-block">
             <form asp-action="Manager" asp-controller="Email" method="post" asp-antiforgery="true">
                 <div class="form-group">
@@ -15,9 +17,9 @@
                         <span>Please correct the following errors</span>
                     </div>
                 </div>
-                <input type="hidden" asp-for="EmailId" />
-                <input type="hidden" asp-for="IsAvailable" />
-                <input type="hidden" asp-for="IsMasterEmail" />
+                <input type="hidden" asp-for="EmailId"/>
+                <input type="hidden" asp-for="IsAvailable"/>
+                <input type="hidden" asp-for="IsMasterEmail"/>
                 <div class="form-group">
                     <div class="input-group">
                         <div class="input-group-addon">
@@ -82,5 +84,5 @@
 </div>
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
 }

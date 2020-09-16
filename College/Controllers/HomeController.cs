@@ -1,18 +1,19 @@
-﻿using College.Access.IRepository;
+﻿using System.Threading.Tasks;
+using College.Access.IRepository;
 using College.Helpers;
 using College.Model.DataTransferObject.FrontEndOtherDto;
 using College.Model.DataTransferObject.PageDto;
 using Microsoft.AspNetCore.Mvc;
-using System.Threading.Tasks;
 
 namespace College.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly IFrontEndRepo _front;
-        private readonly ILayoutRepo _layout;
         private readonly IDownloadsRepo _downloads;
+        private readonly IFrontEndRepo _front;
         private readonly IGalleryRepo _gallery;
+        private readonly ILayoutRepo _layout;
+
         public HomeController(IFrontEndRepo _front, ILayoutRepo _layout, IDownloadsRepo downloads, IGalleryRepo gallery)
         {
             this._front = _front;
@@ -23,10 +24,10 @@ namespace College.Controllers
 
         private async Task SetLayout()
         {
-            var layout = new LayoutModelDto()
+            var layout = new LayoutModelDto
             {
-                Footer = await _layout.FetchFooterHeaderAsyncTask((int)Enums.Page.Default),
-                StudentSay = await _layout.FetchStudentsSayAsyncTask((int)Enums.Page.Default),
+                Footer = await _layout.FetchFooterHeaderAsyncTask((int) Enums.Page.Default),
+                StudentSay = await _layout.FetchStudentsSayAsyncTask((int) Enums.Page.Default),
                 ImportantLinks = await _layout.FetchImportantLinksListAsyncTask(),
                 SalientFeatures = await _layout.FetchSalientFeaturesListAsyncTask(),
                 Students = await _layout.FetchStudentsSayingListAsyncTask()
@@ -36,18 +37,18 @@ namespace College.Controllers
 
         private async Task<PageModelDto> FetchPage(Enums.Page page)
         {
-            return await _front.FetchPageDataByIdAsyncTask((int)page);
+            return await _front.FetchPageDataByIdAsyncTask((int) page);
         }
 
         public async Task<IActionResult> Index()
         {
-            var homeDataSet = new HomepageModelDto()
+            var homeDataSet = new HomepageModelDto
             {
-                Academic = await _front.FetchAcademicDataByIdAsyncTask((int)Enums.Page.Default),
+                Academic = await _front.FetchAcademicDataByIdAsyncTask((int) Enums.Page.Default),
                 Page = await FetchPage(Enums.Page.Home),
-                PopUp = await _front.FetchPopUpByIdAsyncTask((int)Enums.Page.Default),
+                PopUp = await _front.FetchPopUpByIdAsyncTask((int) Enums.Page.Default),
                 AcademicItems = await _front.FetchAcademicItemListAsyncTask(),
-                Carousel = await _front.FetchCarouselListAsyncTask(),
+                Carousel = await _front.FetchCarouselListAsyncTask()
             };
             await SetLayout();
             HttpContext.Session.SetComplexData("_Index", homeDataSet);
@@ -57,8 +58,8 @@ namespace College.Controllers
         public async Task<IActionResult> About()
         {
             await SetLayout();
-            var brochure = await _front.FetchAttachmentByIdAsyncTask((int)Enums.Page.Home);
-            var about = await _front.FetchPageDataByIdAsyncTask((int)Enums.Page.About);
+            var brochure = await _front.FetchAttachmentByIdAsyncTask((int) Enums.Page.Home);
+            var about = await _front.FetchPageDataByIdAsyncTask((int) Enums.Page.About);
             HttpContext.Session.SetComplexData("_About", about);
             HttpContext.Session.SetComplexData("_Brochure", brochure);
             return View();
@@ -67,7 +68,7 @@ namespace College.Controllers
         public async Task<IActionResult> Background()
         {
             await SetLayout();
-            var background = await _front.FetchPageDataByIdAsyncTask((int)Enums.Page.Background);
+            var background = await _front.FetchPageDataByIdAsyncTask((int) Enums.Page.Background);
             HttpContext.Session.SetComplexData("_Background", background);
             return View();
         }
@@ -75,10 +76,10 @@ namespace College.Controllers
         public async Task<IActionResult> Forestry()
         {
             await SetLayout();
-            var combinedModel = new PageAttachmentModelDto()
+            var combinedModel = new PageAttachmentModelDto
             {
-                Page = await _front.FetchPageDataByIdAsyncTask((int)Enums.Page.Forestry),
-                Attachment = await _front.FetchAttachmentByIdAsyncTask((int)Enums.Page.Forestry)
+                Page = await _front.FetchPageDataByIdAsyncTask((int) Enums.Page.Forestry),
+                Attachment = await _front.FetchAttachmentByIdAsyncTask((int) Enums.Page.Forestry)
             };
             HttpContext.Session.SetComplexData("_Forestry", combinedModel);
             return View();
@@ -87,10 +88,10 @@ namespace College.Controllers
         public async Task<IActionResult> Prospectus()
         {
             await SetLayout();
-            var combinedModel = new PageAttachmentModelDto()
+            var combinedModel = new PageAttachmentModelDto
             {
-                Page = await _front.FetchPageDataByIdAsyncTask((int)Enums.Page.Prospectus),
-                Attachment = await _front.FetchAttachmentByIdAsyncTask((int)Enums.Page.Prospectus)
+                Page = await _front.FetchPageDataByIdAsyncTask((int) Enums.Page.Prospectus),
+                Attachment = await _front.FetchAttachmentByIdAsyncTask((int) Enums.Page.Prospectus)
             };
             HttpContext.Session.SetComplexData("_Prospectus", combinedModel);
             return View();
@@ -99,10 +100,10 @@ namespace College.Controllers
         public async Task<IActionResult> Notice()
         {
             await SetLayout();
-            var combinedModel = new PageAttachmentModelDto()
+            var combinedModel = new PageAttachmentModelDto
             {
-                Page = await _front.FetchPageDataByIdAsyncTask((int)Enums.Page.Notice),
-                Attachment = await _front.FetchAttachmentByIdAsyncTask((int)Enums.Page.Notice)
+                Page = await _front.FetchPageDataByIdAsyncTask((int) Enums.Page.Notice),
+                Attachment = await _front.FetchAttachmentByIdAsyncTask((int) Enums.Page.Notice)
             };
             HttpContext.Session.SetComplexData("_Notice", combinedModel);
             return View();
@@ -111,10 +112,10 @@ namespace College.Controllers
         public async Task<IActionResult> Agriculture()
         {
             await SetLayout();
-            var combinedModel = new PageAttachmentModelDto()
+            var combinedModel = new PageAttachmentModelDto
             {
-                Page = await _front.FetchPageDataByIdAsyncTask((int)Enums.Page.Agriculture),
-                Attachment = await _front.FetchAttachmentByIdAsyncTask((int)Enums.Page.Agriculture)
+                Page = await _front.FetchPageDataByIdAsyncTask((int) Enums.Page.Agriculture),
+                Attachment = await _front.FetchAttachmentByIdAsyncTask((int) Enums.Page.Agriculture)
             };
             HttpContext.Session.SetComplexData("_Agriculture", combinedModel);
             return View();
@@ -123,9 +124,9 @@ namespace College.Controllers
         public async Task<IActionResult> Faculties()
         {
             await SetLayout();
-            var combinedModel = new PageTeacherModelDto()
+            var combinedModel = new PageTeacherModelDto
             {
-                Page = await _front.FetchPageDataByIdAsyncTask((int)Enums.Page.Staff),
+                Page = await _front.FetchPageDataByIdAsyncTask((int) Enums.Page.Staff),
                 Teacher = await _front.FetchTeacherListAsyncTask()
             };
             HttpContext.Session.SetComplexData("_Faculties", combinedModel);
@@ -135,7 +136,7 @@ namespace College.Controllers
         public async Task<IActionResult> Privacy()
         {
             await SetLayout();
-            var privacy = await _front.FetchPageDataByIdAsyncTask((int)Enums.Page.Privacy);
+            var privacy = await _front.FetchPageDataByIdAsyncTask((int) Enums.Page.Privacy);
             HttpContext.Session.SetComplexData("_Privacy", privacy);
             return View();
         }
@@ -143,7 +144,7 @@ namespace College.Controllers
         public async Task<IActionResult> Mayor()
         {
             await SetLayout();
-            var mayor = await _front.FetchPageDataByIdAsyncTask((int)Enums.Page.Mayor);
+            var mayor = await _front.FetchPageDataByIdAsyncTask((int) Enums.Page.Mayor);
             HttpContext.Session.SetComplexData("_Mayor", mayor);
             return View();
         }
@@ -152,7 +153,7 @@ namespace College.Controllers
         {
             await SetLayout();
             var downloadDataSet = await _downloads.FetchAllDownloadsAsyncTask();
-            var downloads = await _front.FetchPageDataByIdAsyncTask((int)Enums.Page.Downloads);
+            var downloads = await _front.FetchPageDataByIdAsyncTask((int) Enums.Page.Downloads);
             HttpContext.Session.SetComplexData("_Downloads", downloads);
             return View(downloadDataSet);
         }
@@ -161,7 +162,7 @@ namespace College.Controllers
         {
             await SetLayout();
             var galleryDataSet = await _gallery.FetchAllGalleryAsyncTask();
-            var gallery = await _front.FetchPageDataByIdAsyncTask((int)Enums.Page.Gallery);
+            var gallery = await _front.FetchPageDataByIdAsyncTask((int) Enums.Page.Gallery);
             HttpContext.Session.SetComplexData("_Gallery", gallery);
             return View(galleryDataSet);
         }
@@ -170,7 +171,7 @@ namespace College.Controllers
         {
             await SetLayout();
             var individualGallery = await _gallery.FetchAllImageByGalleryIdAsyncTask(id);
-            var gallery = await _front.FetchPageDataByIdAsyncTask((int)Enums.Page.Gallery);
+            var gallery = await _front.FetchPageDataByIdAsyncTask((int) Enums.Page.Gallery);
             HttpContext.Session.SetComplexData("_Gallery", gallery);
             return View(individualGallery);
         }

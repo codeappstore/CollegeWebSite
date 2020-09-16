@@ -10,6 +10,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Hosting;
 using Newtonsoft.Json.Serialization;
+using System;
 
 namespace College
 {
@@ -35,10 +36,7 @@ namespace College
             );
 
             services.AddMemoryCache();
-            services.AddSession(s =>
-            {
-                s.IdleTimeout = System.TimeSpan.FromMinutes(60);
-            });
+            services.AddSession(s => { s.IdleTimeout = TimeSpan.FromMinutes(60); });
             services.TryAddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
             #region Repository Registery
@@ -58,12 +56,6 @@ namespace College
             #region Privilege
 
             services.AddScoped<IPrivilegeRepo, PrivilegeRepo>();
-
-            #endregion
-
-            #region Access
-
-            services.AddScoped<IAccessRepo, AccessRepo>();
 
             #endregion
 
@@ -100,7 +92,6 @@ namespace College
             #endregion
 
             services.AddProgressiveWebApp();
-
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -125,6 +116,7 @@ namespace College
                     context.Request.Path = "/Error";
                     await next();
                 }
+
                 if (context.Response.StatusCode == 500)
                 {
                     context.Request.Path = "/ErrorIndex500";
@@ -145,8 +137,8 @@ namespace College
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
-                    name: "default",
-                    pattern: "{controller=Home}/{action=Index}/{id?}");
+                    "default",
+                    "{controller=Home}/{action=Index}/{id?}");
             });
         }
     }

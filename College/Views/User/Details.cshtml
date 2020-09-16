@@ -1,6 +1,5 @@
 ﻿@using College.Model.Models
 @model College.Model.DataTransferObject.AuthDto.AuthUpdateModelDto
-@using Microsoft.AspNetCore.Components.Forms
 @{
     Layout = "~/Views/Shared/_BackendLayout.cshtml";
     ViewData["Title"] = "User Details  -";
@@ -21,31 +20,31 @@
                 <div class="col-sm-12 col-md-6 col-sm-6">
                     <div class="form-group">
                         <label asp-for="FullName"></label>
-                        <input asp-for="FullName" class="au-input au-input--full" type="text" disabled="disabled" />
+                        <input asp-for="FullName" class="au-input au-input--full" type="text" disabled="disabled"/>
                     </div>
                 </div>
                 <div class="col-sm-12 col-md-6 col-sm-6">
                     <div class="form-group">
                         <label asp-for="UserName"></label>
-                        <input asp-for="UserName" class="au-input au-input--full" type="text" disabled="disabled" />
+                        <input asp-for="UserName" class="au-input au-input--full" type="text" disabled="disabled"/>
                     </div>
                 </div>
                 <div class="col-sm-12 col-md-6 col-sm-6">
                     <div class="form-group">
                         <label asp-for="Email"></label>
-                        <input asp-for="Email" class="au-input au-input--full" type="email" disabled="disabled" />
+                        <input asp-for="Email" class="au-input au-input--full" type="email" disabled="disabled"/>
                     </div>
                 </div>
                 <div class="col-sm-12 col-md-6 col-sm-6">
                     <div class="form-group">
                         <label asp-for="Address"></label>
-                        <input asp-for="Address" class="au-input au-input--full" type="text" disabled="disabled" />
+                        <input asp-for="Address" class="au-input au-input--full" type="text" disabled="disabled"/>
                     </div>
                 </div>
                 <div class="col-sm-12 col-md-6 col-sm-6">
                     <div class="form-group">
                         <label asp-for="DateOfBirth"></label>
-                        <input asp-for="DateOfBirth" class="au-input au-input--full" type="date" disabled="disabled" />
+                        <input asp-for="DateOfBirth" class="au-input au-input--full" type="date" disabled="disabled"/>
                     </div>
                 </div>
                 <div class="col-sm-12 col-md-6 col-sm-6">
@@ -70,16 +69,16 @@
                 <div class="col-sm-12 col-md-6 col-sm-6">
                     <div class="form-group">
                         <label asp-for="PhoneNumber"></label>
-                        <input asp-for="PhoneNumber" class="au-input au-input--full" type="tel" disabled="disabled" />
+                        <input asp-for="PhoneNumber" class="au-input au-input--full" type="tel" disabled="disabled"/>
                     </div>
                 </div>
-                @if (!string.IsNullOrWhiteSpace(@Model.Image))
+                @if (!string.IsNullOrWhiteSpace(Model.Image))
                 {
                     <div class="col-sm-12 col-md-6 col-sm-6">
                         <div class="form-group">
                             <label asp-for="Image"></label>
                             <div class="col-sm-12 d-flex justify-content-center ">
-                                <img asp-append-version="true" src="@Model.Image" alt="@Model.FullName's image not found" style="max-height: 200px; width: auto;" />
+                                <img asp-append-version="true" src="@Model.Image" alt="@Model.FullName's image not found" style="max-height: 200px; width: auto;"/>
                             </div>
                         </div>
                     </div>

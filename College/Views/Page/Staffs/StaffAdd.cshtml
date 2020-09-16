@@ -10,7 +10,7 @@
             <h5>
                 Create New Feature
                 <a asp-controller="Page" asp-action="Staffs" class="btn btn-primary btn-sm text-light" style="float: right;">
-                    <i class="fas fa-arrow-left"></i>  Back to staffs settings
+                    <i class="fas fa-arrow-left"></i> Back to staffs settings
                 </a>
             </h5>
         </div>
@@ -31,7 +31,7 @@
                                 &nbsp;&nbsp;
                                 <label asp-for="TeacherName"></label>
                             </div>
-                            <input asp-for="TeacherName" class="au-input au-input--full" type="text" required />
+                            <input asp-for="TeacherName" class="au-input au-input--full" type="text" required/>
                             <span asp-validation-for="TeacherName" class="text-danger"></span>
                         </div>
                     </div>
@@ -43,7 +43,7 @@
                                 &nbsp;&nbsp;
                                 <label asp-for="Designation"></label>
                             </div>
-                            <input asp-for="Designation" class="au-input au-input--full" type="text" required />
+                            <input asp-for="Designation" class="au-input au-input--full" type="text" required/>
                             <span asp-validation-for="Designation" class="text-danger"></span>
                         </div>
                     </div>
@@ -55,7 +55,7 @@
                                 &nbsp;&nbsp;
                                 <label asp-for="Facebook"></label>
                             </div>
-                            <input asp-for="Facebook" class="au-input au-input--full" type="url" />
+                            <input asp-for="Facebook" class="au-input au-input--full" type="url"/>
                             <span asp-validation-for="Facebook" class="text-danger"></span>
                         </div>
                     </div>
@@ -67,7 +67,7 @@
                                 &nbsp;&nbsp;
                                 <label asp-for="Instagram"></label>
                             </div>
-                            <input asp-for="Instagram" class="au-input au-input--full" type="url" />
+                            <input asp-for="Instagram" class="au-input au-input--full" type="url"/>
                             <span asp-validation-for="Instagram" class="text-danger"></span>
                         </div>
                     </div>
@@ -79,7 +79,7 @@
                                 &nbsp;&nbsp;
                                 <label asp-for="Twitter"></label>
                             </div>
-                            <input asp-for="Twitter" class="au-input au-input--full" type="url" />
+                            <input asp-for="Twitter" class="au-input au-input--full" type="url"/>
                             <span asp-validation-for="Twitter" class="text-danger"></span>
                         </div>
                     </div>
@@ -91,7 +91,7 @@
                                 &nbsp;&nbsp;
                                 <label asp-for="GooglePlus"></label>
                             </div>
-                            <input asp-for="GooglePlus" class="au-input au-input--full" type="url" />
+                            <input asp-for="GooglePlus" class="au-input au-input--full" type="url"/>
                             <span asp-validation-for="GooglePlus" class="text-danger"></span>
                         </div>
                     </div>
@@ -120,5 +120,5 @@
 </div>
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
 }

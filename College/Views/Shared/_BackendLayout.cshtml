@@ -1,11 +1,10 @@
 ﻿@using College.Helpers
-@using College.Model.DataTransferObject.AppSettingsDto
 @using College.Model.DataTransferObject.AuthDto
 @using Microsoft.AspNetCore.Http
-@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
+@inject IHttpContextAccessor HttpContextAccessor
 @{
-    string pageName = @ViewContext.RouteData.Values["action"].ToString();
-    string baseUrl = HttpContextAccessor.HttpContext.Request.Scheme + "://" + Url.ActionContext.HttpContext.Request.Host;
+    var pageName = ViewContext.RouteData.Values["action"].ToString();
+    var baseUrl = HttpContextAccessor.HttpContext.Request.Scheme + "://" + Url.ActionContext.HttpContext.Request.Host;
 }
 @{
     var UserInfo = HttpContextAccessor.HttpContext.Session.GetComplexData<AuthBasicDetailsModelDto>("_Details");
@@ -15,8 +14,8 @@
 <html lang="en">
 <head>
     <!-- Meta -->
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta content="CodeAppStore" name="author">
     <meta content="CodeAppStore" name="Developer">
@@ -27,13 +26,13 @@
     <!-- Open Graph -->
     <meta property="og:title" content="Shahid Bishnu Dhani Memorial Polytechnic Institute">
     <meta property="og:description" content="Shahid Bishnu Dhani Memorial Polytechnic Institute | Shahid Bishnu Dhani Memorial Polytechnic Institute is a newly established educational institution which primarily attempts to contribute to the development of the country through the production of skilled and semi-skilled human resources. ">
-    <meta property="og:image" content="@(baseUrl+"/Polytechnic Institute_Dark.png")">
+    <meta property="og:image" content="@(baseUrl + "/Polytechnic Institute_Dark.png")">
     <meta property="og:url" content="@baseUrl">
     <meta name="twitter:card" content="Shahid Bishnu Dhani Memorial Polytechnic Institute | Shahid Bishnu Dhani Memorial Polytechnic Institute is a newly established educational institution which primarily attempts to contribute to the development of the country through the production of skilled and semi-skilled human resources. ">
 
 
     <!-- SITE TITLE -->
-    <title>@ViewData["Title"]  Shahid Bishnu Dhani Memorial Polytechnic Institute</title>
+    <title>@ViewData["Title"] Shahid Bishnu Dhani Memorial Polytechnic Institute</title>
 
     <!-- Favicon Icon -->
     <link rel="shortcut icon" type="image/x-icon" href="~/favicon.ico">
@@ -58,14 +57,14 @@
     <link href="~/assets/vendor/slick/slick.css" rel="stylesheet" media="all">
     <link href="~/assets/vendor/select2/select2.min.css" rel="stylesheet" media="all">
     <link href="~/assets/vendor/perfect-scrollbar/perfect-scrollbar.css" rel="stylesheet" media="all">
-    <link href="~/assets/vendor/dropify/css/dropify.css" rel="stylesheet" />
+    <link href="~/assets/vendor/dropify/css/dropify.css" rel="stylesheet"/>
 
-    <link href="~/assets/vendor/tinymce/skins/ui/oxide/content.min.css" rel="stylesheet" />
-    <link href="~/assets/vendor/tinymce/skins/ui/oxide/content.mobile.min.css" rel="stylesheet" />
-    <link href="~/assets/vendor/tinymce/skins/ui/oxide/skin.mobile.min.css" rel="stylesheet" />
-    <link href="~/assets/vendor/tinymce/skins/ui/oxide-dark/content.min.css" rel="stylesheet" />
-    <link href="~/assets/vendor/tinymce/skins/ui/oxide-dark/content.mobile.min.css" rel="stylesheet" />
-    <link href="~/assets/vendor/tinymce/skins/ui/oxide-dark/skin.mobile.min.css" rel="stylesheet" />
+    <link href="~/assets/vendor/tinymce/skins/ui/oxide/content.min.css" rel="stylesheet"/>
+    <link href="~/assets/vendor/tinymce/skins/ui/oxide/content.mobile.min.css" rel="stylesheet"/>
+    <link href="~/assets/vendor/tinymce/skins/ui/oxide/skin.mobile.min.css" rel="stylesheet"/>
+    <link href="~/assets/vendor/tinymce/skins/ui/oxide-dark/content.min.css" rel="stylesheet"/>
+    <link href="~/assets/vendor/tinymce/skins/ui/oxide-dark/content.mobile.min.css" rel="stylesheet"/>
+    <link href="~/assets/vendor/tinymce/skins/ui/oxide-dark/skin.mobile.min.css" rel="stylesheet"/>
 
     <!-- Main CSS-->
     <link href="~/assets/css/theme.css" rel="stylesheet" media="all">
@@ -74,284 +73,284 @@
 </head>
 
 <body class="animsition">
-    <div class="page-wrapper">
-        <!-- HEADER MOBILE-->
-        <header class="header-mobile d-block d-lg-none">
-            <div class="header-mobile__bar">
-                <div class="container-fluid">
-                    <div class="header-mobile-inner">
-                        <div>
+<div class="page-wrapper">
+<!-- HEADER MOBILE-->
+<header class="header-mobile d-block d-lg-none">
+    <div class="header-mobile__bar">
+        <div class="container-fluid">
+            <div class="header-mobile-inner">
+                <div>
 
-                        </div>
-                        <button class="hamburger hamburger--slider" type="button">
-                            <span class="hamburger-box">
-                                <span class="hamburger-inner"></span>
-                            </span>
-                        </button>
-                    </div>
                 </div>
-            </div>
-            <nav class="navbar-mobile">
-                <div class="container-fluid">
-                    <ul class="navbar-mobile__list list-unstyled">
-                        <li>
-                            <a asp-controller="ControlPanel" asp-action="Index">
-                                <i class="fas fa-tachometer-alt"></i>Dashboard
-                            </a>
-                        </li>
-
-                        @if (UserInfo != null)
-                        {
-                            if (UserInfo.RoleId != 3)
-                            {
-
-                                <li class="has-sub">
-                                    <a class="js-arrow" href="#">
-                                        <i class="fas fa-cogs"></i>User Controls
-                                    </a>
-                                    <ul class="navbar-mobile-sub__list list-unstyled js-sub-list">
-                                        <li>
-                                            <a asp-controller="User" asp-action="Index">Users</a>
-                                        </li>
-                                    </ul>
-                                </li>
-                            }
-                        }
-
-                        <li>
-                            <a asp-controller="WebSite" asp-action="Index">
-                                <i class="fas fa-laptop"></i>Web Site
-                            </a>
-                        </li>
-
-
-                        <li class="has-sub">
-                            <a class="js-arrow" href="#">
-                                <i class="fas fa-envelope"></i>Email Manager
-                            </a>
-                            <ul class="navbar-mobile-sub__list list-unstyled js-sub-list">
-                                <li>
-                                    <a asp-controller="Email" asp-action="Sender">Send Email</a>
-                                </li>
-                                @if (UserInfo != null)
-                                {
-                                    if (UserInfo.RoleId != 3)
-                                    {
-                                        <li>
-                                            <a asp-controller="Email" asp-action="Manager">Manage Settings</a>
-                                        </li>
-                                    }
-                                }
-                            </ul>
-                        </li>
-
-                    </ul>
-                </div>
-            </nav>
-        </header>
-        <!-- END HEADER MOBILE-->
-        <!-- MENU SIDEBAR-->
-        <aside class="menu-sidebar d-none d-lg-block">
-            <div class="menu-sidebar__content js-scrollbar1">
-                <nav class="navbar-sidebar">
-                    <ul class="list-unstyled navbar__list">
-                        <li class="active">
-                            <a asp-controller="ControlPanel" asp-action="Index">
-                                <i class="fas fa-tachometer-alt"></i>Dashboard
-                            </a>
-                        </li>
-                        @if (UserInfo != null)
-                        {
-                            if (UserInfo.RoleId != 3)
-                            {
-                                <li class="has-sub">
-                                    <a class="js-arrow" href="#">
-                                        <i class="fas fa-cogs"></i>User Controls
-                                    </a>
-                                    <ul class="list-unstyled navbar__sub-list js-sub-list">
-                                        <li>
-                                            <a asp-controller="User" asp-action="Index">Users</a>
-                                        </li>
-                                    </ul>
-                                </li>
-                            }
-                        }
-                        <li>
-
-                            <a asp-controller="WebSite" asp-action="Index">
-                                <i class="fas fa-laptop"></i>Web Site
-                            </a>
-                        </li>
-
-                        <li class="has-sub">
-                            <a class="js-arrow" href="#">
-                                <i class="fas fa-envelope"></i>Email Manager
-                            </a>
-                            <ul class="list-unstyled navbar__sub-list js-sub-list">
-                                <li>
-                                    <a asp-controller="Email" asp-action="Sender">Send Email</a>
-                                </li>
-                                @if (UserInfo != null)
-                                {
-                                    if (UserInfo.RoleId != 3)
-                                    {
-                                        <li>
-                                            <a asp-controller="Email" asp-action="Manager">Manage Settings</a>
-                                        </li>
-                                    }
-                                }
-                            </ul>
-                        </li>
-
-                    </ul>
-                </nav>
-            </div>
-        </aside>
-        <!-- END MENU SIDEBAR-->
-        <!-- PAGE CONTAINER-->
-        <div class="page-container">
-            <!-- HEADER DESKTOP-->
-            <header class="header-desktop">
-                <div class="section__content section__content--p30">
-                    <div class="container-fluid">
-                        <div class="header-wrap">
-                            <div></div>
-                            <div class="header-button">
-                                <div class="noti-wrap">
-                                    <div></div>
-                                    <div></div>
-                                    <div></div>
-                                </div>
-                                <div class="account-wrap">
-                                    @if (UserInfo != null)
-                                    {
-                                        <div class="account-item clearfix js-item-menu">
-                                            <div class="image">
-                                                <img src="@(string.IsNullOrWhiteSpace(UserInfo.Image) ? "/images/user.png" : UserInfo.Image)" alt="@(UserInfo.FullName)'s image " />
-                                            </div>
-                                            <div class="content">
-                                                <a class="js-acc-btn" href="javastript:void();">@UserInfo.UserName</a>
-                                            </div>
-                                            <div class="account-dropdown js-dropdown">
-                                                <div class="info clearfix">
-                                                    <div class="image">
-                                                        <img src="@(string.IsNullOrWhiteSpace(UserInfo.Image) ? "/images/user.png" : UserInfo.Image)" alt="@(UserInfo.FullName)'s image " />
-                                                    </div>
-                                                    <div class="content">
-                                                        <h5 class="name">
-                                                            @UserInfo.FullName
-                                                        </h5>
-                                                        <span class="email">@UserInfo.Email</span>
-                                                    </div>
-                                                </div>
-                                                <div class="account-dropdown__body">
-                                                    <div class="account-dropdown__item">
-                                                        <a asp-controller="ControlPanel" asp-action="Account">
-                                                            <i class="zmdi zmdi-account"></i>Account
-                                                        </a>
-                                                    </div>
-                                                    <div class="account-dropdown__item">
-                                                        <a asp-controller="ControlPanel" asp-action="Settings">
-                                                            <i class="zmdi zmdi-settings"></i>Setting
-                                                        </a>
-                                                    </div>
-                                                </div>
-                                                <div class="account-dropdown__footer">
-                                                    <a asp-controller="Login" asp-action="Logout" method="get">
-                                                        <i class="zmdi zmdi-power"></i>Logout
-                                                    </a>
-                                                </div>
-
-                                            </div>
-                                        </div>
-                                    }
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </header>
-            <!-- HEADER DESKTOP-->
-            <!-- MAIN CONTENT-->
-            <div class="main-content">
-                <div class="section__content section__content--p30">
-                    <div class="container-fluid">
-                        @if (UserInfo != null)
-                        {
-                            if (!UserInfo.IsEmailVerified)
-                            {
-                                <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                                    <i class="fas fa-bullhorn"></i>&nbsp;&nbsp; <strong>Email not Verified :</strong> &nbsp;&nbsp; Your email is not verified please <a asp-controller="Verification" asp-action="SendVerificationEmail" methord="get">verify it now. <i class="fas fa-envelope"></i> </a>
-                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                        <span aria-hidden="true">&times;</span>
-                                    </button>
-                                </div>
-                            }
-                        }
-                        <!-- Body Section -->
-                        @RenderBody()
-
-                        <!-- End Body Section -->
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div class="copyright">
-                                    <p>&copy; @DateTime.Now.Year All Rights Reserved by Shahid Bishnu Dhani Memorial Polytechnic Institute</p>
-                                    <p>Queries for <a href="https://codeappstore.com" target="_blank">Support Team</a></p>
-                                    <p>License @License</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="row mt-80 d-sm-none d-md-none d-lg-block d-xl-none ">
-                <br /><br />
+                <button class="hamburger hamburger--slider" type="button">
+                    <span class="hamburger-box">
+                        <span class="hamburger-inner"></span>
+                    </span>
+                </button>
             </div>
         </div>
     </div>
+    <nav class="navbar-mobile">
+        <div class="container-fluid">
+            <ul class="navbar-mobile__list list-unstyled">
+                <li>
+                    <a asp-controller="ControlPanel" asp-action="Index">
+                        <i class="fas fa-tachometer-alt"></i>Dashboard
+                    </a>
+                </li>
 
-    <!-- Jquery JS-->
-    <!-- Jquery JS-->
-    <script src="~/assets/vendor/jquery-3.2.1.min.js"></script>
-    <!-- Bootstrap JS-->
-    <script src="~/assets/vendor/bootstrap-4.1/popper.min.js"></script>
-    <script src="~/assets/vendor/bootstrap-4.1/bootstrap.min.js"></script>
-    <!-- Vendor JS       -->
-    <script src="~/assets/vendor/slick/slick.min.js">
-    </script>
-    <script src="~/assets/vendor/wow/wow.min.js"></script>
-    <script src="~/assets/vendor/animsition/animsition.min.js"></script>
-    <script src="~/assets/vendor/bootstrap-progressbar/bootstrap-progressbar.min.js">
-    </script>
-    <script src="~/assets/vendor/counter-up/jquery.waypoints.min.js"></script>
-    <script src="~/assets/vendor/counter-up/jquery.counterup.min.js">
-    </script>
-    <script src="~/assets/vendor/circle-progress/circle-progress.min.js"></script>
-    <script src="~/assets/vendor/perfect-scrollbar/perfect-scrollbar.js"></script>
-    <script src="~/assets/vendor/chartjs/Chart.bundle.min.js"></script>
-    <script src="~/assets/vendor/select2/select2.min.js">
-    </script>
-    <script src="~/assets/vendor/dropify/js/dropify.js"></script>
-    <!-- Main JS-->
-    <script src="~/assets/vendor/tinymce/jquery.tinymce.min.js"></script>
-    <script src="~/assets/vendor/tinymce/tinymce.min.js"></script>
+                @if (UserInfo != null)
+                {
+                    if (UserInfo.RoleId != 3)
+                    {
+                        <li class="has-sub">
+                            <a class="js-arrow" href="#">
+                                <i class="fas fa-cogs"></i>User Controls
+                            </a>
+                            <ul class="navbar-mobile-sub__list list-unstyled js-sub-list">
+                                <li>
+                                    <a asp-controller="User" asp-action="Index">Users</a>
+                                </li>
+                            </ul>
+                        </li>
+                    }
+                }
 
-    <script src="~/assets/vendor/tinymce/themes/mobile/theme.min.js"></script>
-    <script src="~/assets/vendor/tinymce/themes/silver/theme.min.js"></script>
-    <script src="~/assets/vendor/sweetalert/sweetalert.min.js"></script>
+                <li>
+                    <a asp-controller="WebSite" asp-action="Index">
+                        <i class="fas fa-laptop"></i>Web Site
+                    </a>
+                </li>
 
-    <script src="~/assets/js/main.js"></script>
-    <script src="~/js/site.js" asp-append-version="true"></script>
-    <script src="~/assets/js/custom.js"></script>
 
-    <!--Validation Dependencies-->
-    <!-- <script src="~/validation/jquery.validate.min.js"></script>
-    <script src="~/validation/jquery.validate.unobtrusive.min.js"></script> -->
-    <script>
-        setTimeout(() => {
+                <li class="has-sub">
+                    <a class="js-arrow" href="#">
+                        <i class="fas fa-envelope"></i>Email Manager
+                    </a>
+                    <ul class="navbar-mobile-sub__list list-unstyled js-sub-list">
+                        <li>
+                            <a asp-controller="Email" asp-action="Sender">Send Email</a>
+                        </li>
+                        @if (UserInfo != null)
+                        {
+                            if (UserInfo.RoleId != 3)
+                            {
+                                <li>
+                                    <a asp-controller="Email" asp-action="Manager">Manage Settings</a>
+                                </li>
+                            }
+                        }
+                    </ul>
+                </li>
+
+            </ul>
+        </div>
+    </nav>
+</header>
+<!-- END HEADER MOBILE-->
+<!-- MENU SIDEBAR-->
+<aside class="menu-sidebar d-none d-lg-block">
+    <div class="menu-sidebar__content js-scrollbar1">
+        <nav class="navbar-sidebar">
+            <ul class="list-unstyled navbar__list">
+                <li class="active">
+                    <a asp-controller="ControlPanel" asp-action="Index">
+                        <i class="fas fa-tachometer-alt"></i>Dashboard
+                    </a>
+                </li>
+                @if (UserInfo != null)
+                {
+                    if (UserInfo.RoleId != 3)
+                    {
+                        <li class="has-sub">
+                            <a class="js-arrow" href="#">
+                                <i class="fas fa-cogs"></i>User Controls
+                            </a>
+                            <ul class="list-unstyled navbar__sub-list js-sub-list">
+                                <li>
+                                    <a asp-controller="User" asp-action="Index">Users</a>
+                                </li>
+                            </ul>
+                        </li>
+                    }
+                }
+                <li>
+
+                    <a asp-controller="WebSite" asp-action="Index">
+                        <i class="fas fa-laptop"></i>Web Site
+                    </a>
+                </li>
+
+                <li class="has-sub">
+                    <a class="js-arrow" href="#">
+                        <i class="fas fa-envelope"></i>Email Manager
+                    </a>
+                    <ul class="list-unstyled navbar__sub-list js-sub-list">
+                        <li>
+                            <a asp-controller="Email" asp-action="Sender">Send Email</a>
+                        </li>
+                        @if (UserInfo != null)
+                        {
+                            if (UserInfo.RoleId != 3)
+                            {
+                                <li>
+                                    <a asp-controller="Email" asp-action="Manager">Manage Settings</a>
+                                </li>
+                            }
+                        }
+                    </ul>
+                </li>
+
+            </ul>
+        </nav>
+    </div>
+</aside>
+<!-- END MENU SIDEBAR-->
+<!-- PAGE CONTAINER-->
+<div class="page-container">
+    <!-- HEADER DESKTOP-->
+    <header class="header-desktop">
+        <div class="section__content section__content--p30">
+            <div class="container-fluid">
+                <div class="header-wrap">
+                    <div></div>
+                    <div class="header-button">
+                        <div class="noti-wrap">
+                            <div></div>
+                            <div></div>
+                            <div></div>
+                        </div>
+                        <div class="account-wrap">
+                            @if (UserInfo != null)
+                            {
+                                <div class="account-item clearfix js-item-menu">
+                                    <div class="image">
+                                        <img src="@(string.IsNullOrWhiteSpace(UserInfo.Image) ? "/images/user.png" : UserInfo.Image)" alt="@(UserInfo.FullName)'s image "/>
+                                    </div>
+                                    <div class="content">
+                                        <a class="js-acc-btn" href="javastript:void();">@UserInfo.UserName</a>
+                                    </div>
+                                    <div class="account-dropdown js-dropdown">
+                                        <div class="info clearfix">
+                                            <div class="image">
+                                                <img src="@(string.IsNullOrWhiteSpace(UserInfo.Image) ? "/images/user.png" : UserInfo.Image)" alt="@(UserInfo.FullName)'s image "/>
+                                            </div>
+                                            <div class="content">
+                                                <h5 class="name">
+                                                    @UserInfo.FullName
+                                                </h5>
+                                                <span class="email">@UserInfo.Email</span>
+                                            </div>
+                                        </div>
+                                        <div class="account-dropdown__body">
+                                            <div class="account-dropdown__item">
+                                                <a asp-controller="ControlPanel" asp-action="Account">
+                                                    <i class="zmdi zmdi-account"></i>Account
+                                                </a>
+                                            </div>
+                                            <div class="account-dropdown__item">
+                                                <a asp-controller="ControlPanel" asp-action="Settings">
+                                                    <i class="zmdi zmdi-settings"></i>Setting
+                                                </a>
+                                            </div>
+                                        </div>
+                                        <div class="account-dropdown__footer">
+                                            <a asp-controller="Login" asp-action="Logout" method="get">
+                                                <i class="zmdi zmdi-power"></i>Logout
+                                            </a>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+    <!-- HEADER DESKTOP-->
+    <!-- MAIN CONTENT-->
+    <div class="main-content">
+        <div class="section__content section__content--p30">
+            <div class="container-fluid">
+                @if (UserInfo != null)
+                {
+                    if (!UserInfo.IsEmailVerified)
+                    {
+                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                            <i class="fas fa-bullhorn"></i>&nbsp;&nbsp; <strong>Email not Verified :</strong> &nbsp;&nbsp; Your email is not verified please <a asp-controller="Verification" asp-action="SendVerificationEmail" methord="get">verify it now. <i class="fas fa-envelope"></i> </a>
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                    }
+                }
+                <!-- Body Section -->
+                @RenderBody()
+
+                <!-- End Body Section -->
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="copyright">
+                            <p>&copy; @DateTime.Now.Year All Rights Reserved by Shahid Bishnu Dhani Memorial Polytechnic Institute</p>
+                            <p>Queries for <a href="https://codeappstore.com" target="_blank">Support Team</a></p>
+                            <p>License @License</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row mt-80 d-sm-none d-md-none d-lg-block d-xl-none ">
+        <br/><br/>
+    </div>
+</div>
+</div>
+
+<!-- Jquery JS-->
+<!-- Jquery JS-->
+<script src="~/assets/vendor/jquery-3.2.1.min.js"></script>
+<!-- Bootstrap JS-->
+<script src="~/assets/vendor/bootstrap-4.1/popper.min.js"></script>
+<script src="~/assets/vendor/bootstrap-4.1/bootstrap.min.js"></script>
+<!-- Vendor JS       -->
+<script src="~/assets/vendor/slick/slick.min.js">
+</script>
+<script src="~/assets/vendor/wow/wow.min.js"></script>
+<script src="~/assets/vendor/animsition/animsition.min.js"></script>
+<script src="~/assets/vendor/bootstrap-progressbar/bootstrap-progressbar.min.js">
+</script>
+<script src="~/assets/vendor/counter-up/jquery.waypoints.min.js"></script>
+<script src="~/assets/vendor/counter-up/jquery.counterup.min.js">
+</script>
+<script src="~/assets/vendor/circle-progress/circle-progress.min.js"></script>
+<script src="~/assets/vendor/perfect-scrollbar/perfect-scrollbar.js"></script>
+<script src="~/assets/vendor/chartjs/Chart.bundle.min.js"></script>
+<script src="~/assets/vendor/select2/select2.min.js">
+</script>
+<script src="~/assets/vendor/dropify/js/dropify.js"></script>
+<!-- Main JS-->
+<script src="~/assets/vendor/tinymce/jquery.tinymce.min.js"></script>
+<script src="~/assets/vendor/tinymce/tinymce.min.js"></script>
+
+<script src="~/assets/vendor/tinymce/themes/mobile/theme.min.js"></script>
+<script src="~/assets/vendor/tinymce/themes/silver/theme.min.js"></script>
+<script src="~/assets/vendor/sweetalert/sweetalert.min.js"></script>
+
+<script src="~/assets/js/main.js"></script>
+<script src="~/js/site.js" asp-append-version="true"></script>
+<script src="~/assets/js/custom.js"></script>
+
+<!--Validation Dependencies-->
+<!-- <script src="~/validation/jquery.validate.min.js"></script>
+<script src="~/validation/jquery.validate.unobtrusive.min.js"></script> -->
+<script>
+    setTimeout(() => {
             $('.flash').slideUp();
-        }, 5000);
-    </script>
-    @RenderSection("Scripts", required: false)
+        },
+        5000);
+</script>
+@RenderSection("Scripts", false)
 </body>
 </html>

@@ -11,7 +11,7 @@
                 <h5>
                     Notice Page
                     <a asp-controller="WebSite" asp-action="Index" class="btn btn-primary btn-sm text-light" style="float: right;">
-                        <i class="fas fa-arrow-left"></i>  Back to website manager
+                        <i class="fas fa-arrow-left"></i> Back to website manager
                     </a>
                 </h5>
             </div>
@@ -22,7 +22,7 @@
                             <span>Please correct the following errors</span>
                         </div>
                     </div>
-                    <input type="hidden" asp-for="Page.PageId" />
+                    <input type="hidden" asp-for="Page.PageId"/>
 
                     <div class="row">
 
@@ -33,7 +33,7 @@
                                     &nbsp;&nbsp;
                                     <label asp-for="Page.PageName"></label>
                                 </div>
-                                <input asp-for="Page.PageName" class="au-input au-input--full" type="text" required />
+                                <input asp-for="Page.PageName" class="au-input au-input--full" type="text" required/>
                                 <span asp-validation-for="Page.PageName" class="text-danger"></span>
                             </div>
                         </div>
@@ -64,7 +64,7 @@
                             {
                                 <div class="row">
                                     <div class="col-sm-12 d-flex justify-content-center ">
-                                        <img asp-append-version="false" src="@Model.Page.BackgroundImage" alt="@Model.Page.BackgroundImage image not found" style="max-height: 200px; width: auto;" />
+                                        <img asp-append-version="false" src="@Model.Page.BackgroundImage" alt="@Model.Page.BackgroundImage image not found" style="max-height: 200px; width: auto;"/>
                                     </div>
                                     <div class="col-sm-12">
                                         <p class="text-center">Current Image</p>
@@ -72,9 +72,9 @@
                                 </div>
                             }
                         </div>
-                        <hr />
-                        <input type="hidden" asp-for="Attachment.AttachmentId" />
-                        <input type="hidden" asp-for="Attachment.PageId" />
+                        <hr/>
+                        <input type="hidden" asp-for="Attachment.AttachmentId"/>
+                        <input type="hidden" asp-for="Attachment.PageId"/>
 
                         <div class="col-sm-12 col-md-12 col-lg-12">
                             <div class="form-group">
@@ -83,7 +83,7 @@
                                     &nbsp;&nbsp;
                                     <label asp-for="Attachment.FileName"></label>
                                 </div>
-                                <input asp-for="Attachment.FileName" class="au-input au-input--full" type="text" required />
+                                <input asp-for="Attachment.FileName" class="au-input au-input--full" type="text" required/>
                                 <span asp-validation-for="Attachment.FileName" class="text-danger"></span>
                             </div>
                         </div>
@@ -103,7 +103,9 @@
                             {
                                 <div class="row">
                                     <div class="col-sm-12 d-flex justify-content-center ">
-                                        <button class="btn btn-danger"> <i class="fas fa-file"></i><a class="text-light" href="@(Model.Attachment.Link)" target="_blank">&nbsp;&nbsp;  @Model.Attachment.FileName</a></button>
+                                        <button class="btn btn-danger">
+                                            <i class="fas fa-file"></i><a class="text-light" href="@(Model.Attachment.Link)" target="_blank">&nbsp;&nbsp; @Model.Attachment.FileName</a>
+                                        </button>
                                     </div>
                                     <div class="col-sm-12">
                                         <p class="text-center">Current File</p>
@@ -122,6 +124,7 @@
     </div>
 
 </div>
+
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
 }

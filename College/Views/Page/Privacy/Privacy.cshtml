@@ -10,7 +10,7 @@
             <h5>
                 Privacy Policy Page
                 <a asp-controller="WebSite" asp-action="Index" class="btn btn-primary btn-sm text-light" style="float: right;">
-                    <i class="fas fa-arrow-left"></i>  Back to website manager
+                    <i class="fas fa-arrow-left"></i> Back to website manager
                 </a>
             </h5>
         </div>
@@ -21,7 +21,7 @@
                         <span>Please correct the following errors</span>
                     </div>
                 </div>
-                <input type="hidden" asp-for="PageId" />
+                <input type="hidden" asp-for="PageId"/>
 
                 <div class="row">
 
@@ -32,7 +32,7 @@
                                 &nbsp;&nbsp;
                                 <label asp-for="PageName"></label>
                             </div>
-                            <input asp-for="PageName" class="au-input au-input--full" type="text" required />
+                            <input asp-for="PageName" class="au-input au-input--full" type="text" required/>
                             <span asp-validation-for="PageName" class="text-danger"></span>
                         </div>
                     </div>
@@ -63,7 +63,7 @@
                         {
                             <div class="row">
                                 <div class="col-sm-12 d-flex justify-content-center ">
-                                    <img asp-append-version="false" src="@Model.BackgroundImage" alt="@Model.BackgroundImage image not found" style="max-height: 200px; width: auto;" />
+                                    <img asp-append-version="false" src="@Model.BackgroundImage" alt="@Model.BackgroundImage image not found" style="max-height: 200px; width: auto;"/>
                                 </div>
                                 <div class="col-sm-12">
                                     <p class="text-center">Current Image</p>
@@ -80,6 +80,7 @@
         </div>
     </div>
 </div>
+
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
 }

@@ -12,7 +12,7 @@
             <h5>
                 Create New User
                 <a asp-controller="User" asp-action="Index" class="btn btn-primary btn-sm text-light" style="float: right;">
-                    <i class="fas fa-arrow-left"></i>  Back to user list
+                    <i class="fas fa-arrow-left"></i> Back to user list
                 </a>
             </h5>
         </div>
@@ -23,19 +23,19 @@
                         <span>Please correct the following errors</span>
                     </div>
                 </div>
-                <input type="hidden" asp-for="AuthId" />
+                <input type="hidden" asp-for="AuthId"/>
                 <div class="row">
                     <div class="col-sm-12 col-md-6 col-sm-6">
                         <div class="form-group">
                             <label asp-for="FullName"></label>
-                            <input asp-for="FullName" class="au-input au-input--full" type="text" required />
+                            <input asp-for="FullName" class="au-input au-input--full" type="text" required/>
                             <span asp-validation-for="FullName" class="text-danger"></span>
                         </div>
                     </div>
                     <div class="col-sm-12 col-md-6 col-sm-6">
                         <div class="form-group">
                             <label asp-for="UserName"></label>
-                            <input asp-for="UserName" class="au-input au-input--full" type="text" required />
+                            <input asp-for="UserName" class="au-input au-input--full" type="text" required/>
                             <span asp-validation-for="UserName" class="text-danger"></span>
                         </div>
                     </div>
@@ -43,14 +43,14 @@
                     <div class="col-sm-12 col-md-6 col-sm-6">
                         <div class="form-group">
                             <label asp-for="Address"></label>
-                            <input asp-for="Address" class="au-input au-input--full" type="text" required />
+                            <input asp-for="Address" class="au-input au-input--full" type="text" required/>
                             <span asp-validation-for="Address" class="text-danger"></span>
                         </div>
                     </div>
                     <div class="col-sm-12 col-md-6 col-sm-6">
                         <div class="form-group">
                             <label asp-for="DateOfBirth"></label>
-                            <input asp-for="DateOfBirth" class="au-input au-input--full" type="date" required />
+                            <input asp-for="DateOfBirth" class="au-input au-input--full" type="date" required/>
                             <span asp-validation-for="DateOfBirth" class="text-danger"></span>
                         </div>
                     </div>
@@ -78,7 +78,7 @@
                     <div class="col-sm-12 col-md-6 col-sm-6">
                         <div class="form-group">
                             <label asp-for="PhoneNumber"></label>
-                            <input asp-for="PhoneNumber" class="au-input au-input--full" type="tel" required />
+                            <input asp-for="PhoneNumber" class="au-input au-input--full" type="tel" required/>
                             <span asp-validation-for="PhoneNumber" class="text-danger"></span>
                         </div>
                     </div>
@@ -93,5 +93,5 @@
 </div>
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
 }

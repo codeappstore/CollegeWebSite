@@ -12,7 +12,7 @@
             <h5>
                 Create New Saying
                 <a asp-controller="WebSite" asp-action="StudentsSay" class="btn btn-primary btn-sm text-light" style="float: right;">
-                    <i class="fas fa-arrow-left"></i>  Back to sayings list
+                    <i class="fas fa-arrow-left"></i> Back to sayings list
                 </a>
             </h5>
         </div>
@@ -28,14 +28,14 @@
                     <div class="col-sm-12 col-md-6 col-lg-6">
                         <div class="form-group">
                             <label asp-for="StudentName"></label>
-                            <input asp-for="StudentName" class="au-input au-input--full" type="text" required />
+                            <input asp-for="StudentName" class="au-input au-input--full" type="text" required/>
                             <span asp-validation-for="StudentName" class="text-danger"></span>
                         </div>
                     </div>
                     <div class="col-sm-12 col-md-6 col-lg-6">
                         <div class="form-group">
                             <label asp-for="StudentDesignation"></label>
-                            <input asp-for="StudentDesignation" class="au-input au-input--full" type="text" required />
+                            <input asp-for="StudentDesignation" class="au-input au-input--full" type="text" required/>
                             <span asp-validation-for="StudentDesignation" class="text-danger"></span>
                         </div>
                     </div>
@@ -69,5 +69,5 @@
 </div>
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
 }

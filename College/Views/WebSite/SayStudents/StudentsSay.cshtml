@@ -2,7 +2,7 @@
 @{
     Layout = "~/Views/Shared/_BackendLayout.cshtml";
     ViewData["Title"] = "Students Sayings List -";
-    int serialize = 1;
+    var serialize = 1;
 }
 @(await Html.PartialAsync("~/Views/Shared/_AlertLayout.cshtml"))
 <div class="row">
@@ -12,20 +12,20 @@
                 <h5>
                     Students Saynig
                     <a asp-controller="WebSite" asp-action="Index" class="btn btn-primary btn-sm text-light" style="float: right;">
-                        <i class="fas fa-arrow-left"></i>  Back to website manager
+                        <i class="fas fa-arrow-left"></i> Back to website manager
                     </a>
                 </h5>
             </div>
             <div class="card-body card-block">
                 <form asp-action="StudentsSay" asp-controller="WebSite" method="post" enctype="multipart/form-data" asp-antiforgery="true">
-                    <input type="hidden" asp-for="SayModel.StudentSayId" />
+                    <input type="hidden" asp-for="SayModel.StudentSayId"/>
                     <div class="form-group">
                         <div asp-validation-summary="ModelOnly" class="text-danger">
                             <span>Please correct the following errors</span>
                         </div>
                     </div>
 
-                    <input type="hidden" asp-for="SayModel.StudentSayId" />
+                    <input type="hidden" asp-for="SayModel.StudentSayId"/>
                     <div class="row">
 
                         <div class="col-sm-12 col-md-12 col-lg-12">
@@ -55,7 +55,7 @@
                             {
                                 <div class="row">
                                     <div class="col-sm-12 d-flex justify-content-center ">
-                                        <img asp-append-version="true" src="@Model.SayModel.Image" alt="@Model.SayModel.Image's image not found" style="max-height: 200px; width: auto;" />
+                                        <img asp-append-version="true" src="@Model.SayModel.Image" alt="@Model.SayModel.Image's image not found" style="max-height: 200px; width: auto;"/>
                                     </div>
                                     <div class="col-sm-12">
                                         <p class="text-center">Current Image</p>
@@ -101,7 +101,9 @@
                 }
                 else
                 {
-                    <div class="text-center"><h4>Dat not found</h4></div>
+                    <div class="text-center">
+                        <h4>Dat not found</h4>
+                    </div>
                 }
             </div>
         </div>
@@ -109,7 +111,7 @@
 </div>
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
     <script>
         function NotifyAndDelete(id) {
             swal({
@@ -132,17 +134,18 @@
                         data: {
                             id: id
                         },
-                        success: function (response) {
-                            swal("Poof all gone! " + response, {
-                                icon: "success",
-                            }).then(function () {
-                                window.location.href = "/WebSite/StudentsSay"
+                        success: function(response) {
+                            swal("Poof all gone! " + response,
+                                {
+                                    icon: "success",
+                                }).then(function() {
+                                window.location.href = "/WebSite/StudentsSay";
                             });
                         },
-                        failure: function (response) {
+                        failure: function(response) {
                             alert(response.responseText);
                         },
-                        error: function (response) {
+                        error: function(response) {
                             alert(response.responseText);
                         }
                     });
